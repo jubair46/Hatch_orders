@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hatch — a kitchen with six passports, Bengaluru</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -924,8 +925,8 @@
   .cart-item{
     display:grid;
     grid-template-columns:1fr auto;
-    gap:2px 12px;
-    padding:16px 0;
+    gap:4px 12px;
+    padding:14px 0;
     border-bottom:1px solid var(--line-on-paper);
   }
   .cart-item-name{
@@ -935,29 +936,72 @@
     margin:0;
   }
   .cart-item-meta{
-    grid-column:1;
-    font-size:12.5px;
-    opacity:0.65;
+    font-size:12px;
+    opacity:0.7;
     margin:0;
   }
   .cart-item-price{
     font-family:var(--serif);
     font-style:italic;
     font-size:15px;
-    grid-row:1 / span 2;
-    align-self:center;
+    font-weight:600;
+    align-self:start;
+    text-align:right;
   }
+  .cart-item-controls{
+    grid-column:1 / span 2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:6px;
+  }
+  .cart-qty-pill{
+    display:inline-flex;
+    align-items:center;
+    border:1px solid var(--line-on-paper);
+    border-radius:999px;
+    background:rgba(20,32,26,0.05);
+    overflow:hidden;
+  }
+  .cart-qty-btn{
+    width:26px; height:24px; border:none; background:none; cursor:pointer; font-size:14px;
+    display:flex; align-items:center; justify-content:center; color:var(--ink);
+  }
+  .cart-qty-btn:hover{ background:rgba(20,32,26,0.1); }
+  .cart-qty-count{ min-width:20px; text-align:center; font-size:12px; font-weight:600; }
   .cart-item-remove{
-    grid-column:1;
-    justify-self:start;
     background:none;
     border:none;
-    padding:0;
-    font-size:12px;
+    padding:2px 6px;
+    font-size:11.5px;
     text-decoration:underline;
     opacity:0.6;
     cursor:pointer;
-    margin-top:4px;
+  }
+  .cart-item-remove:hover{ opacity:1; color:#b5502e; }
+  .receipt-tracker{
+    background:rgba(20,32,26,0.05);
+    border-radius:6px;
+    padding:12px;
+    margin:12px 0 16px;
+    text-align:center;
+  }
+  .tracker-status{
+    display:inline-block;
+    padding:5px 14px;
+    border-radius:999px;
+    font-size:11.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .tracker-status.new{ background:rgba(224,138,66,0.18); color:#b5502e; border:1px solid #b5502e; }
+  .tracker-status.preparing{ background:rgba(91,143,209,0.18); color:#2c67b2; border:1px solid #2c67b2; }
+  .tracker-status.done{ background:rgba(77,166,100,0.18); color:#2e7d32; border:1px solid #2e7d32; }
+  .tracker-note{ font-size:11.5px; opacity:0.75; margin:6px 0 0; line-height:1.4; }
+  .detail-field.has-error input, .detail-field.has-error textarea{
+    border-color:#b5502e !important;
+    outline:2px solid #b5502e !important;
   }
   .cart-drawer-foot{
     padding:18px 24px calc(22px + env(safe-area-inset-bottom,0px));
@@ -1638,14 +1682,18 @@
         <textarea id="deliveryAddress" rows="2" placeholder="Flat, street, area, landmark"></textarea>
       </div>
       <div class="detail-row">
-        <div class="detail-field">
-          <label for="customerName">Name</label>
+        <div class="detail-field" id="fieldCustName">
+          <label for="customerName">Name *</label>
           <input type="text" id="customerName" placeholder="Your name">
         </div>
-        <div class="detail-field">
-          <label for="customerPhone">Phone</label>
+        <div class="detail-field" id="fieldCustPhone">
+          <label for="customerPhone">Phone *</label>
           <input type="tel" id="customerPhone" placeholder="10-digit number">
         </div>
+      </div>
+      <div class="detail-field" id="fieldNotes">
+        <label for="orderNotes">Special Instructions / Allergies (optional)</label>
+        <input type="text" id="orderNotes" placeholder="e.g. Less spicy, extra sauce, allergy note…">
       </div>
     </div>
     <div class="cart-drawer-foot">
@@ -1663,10 +1711,10 @@
       </div>
       <div class="cart-actions">
         <button class="cart-send-btn" id="cartSendBtn">Send to kitchen</button>
-        <a class="cart-email-btn" id="cartEmailBtn" href="mailto:reserve@hatchbengaluru.example">Email</a>
+        <a class="cart-email-btn" id="cartEmailBtn" href="mailto:orders@hatchbengaluru.in">Email Order</a>
         <button class="cart-clear-btn" id="cartClearBtn">Clear</button>
       </div>
-      <p class="cart-note" id="cartNote">Saved in this browser. Tap "Send to kitchen" to submit it to Hatch.</p>
+      <p class="cart-note" id="cartNote">Tap "Send to kitchen" to dispatch your order directly to the chef.</p>
     </div>
   </div>
 </div>
@@ -1946,10 +1994,38 @@
         row.innerHTML =
           '<p class="cart-item-name">' + item.name + '</p>' +
           '<span class="cart-item-price">₹' + (item.price * item.qty) + '</span>' +
-          '<p class="cart-item-meta">' + item.size + ' × ' + item.qty + '</p>' +
-          '<button class="cart-item-remove" data-idx="' + idx + '">Remove</button>';
+          '<div class="cart-item-controls">' +
+            '<span class="cart-item-meta">' + item.size + ' · ₹' + item.price + '</span>' +
+            '<div class="cart-qty-pill">' +
+              '<button type="button" class="cart-qty-btn cart-item-minus" data-idx="' + idx + '" title="Decrease quantity">−</button>' +
+              '<span class="cart-qty-count">' + item.qty + '</span>' +
+              '<button type="button" class="cart-qty-btn cart-item-plus" data-idx="' + idx + '" title="Increase quantity">+</button>' +
+            '</div>' +
+            '<button type="button" class="cart-item-remove" data-idx="' + idx + '">Remove</button>' +
+          '</div>';
         cartItemsEl.appendChild(row);
       });
+
+      cartItemsEl.querySelectorAll('.cart-item-minus').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var i = parseInt(btn.getAttribute('data-idx'), 10);
+          if (cart[i].qty > 1) {
+            cart[i].qty--;
+          } else {
+            cart.splice(i, 1);
+          }
+          saveCart(); renderCart();
+        });
+      });
+
+      cartItemsEl.querySelectorAll('.cart-item-plus').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var i = parseInt(btn.getAttribute('data-idx'), 10);
+          cart[i].qty++;
+          saveCart(); renderCart();
+        });
+      });
+
       cartItemsEl.querySelectorAll('.cart-item-remove').forEach(function(btn){
         btn.addEventListener('click', function(){
           cart.splice(parseInt(btn.getAttribute('data-idx'), 10), 1);
@@ -1964,18 +2040,23 @@
     cartTotalEl.textContent = '₹' + t.total;
 
     if (cart.length === 0){
-      cartEmailBtn.setAttribute('href', 'mailto:reserve@hatchbengaluru.example?subject=Hatch%20order');
+      cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order');
     } else {
       var lines = cart.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ') - Rs.' + (it.price*it.qty); });
       var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
-      cartEmailBtn.setAttribute('href', 'mailto:reserve@hatchbengaluru.example?subject=Hatch%20order&body=' + body);
+      cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order&body=' + body);
     }
   }
 
   addBtn.addEventListener('click', function(){
     if (!currentDish) return;
     var size = currentDish.sizes[currentDish.sizeIdx];
-    cart.push({ id: currentDish.id, name: currentDish.name, size: size[0], price: size[1], qty: currentDish.qty });
+    var existing = cart.find(function(it){ return it.id === currentDish.id && it.size === size[0]; });
+    if (existing) {
+      existing.qty += currentDish.qty;
+    } else {
+      cart.push({ id: currentDish.id, name: currentDish.name, size: size[0], price: size[1], qty: currentDish.qty });
+    }
     saveCart();
     renderCart();
     closeModal();
@@ -1990,71 +2071,147 @@
   });
   cartOverlay.addEventListener('click', function(e){ if (e.target === cartOverlay) cartOverlay.classList.remove('open'); });
   document.getElementById('cartClearBtn').addEventListener('click', function(){
-    cart = [];
-    saveCart();
-    renderCart();
+    if (cart.length && confirm('Clear all dishes from your order?')){
+      cart = [];
+      saveCart();
+      renderCart();
+    }
   });
 
-  /* ================= RECEIPT ================= */
+  /* ================= RECEIPT & TRACKER ================= */
   var receiptOverlay = document.getElementById('receiptOverlay');
   var receiptBody = document.getElementById('receiptBody');
+  var livePollTimer = null;
 
-  function showReceipt(order, items, totals, details){
+  function showReceipt(orderId, orderNum, items, totals, details){
     var d = new Date();
     var lines = items.map(function(it){
       return '<div class="receipt-line"><span class="item-label">' + it.qty + ' × ' + it.name + ' (' + it.size + ')</span><span>₹' + (it.price*it.qty) + '</span></div>';
     }).join('');
     var extra = '';
-    if (details.orderType === 'dine-in' && details.tableNumber) extra = 'Table ' + details.tableNumber;
+    if (details.orderType === 'dine-in' && details.tableNumber) extra = 'Table #' + details.tableNumber;
     if (details.orderType === 'delivery' && details.deliveryAddress) extra = details.deliveryAddress;
+
+    var displayCode = orderNum || (orderId ? ('HTC-' + orderId.slice(0,6).toUpperCase()) : 'HATCH');
+
     receiptBody.innerHTML =
       '<h4>Hatch</h4>' +
-      '<p class="receipt-meta">Indiranagar, Bengaluru 560038<br>' + d.toLocaleDateString() + ' ' + d.toLocaleTimeString() + '<br>Order #' + order.slice(0,8).toUpperCase() + '</p>' +
+      '<p class="receipt-meta">100 Feet Road, Indiranagar, Bengaluru 560038<br>' + d.toLocaleDateString('en-IN') + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + '<br><strong>Order #' + displayCode + '</strong></p>' +
+      '<div class="receipt-tracker" id="receiptTracker">' +
+        '<div class="tracker-status new" id="trackerBadge">⏳ Order Dispatched</div>' +
+        '<p class="tracker-note" id="trackerNote">Sent to the kitchen. The chef will prepare it shortly.</p>' +
+      '</div>' +
       '<hr class="receipt-divider">' +
       '<p class="receipt-meta" style="text-align:left;">' +
-        (details.customerName ? details.customerName + '<br>' : '') +
-        (details.customerPhone ? details.customerPhone + '<br>' : '') +
-        details.orderType.charAt(0).toUpperCase() + details.orderType.slice(1) + (extra ? ' — ' + extra : '') +
+        (details.customerName ? 'Guest: ' + details.customerName + '<br>' : '') +
+        (details.customerPhone ? 'Phone: ' + details.customerPhone + '<br>' : '') +
+        details.orderType.toUpperCase() + (extra ? ' — ' + extra : '') +
+        (details.notes ? '<br><em>Note: ' + details.notes + '</em>' : '') +
       '</p>' +
       '<hr class="receipt-divider">' +
       lines +
       '<hr class="receipt-divider">' +
       '<div class="receipt-total-line"><span>Subtotal</span><span>₹' + totals.subtotal + '</span></div>' +
       '<div class="receipt-total-line"><span>GST (5%)</span><span>₹' + totals.gst + '</span></div>' +
-      '<div class="receipt-total-line receipt-grand"><span>Total</span><span>₹' + totals.total + '</span></div>' +
-      '<p class="receipt-footer-note">Thank you for visiting Hatch.<br>Six kitchens, one room.</p>';
+      '<div class="receipt-total-line receipt-grand"><span>Total Amount</span><span>₹' + totals.total + '</span></div>' +
+      '<p class="receipt-footer-note">Thank you for dining with Hatch.<br>Six kitchens, one room.</p>';
+
     receiptOverlay.classList.add('open');
+
+    // Live order tracking
+    if (livePollTimer) clearInterval(livePollTimer);
+    if (orderId && orderId !== 'HATCH') {
+      var pollStatus = function(){
+        var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+          ? 'http://localhost:3001/api/orders/'
+          : '/api/orders/';
+        fetch(apiBase + orderId + '/status')
+          .then(function(res){ return res.json(); })
+          .then(function(data){
+            var badge = document.getElementById('trackerBadge');
+            var note = document.getElementById('trackerNote');
+            if (!badge || !note) return;
+            if (data.status === 'preparing') {
+              badge.className = 'tracker-status preparing';
+              badge.textContent = '👨‍🍳 In Preparation';
+              note.textContent = 'The kitchen is actively crafting your dishes now.';
+            } else if (data.status === 'done') {
+              badge.className = 'tracker-status done';
+              badge.textContent = (details.orderType === 'delivery') ? '🛵 Out for Delivery' : '✓ Ready to Serve';
+              note.textContent = (details.orderType === 'delivery') ? 'Your order is on the way!' : 'Hot and ready! Serving to your table.';
+              clearInterval(livePollTimer);
+            }
+          }).catch(function(){});
+      };
+      livePollTimer = setInterval(pollStatus, 4000);
+    }
   }
 
-  document.getElementById('receiptCloseBtn').addEventListener('click', function(){
+  function closeReceipt(){
+    if (livePollTimer) clearInterval(livePollTimer);
     receiptOverlay.classList.remove('open');
-  });
-  document.getElementById('receiptDoneBtn').addEventListener('click', function(){
-    receiptOverlay.classList.remove('open');
-  });
-  document.getElementById('receiptPrintBtn').addEventListener('click', function(){
-    window.print();
-  });
+  }
+  document.getElementById('receiptCloseBtn').addEventListener('click', closeReceipt);
+  document.getElementById('receiptDoneBtn').addEventListener('click', closeReceipt);
+  document.getElementById('receiptPrintBtn').addEventListener('click', function(){ window.print(); });
 
   var cartNote = document.getElementById('cartNote');
   document.getElementById('cartSendBtn').addEventListener('click', function(){
     if (cart.length === 0){
-      cartNote.textContent = 'Add something first.';
+      cartNote.textContent = 'Your order is empty. Select dishes to get started.';
       return;
     }
+
+    // Clear previous validation styling
+    document.querySelectorAll('.detail-field').forEach(function(f){ f.classList.remove('has-error'); });
+
+    var nameVal = document.getElementById('customerName').value.trim();
+    var phoneVal = document.getElementById('customerPhone').value.trim();
+    var tableVal = document.getElementById('tableNumber').value.trim();
+    var addrVal = document.getElementById('deliveryAddress').value.trim();
+    var notesVal = document.getElementById('orderNotes') ? document.getElementById('orderNotes').value.trim() : '';
+
+    if (!nameVal) {
+      document.getElementById('fieldCustName').classList.add('has-error');
+      cartNote.textContent = 'Please enter your name.';
+      document.getElementById('customerName').focus();
+      return;
+    }
+    if (!phoneVal) {
+      document.getElementById('fieldCustPhone').classList.add('has-error');
+      cartNote.textContent = 'Please enter your phone number.';
+      document.getElementById('customerPhone').focus();
+      return;
+    }
+    if (orderType === 'dine-in' && !tableVal) {
+      document.getElementById('fieldTable').classList.add('has-error');
+      cartNote.textContent = 'Please enter your table number.';
+      document.getElementById('tableNumber').focus();
+      return;
+    }
+    if (orderType === 'delivery' && !addrVal) {
+      document.getElementById('fieldAddress').classList.add('has-error');
+      cartNote.textContent = 'Please enter your delivery address.';
+      document.getElementById('deliveryAddress').focus();
+      return;
+    }
+
     var t = cartTotals();
     var details = {
       orderType: orderType,
-      customerName: document.getElementById('customerName').value.trim(),
-      customerPhone: document.getElementById('customerPhone').value.trim(),
-      tableNumber: document.getElementById('tableNumber').value.trim(),
-      deliveryAddress: document.getElementById('deliveryAddress').value.trim()
+      customerName: nameVal,
+      customerPhone: phoneVal,
+      tableNumber: tableVal,
+      deliveryAddress: addrVal,
+      notes: notesVal
     };
     var orderItems = cart.slice();
-    cartNote.textContent = 'Sending…';
+    cartNote.textContent = 'Sending to kitchen…';
+
     var apiUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
       ? 'http://localhost:3001/api/orders'
       : '/api/orders';
+
     fetch(apiUrl, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -2067,20 +2224,21 @@
         customerName: details.customerName,
         customerPhone: details.customerPhone,
         tableNumber: details.tableNumber,
-        deliveryAddress: details.deliveryAddress
+        deliveryAddress: details.deliveryAddress,
+        notes: details.notes
       })
     }).then(function(res){
       if (!res.ok) throw new Error('bad response');
       return res.json();
     }).then(function(data){
-      cartNote.textContent = 'Sent to the kitchen — thank you!';
+      cartNote.textContent = 'Dispatched to kitchen!';
       cartOverlay.classList.remove('open');
-      showReceipt(data.id || 'HATCH', orderItems, t, details);
+      showReceipt(data.id || 'HATCH', data.orderNumber || null, orderItems, t, details);
       cart = [];
       saveCart();
       renderCart();
     }).catch(function(){
-      cartNote.textContent = "Couldn't reach the kitchen right now — try Email instead.";
+      cartNote.textContent = "Couldn't reach the kitchen server — try Email Order instead.";
     });
   });
 

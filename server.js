@@ -108,15 +108,26 @@ const server = http.createServer((req, res) => {
     return sendJSON(res, 200, { ok: true });
   }
 
+  if (pathname === '/favicon.ico') {
+    res.writeHead(200, {
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'public, max-age=86400'
+    });
+    return res.end('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#14201a"/><path d="M50 16 C34 16 26 44 26 64 C26 80 37 88 50 88 C63 88 74 80 74 64 C74 44 66 16 50 16 Z" fill="#d4a017"/><path d="M50 24 C38 24 32 46 32 63 C32 75 40 81 50 81 C60 81 68 75 68 63 C68 46 62 24 50 24 Z" fill="#f6efe1"/></svg>');
+  }
+
   if (req.method === 'POST' && pathname === '/api/orders') {
     return readBody(req, (err, body) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
-      const { items, total, subtotal, gst, orderType, customerName, customerPhone, tableNumber, deliveryAddress } = body || {};
+      const { items, total, subtotal, gst, orderType, customerName, customerPhone, tableNumber, deliveryAddress, notes } = body || {};
       if (!Array.isArray(items) || items.length === 0) {
         return sendJSON(res, 400, { error: 'items required' });
       }
+      const orders = loadOrders();
+      const orderNum = 'HTC-' + String(1001 + orders.length);
       const order = {
         id: crypto.randomUUID(),
+        orderNumber: orderNum,
         createdAt: new Date().toISOString(),
         items,
         subtotal: Number(subtotal) || 0,
@@ -127,12 +138,29 @@ const server = http.createServer((req, res) => {
         customerName: clean(customerName, 80),
         customerPhone: clean(customerPhone, 20),
         tableNumber: clean(tableNumber, 20),
-        deliveryAddress: clean(deliveryAddress, 300)
+        deliveryAddress: clean(deliveryAddress, 300),
+        notes: clean(notes, 300)
       };
-      const orders = loadOrders();
       orders.push(order);
       saveOrders(orders);
-      sendJSON(res, 200, { ok: true, id: order.id });
+      sendJSON(res, 200, { ok: true, id: order.id, orderNumber: order.orderNumber });
+    });
+  }
+
+  // Public status endpoint for customers
+  const statusMatch = pathname.match(/^\/api\/orders\/([^\/]+)\/status$/);
+  if (req.method === 'GET' && statusMatch) {
+    const orders = loadOrders();
+    const order = orders.find(o => o.id === statusMatch[1] || o.orderNumber === statusMatch[1]);
+    if (!order) return sendJSON(res, 404, { error: 'order not found' });
+    return sendJSON(res, 200, {
+      id: order.id,
+      orderNumber: order.orderNumber || order.id.slice(0, 8).toUpperCase(),
+      status: order.status,
+      createdAt: order.createdAt,
+      orderType: order.orderType,
+      itemCount: order.items ? order.items.length : 0,
+      total: order.total
     });
   }
 
@@ -152,10 +180,19 @@ const server = http.createServer((req, res) => {
       if (!order) return sendJSON(res, 404, { error: 'not found' });
       if (body && body.status) order.status = body.status;
       saveOrders(orders);
-      sendJSON(res, 200, { ok: true });
+      sendJSON(res, 200, { ok: true, status: order.status });
     });
   }
 
+  if (req.method === 'DELETE' && patchMatch) {
+    if (!requireAuthOr401(req, res)) return;
+    const orders = loadOrders();
+    const idx = orders.findIndex(o => o.id === patchMatch[1]);
+    if (idx === -1) return sendJSON(res, 404, { error: 'not found' });
+    orders.splice(idx, 1);
+    saveOrders(orders);
+    return sendJSON(res, 200, { ok: true, deleted: true });
+  }
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Not found');
