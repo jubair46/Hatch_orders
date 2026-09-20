@@ -12,3 +12,5 @@ Thumbs.db
 cloudflared.exe
 *.log
 scratch/
+.env
+

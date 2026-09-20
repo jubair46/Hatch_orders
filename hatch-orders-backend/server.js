@@ -4,6 +4,27 @@ const path = require('path');
 const crypto = require('crypto');
 const { URL } = require('url');
 
+// Load .env configuration if present
+try {
+  const envPath = path.join(__dirname, '.env');
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+    for (const l of lines) {
+      const trimmed = l.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const idx = trimmed.indexOf('=');
+      if (idx !== -1) {
+        const k = trimmed.substring(0, idx).trim();
+        let v = trimmed.substring(idx + 1).trim();
+        if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+          v = v.slice(1, -1);
+        }
+        if (!process.env[k]) process.env[k] = v;
+      }
+    }
+  }
+} catch(e) {}
+
 const PORT = process.env.PORT || 3001;
 const DB_FILE = path.join(__dirname, 'orders.json');
 const RES_FILE = path.join(__dirname, 'reservations.json');
@@ -256,6 +277,39 @@ const server = http.createServer((req, res) => {
           smsReq.on('error', (e) => console.error('[FAST2SMS ERROR]:', e.message));
           smsReq.write(postData);
           smsReq.end();
+        } catch(e) {}
+      }
+      // Attempt real Email dispatch via Resend API if key exists in environment
+      if (isEmail && process.env.RESEND_API_KEY) {
+        try {
+          const https = require('https');
+          const emailData = JSON.stringify({
+            from: 'Hatch Bengaluru <onboarding@resend.dev>',
+            to: [key],
+            subject: 'Your Hatch Login Verification Code: ' + otp,
+            html: '<div style="font-family:sans-serif; padding:20px; background:#08100b; color:#ffffff; border-radius:12px; border:1px solid #f5c542;">' +
+              '<h2 style="color:#f5c542; margin-top:0;">Hatch Indiranagar</h2>' +
+              '<p>Here is your 6-digit login verification code:</p>' +
+              '<div style="font-size:32px; font-weight:800; letter-spacing:6px; color:#f5c542; padding:12px 20px; background:#14201a; border-radius:8px; display:inline-block; margin:10px 0;">' + otp + '</div>' +
+              '<p style="color:#94a3b8; font-size:12px;">Valid for 5 minutes. Do not share this code with anyone.</p>' +
+            '</div>'
+          });
+          const opt = {
+            hostname: 'api.resend.com',
+            path: '/emails',
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+              'Content-Type': 'application/json',
+              'Content-Length': Buffer.byteLength(emailData)
+            }
+          };
+          const emailReq = https.request(opt, (emailRes) => {
+            console.log('[RESEND EMAIL GATEWAY STATUS]:', emailRes.statusCode);
+          });
+          emailReq.on('error', (e) => console.error('[RESEND EMAIL ERROR]:', e.message));
+          emailReq.write(emailData);
+          emailReq.end();
         } catch(e) {}
       }
 
