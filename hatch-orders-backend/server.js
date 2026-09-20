@@ -619,10 +619,14 @@ const server = http.createServer((req, res) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
       const orders = loadOrders();
       const order = orders.find(o => o.id === patchMatch[1] || o.orderNumber === patchMatch[1]);
-      if (!order) return sendJSON(res, 404, { error: 'not found' });
-      if (body && body.status) order.status = body.status;
+      if (body && body.status) {
+        order.status = body.status;
+        if (body.status === 'completed' || body.status === 'done') {
+          order.completedAt = new Date().toISOString();
+        }
+      }
       saveOrders(orders);
-      sendJSON(res, 200, { ok: true, status: order.status });
+      sendJSON(res, 200, { ok: true, status: order.status, completedAt: order.completedAt });
     });
   }
 

@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "6b7bf229-279c-4e85-915b-efe2c9374596",
+    "confirmation": "RES-1001",
+    "createdAt": "2026-09-20T10:35:19.616Z",
+    "name": "Mehak sharma",
+    "phone": "8688200027",
+    "email": "weird1891@gmail.com",
+    "date": "2026-09-20",
+    "time": "07:45 PM",
+    "guests": 6,
+    "area": "Courtyard Garden",
+    "notes": "Birthday",
+    "status": "confirmed"
+  }
+]
