@@ -1,0 +1,17 @@
+{
+  "name": "hatch-orders",
+  "version": "1.0.0",
+  "description": "Hatch — Bengaluru cafe website + ordering system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "restaurant",
+    "cafe",
+    "orders",
+    "pos"
+  ],
+  "author": "",
+  "license": "ISC"
+}

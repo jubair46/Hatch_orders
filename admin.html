@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hatch — Orders</title>
+<style>
+  :root{
+    --ink:#151311; --paper:#f6efe1; --yolk:#d4a017;
+    --new:#d4a017; --preparing:#5b8fd1; --done:#5f9e6a;
+    --dinein:#b5502e; --takeaway:#3f6b4a; --delivery:#5a2a4d;
+    --line: rgba(246,239,225,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--ink); color:var(--paper); margin:0; padding:28px;
+  }
+  h1{
+    font-family:Georgia,"Iowan Old Style",serif;
+    font-style:italic; font-weight:600; margin:0 0 4px; font-size:30px;
+  }
+  .subtitle{ opacity:0.55; font-size:13px; margin:0 0 26px; }
+  .stats{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:28px; }
+  .stat-card{
+    background:rgba(246,239,225,0.05);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 22px;
+    min-width:140px;
+  }
+  .stat-card .num{
+    font-family:Georgia,serif; font-style:italic; font-size:26px; display:block;
+  }
+  .stat-card .lbl{ font-size:11.5px; opacity:0.55; text-transform:uppercase; letter-spacing:0.04em; }
+  .toolbar{ display:flex; align-items:center; gap:14px; margin-bottom:18px; flex-wrap:wrap; }
+  .refresh, .export-btn{
+    background:var(--yolk); color:var(--ink); border:none; padding:9px 18px;
+    border-radius:999px; cursor:pointer; font-size:13px; font-weight:600;
+  }
+  .export-btn{ background:none; border:1px solid var(--line); color:var(--paper); font-weight:400; }
+  .refresh:hover{ background:#e6b73a; }
+  .updated{ font-size:12px; opacity:0.5; }
+  .filter-chip{
+    background:none; border:1px solid var(--line); color:var(--paper);
+    padding:6px 14px; border-radius:999px; font-size:12.5px; cursor:pointer; opacity:0.7;
+  }
+  .filter-chip.active{ background:var(--paper); color:var(--ink); opacity:1; border-color:var(--paper); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  th{
+    text-align:left; padding:10px 12px; font-size:11px; opacity:0.5;
+    text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid var(--line);
+  }
+  td{ padding:12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr.row-new td{ border-left:3px solid var(--new); }
+  tr.row-preparing td{ border-left:3px solid var(--preparing); }
+  tr.row-done td{ border-left:3px solid var(--done); opacity:0.55; }
+  .time-main{ display:block; }
+  .time-rel{ font-size:11.5px; opacity:0.5; }
+  .item-line{ display:block; margin-bottom:2px; }
+  .total-cell{ font-family:Georgia,serif; font-style:italic; font-size:16px; white-space:nowrap; }
+  .type-badge{
+    display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px;
+    font-weight:600; text-transform:capitalize; margin-bottom:6px;
+  }
+  .type-badge.dine-in{ background:rgba(181,80,46,0.18); color:#e08a68; }
+  .type-badge.takeaway{ background:rgba(63,107,74,0.2); color:#7fbf8f; }
+  .type-badge.delivery{ background:rgba(90,42,77,0.22); color:#c98fbf; }
+  .customer-line{ font-size:12px; opacity:0.75; display:block; }
+  select.status-select{
+    background:rgba(246,239,225,0.08); color:var(--paper);
+    border:1px solid var(--line); padding:6px 10px; border-radius:6px; font-size:13px;
+  }
+  select.status-select.s-new{ border-color:var(--new); color:var(--new); }
+  select.status-select.s-preparing{ border-color:var(--preparing); color:var(--preparing); }
+  select.status-select.s-done{ border-color:var(--done); color:var(--done); }
+  .print-link{
+    display:block; margin-top:8px; font-size:11.5px; color:var(--yolk); cursor:pointer; text-decoration:underline; background:none; border:none; padding:0;
+  }
+  .empty{ opacity:0.55; padding:50px 0; text-align:center; font-size:14px; }
+</style>
+</head>
+<body>
+<h1>Hatch — Orders</h1>
+<p class="subtitle">Live order queue for Indiranagar, Bengaluru</p>
+
+<div class="stats" id="stats"></div>
+
+<div class="toolbar">
+  <button class="refresh" id="refreshBtn">Refresh</button>
+  <button class="export-btn" id="exportBtn">Export CSV</button>
+  <button class="filter-chip active" data-filter="all">All</button>
+  <button class="filter-chip" data-filter="new">New</button>
+  <button class="filter-chip" data-filter="preparing">Preparing</button>
+  <button class="filter-chip" data-filter="done">Done</button>
+  <span class="updated" id="updatedAt"></span>
+</div>
+
+<div id="content"><p class="empty">Loading…</p></div>
+
+<script>
+var currentFilter = 'all';
+var lastOrders = [];
+
+function timeAgo(iso){
+  var diffMs = Date.now() - new Date(iso).getTime();
+  var mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  var hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+function renderStats(orders){
+  var today = new Date().toDateString();
+  var todays = orders.filter(function(o){ return new Date(o.createdAt).toDateString() === today; });
+  var pending = orders.filter(function(o){ return o.status !== 'done'; }).length;
+  var revenue = todays.reduce(function(s,o){ return s + o.total; }, 0);
+  document.getElementById('stats').innerHTML =
+    '<div class="stat-card"><span class="num">' + todays.length + '</span><span class="lbl">Orders today</span></div>' +
+    '<div class="stat-card"><span class="num">' + pending + '</span><span class="lbl">Pending</span></div>' +
+    '<div class="stat-card"><span class="num">\u20b9' + revenue + '</span><span class="lbl">Revenue today</span></div>';
+}
+
+function orderTypeExtra(o){
+  if (o.orderType === 'dine-in' && o.tableNumber) return 'Table ' + o.tableNumber;
+  if (o.orderType === 'delivery' && o.deliveryAddress) return o.deliveryAddress;
+  return '';
+}
+
+function printReceipt(o){
+  var items = o.items.map(function(it){
+    return '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>' + it.qty + ' \u00d7 ' + it.name + ' (' + it.size + ')</span><span>\u20b9' + (it.price*it.qty) + '</span></div>';
+  }).join('');
+  var extra = orderTypeExtra(o);
+  var win = window.open('', '_blank', 'width=380,height=600');
+  win.document.write(
+    '<html><head><title>Receipt</title><style>' +
+    'body{font-family:"Courier New",monospace;padding:24px;color:#1a1a1a;}' +
+    'h4{font-family:Georgia,serif;font-style:italic;text-align:center;font-size:22px;margin:0 0 2px;}' +
+    '.meta{text-align:center;font-size:11.5px;opacity:0.7;margin:0 0 16px;line-height:1.5;}' +
+    'hr{border:none;border-top:1px dashed #999;margin:14px 0;}' +
+    '.total-line{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}' +
+    '.grand{font-weight:700;font-size:16px;margin-top:6px;}' +
+    '.footer{text-align:center;font-size:11px;opacity:0.65;margin-top:16px;}' +
+    '</style></head><body>' +
+    '<h4>Hatch</h4>' +
+    '<p class="meta">Indiranagar, Bengaluru 560038<br>' + new Date(o.createdAt).toLocaleString() + '<br>Order #' + o.id.slice(0,8).toUpperCase() + '</p>' +
+    '<hr>' +
+    '<p class="meta" style="text-align:left;">' + (o.customerName ? o.customerName + '<br>' : '') + (o.customerPhone ? o.customerPhone + '<br>' : '') + o.orderType + (extra ? ' \u2014 ' + extra : '') + '</p>' +
+    '<hr>' + items + '<hr>' +
+    '<div class="total-line"><span>Subtotal</span><span>\u20b9' + (o.subtotal||0) + '</span></div>' +
+    '<div class="total-line"><span>GST (5%)</span><span>\u20b9' + (o.gst||0) + '</span></div>' +
+    '<div class="total-line grand"><span>Total</span><span>\u20b9' + o.total + '</span></div>' +
+    '<p class="footer">Thank you for visiting Hatch.</p>' +
+    '</body></html>'
+  );
+  win.document.close();
+  win.focus();
+  win.print();
+}
+
+function renderTable(orders){
+  var content = document.getElementById('content');
+  var filtered = currentFilter === 'all' ? orders : orders.filter(function(o){ return o.status === currentFilter; });
+  if (!filtered.length){
+    content.innerHTML = '<p class="empty">No orders here.</p>';
+    return;
+  }
+  var html = '<table><thead><tr><th>Time</th><th>Type &amp; customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>';
+  filtered.forEach(function(o){
+    var items = o.items.map(function(it){
+      return '<span class="item-line">' + it.qty + '\u00d7 ' + it.name + ' (' + it.size + ')</span>';
+    }).join('');
+    var d = new Date(o.createdAt);
+    var timeStr = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    var extra = orderTypeExtra(o);
+    var type = o.orderType || 'dine-in';
+    html += '<tr class="row-' + o.status + '">' +
+      '<td><span class="time-main">' + timeStr + '</span><span class="time-rel">' + timeAgo(o.createdAt) + '</span></td>' +
+      '<td>' +
+        '<span class="type-badge ' + type + '">' + type + '</span>' +
+        (extra ? '<span class="customer-line">' + extra + '</span>' : '') +
+        (o.customerName ? '<span class="customer-line">' + o.customerName + '</span>' : '') +
+        (o.customerPhone ? '<span class="customer-line">' + o.customerPhone + '</span>' : '') +
+      '</td>' +
+      '<td>' + items + '</td>' +
+      '<td class="total-cell">\u20b9' + o.total +
+        '<button class="print-link" data-id="' + o.id + '">Print receipt</button>' +
+      '</td>' +
+      '<td><select class="status-select s-' + o.status + '" data-id="' + o.id + '">' +
+        ['new','preparing','done'].map(function(s){
+          return '<option value="' + s + '"' + (s===o.status?' selected':'') + '>' + s + '</option>';
+        }).join('') +
+      '</select></td></tr>';
+  });
+  html += '</tbody></table>';
+  content.innerHTML = html;
+  content.querySelectorAll('.status-select').forEach(function(sel){
+    sel.addEventListener('change', async function(){
+      sel.className = 'status-select s-' + sel.value;
+      await fetch('/api/orders/' + sel.getAttribute('data-id'), {
+        method:'PATCH',
+        headers:{'Content-Type':'application/json'},
+        credentials:'include',
+        body: JSON.stringify({status: sel.value})
+      });
+      loadOrders();
+    });
+  });
+  content.querySelectorAll('.print-link').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var order = lastOrders.find(function(o){ return o.id === btn.getAttribute('data-id'); });
+      if (order) printReceipt(order);
+    });
+  });
+}
+
+function exportCSV(){
+  var rows = [['Time','Type','Customer','Phone','Table/Address','Items','Subtotal','GST','Total','Status']];
+  lastOrders.forEach(function(o){
+    var items = o.items.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ')'; }).join('; ');
+    rows.push([
+      new Date(o.createdAt).toLocaleString(),
+      o.orderType || '',
+      o.customerName || '',
+      o.customerPhone || '',
+      o.tableNumber || o.deliveryAddress || '',
+      items,
+      o.subtotal || 0,
+      o.gst || 0,
+      o.total,
+      o.status
+    ]);
+  });
+  var csv = rows.map(function(r){
+    return r.map(function(cell){ return '"' + String(cell).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'hatch-orders-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function loadOrders(){
+  var res = await fetch('/api/orders', {credentials:'include'});
+  var orders = await res.json();
+  lastOrders = orders;
+  renderStats(orders);
+  renderTable(orders);
+  document.getElementById('updatedAt').textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
+document.getElementById('refreshBtn').addEventListener('click', loadOrders);
+document.getElementById('exportBtn').addEventListener('click', exportCSV);
+document.querySelectorAll('.filter-chip').forEach(function(chip){
+  chip.addEventListener('click', function(){
+    document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
+    chip.classList.add('active');
+    currentFilter = chip.getAttribute('data-filter');
+    renderTable(lastOrders);
+  });
+});
+
+loadOrders();
+setInterval(loadOrders, 15000);
+</script>
+</body>
+</html>
