@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hatch — Kitchen & Orders POS</title>
+<title>Hatch — Kitchen & Reservations POS</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.ico">
 <style>
   :root{
@@ -20,7 +20,7 @@
   }
   header{
     display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;
-    margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--line);
+    margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--line);
   }
   h1{
     font-family:Georgia,"Iowan Old Style",serif; font-style:italic; font-weight:600; margin:0 0 4px; font-size:32px;
@@ -34,8 +34,26 @@
   .subtitle{ opacity:0.6; font-size:13.5px; margin:0; }
   .header-actions{ display:flex; align-items:center; gap:10px; }
 
+  /* View tabs */
+  .view-tabs{
+    display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;
+  }
+  .view-tab{
+    background:rgba(246,239,225,0.05); border:1px solid var(--line);
+    color:var(--paper); font-size:13.5px; font-weight:600;
+    padding:10px 20px; border-radius:999px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; transition:all .2s;
+  }
+  .view-tab:hover{ background:rgba(246,239,225,0.1); }
+  .view-tab.active{ background:var(--yolk); color:var(--ink); border-color:var(--yolk); }
+  .badge-count{
+    background:rgba(255,255,255,0.15); color:currentColor;
+    font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px;
+  }
+  .view-tab.active .badge-count{ background:var(--ink); color:var(--yolk); }
+
   /* Stats grid */
-  .stats{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:24px; }
+  .stats{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
   .stat-card{
     background:rgba(246,239,225,0.04);
     border:1px solid var(--line);
@@ -88,7 +106,7 @@
   }
   @keyframes pulse{ 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.8);} }
 
-  /* Orders table */
+  /* Orders & Reservations table */
   .table-wrap{
     background:var(--ink-card); border:1px solid var(--line); border-radius:14px; overflow:hidden;
   }
@@ -103,6 +121,9 @@
   tr.row-new td{ border-left:4px solid var(--new); background:rgba(224,138,66,0.04); }
   tr.row-preparing td{ border-left:4px solid var(--preparing); background:rgba(91,143,209,0.04); }
   tr.row-done td{ border-left:4px solid var(--done); opacity:0.65; }
+  tr.row-confirmed td{ border-left:4px solid var(--yolk); background:rgba(212,160,23,0.03); }
+  tr.row-seated td{ border-left:4px solid var(--done); opacity:0.7; }
+  tr.row-cancelled td{ border-left:4px solid var(--cancelled); opacity:0.5; }
 
   .order-num{ font-family:Georgia,serif; font-size:15px; font-weight:700; color:var(--yolk); display:block; margin-bottom:2px; }
   .time-main{ display:block; font-weight:600; }
@@ -133,6 +154,9 @@
   .status-badge.new{ background:rgba(224,138,66,0.2); color:var(--new); border:1px solid var(--new); }
   .status-badge.preparing{ background:rgba(91,143,209,0.2); color:var(--preparing); border:1px solid var(--preparing); }
   .status-badge.done{ background:rgba(77,166,100,0.2); color:var(--done); border:1px solid var(--done); }
+  .status-badge.confirmed{ background:rgba(212,160,23,0.2); color:var(--yolk); border:1px solid var(--yolk); }
+  .status-badge.seated{ background:rgba(77,166,100,0.2); color:var(--done); border:1px solid var(--done); }
+  .status-badge.cancelled{ background:rgba(201,74,74,0.2); color:var(--cancelled); border:1px solid var(--cancelled); }
 
   .btn-action{
     background:none; border:1px solid var(--line); color:var(--paper); padding:4px 10px;
@@ -146,6 +170,12 @@
   .btn-action.danger{ color:#e06666; border-color:rgba(224,102,102,0.3); }
   .btn-action.danger:hover{ background:rgba(224,102,102,0.15); border-color:#e06666; }
 
+  .wa-link{
+    color:#25d366; text-decoration:none; font-size:11.5px; display:inline-flex; align-items:center; gap:4px;
+    margin-top:4px;
+  }
+  .wa-link:hover{ text-decoration:underline; }
+
   .empty{ opacity:0.55; padding:64px 20px; text-align:center; font-size:14px; }
 </style>
 </head>
@@ -153,8 +183,8 @@
 
 <header>
   <div>
-    <h1>Hatch Kitchen POS <span class="hatch-badge">Staff Live</span></h1>
-    <p class="subtitle">Indiranagar, Bengaluru • Six Kitchens Order Dispatch Queue</p>
+    <h1>Hatch Kitchen &amp; POS <span class="hatch-badge">Staff Live</span></h1>
+    <p class="subtitle">100ft Road, Indiranagar, Bengaluru • 9 Culinary Kitchens Dispatch &amp; Reservations</p>
   </div>
   <div class="header-actions">
     <button class="btn btn-outline btn-sound" id="soundBtn" title="Toggle audio chime on new orders">🔔 Sound: On</button>
@@ -162,13 +192,22 @@
   </div>
 </header>
 
+<div class="view-tabs">
+  <button class="view-tab active" id="tabOrders" onclick="switchTab('orders')">
+    🍳 Kitchen Orders <span class="badge-count" id="badgeOrders">0</span>
+  </button>
+  <button class="view-tab" id="tabReservations" onclick="switchTab('reservations')">
+    📅 Table Reservations <span class="badge-count" id="badgeReservations">0</span>
+  </button>
+</div>
+
 <div class="stats" id="stats"></div>
 
 <div class="toolbar">
   <div class="search-box">
     <input type="search" id="searchBox" placeholder="Search order #, customer, table, item…">
   </div>
-  <div class="filter-group">
+  <div class="filter-group" id="filterGroup">
     <button class="filter-chip active" data-filter="all">All</button>
     <button class="filter-chip" data-filter="new">New</button>
     <button class="filter-chip" data-filter="preparing">Preparing</button>
@@ -184,9 +223,11 @@
 </div>
 
 <script>
+var currentTab = 'orders'; // 'orders' or 'reservations'
 var currentFilter = 'all';
 var searchQuery = '';
 var lastOrders = [];
+var lastReservations = [];
 var knownOrderIds = new Set();
 var soundEnabled = true;
 var audioCtx = null;
@@ -218,7 +259,6 @@ function playChime(){
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
     var now = audioCtx.currentTime;
-    // Two-tone bell (E5 659Hz -> G#5 830Hz)
     var osc1 = audioCtx.createOscillator();
     var osc2 = audioCtx.createOscillator();
     var gain1 = audioCtx.createGain();
@@ -252,12 +292,57 @@ function timeAgo(iso){
   return Math.floor(hrs / 24) + 'd ago';
 }
 
-function renderStats(orders){
+function switchTab(tab){
+  currentTab = tab;
+  document.getElementById('tabOrders').classList.toggle('active', tab === 'orders');
+  document.getElementById('tabReservations').classList.toggle('active', tab === 'reservations');
+  currentFilter = 'all';
+  searchQuery = '';
+  document.getElementById('searchBox').value = '';
+
+  var filterGroup = document.getElementById('filterGroup');
+  if (tab === 'orders') {
+    document.getElementById('searchBox').placeholder = 'Search order #, customer, table, item…';
+    filterGroup.innerHTML =
+      '<button class="filter-chip active" data-filter="all">All</button>' +
+      '<button class="filter-chip" data-filter="new">New</button>' +
+      '<button class="filter-chip" data-filter="preparing">Preparing</button>' +
+      '<button class="filter-chip" data-filter="done">Completed</button>';
+    renderOrdersStats(lastOrders);
+    renderOrdersTable(lastOrders);
+  } else {
+    document.getElementById('searchBox').placeholder = 'Search confirmation, guest name, phone, area…';
+    filterGroup.innerHTML =
+      '<button class="filter-chip active" data-filter="all">All</button>' +
+      '<button class="filter-chip" data-filter="confirmed">Confirmed</button>' +
+      '<button class="filter-chip" data-filter="seated">Seated</button>' +
+      '<button class="filter-chip" data-filter="cancelled">Cancelled</button>';
+    renderReservationsStats(lastReservations);
+    renderReservationsTable(lastReservations);
+  }
+  bindFilterChips();
+}
+
+function bindFilterChips(){
+  document.querySelectorAll('.filter-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      currentFilter = chip.getAttribute('data-filter');
+      if (currentTab === 'orders') renderOrdersTable(lastOrders);
+      else renderReservationsTable(lastReservations);
+    });
+  });
+}
+
+function renderOrdersStats(orders){
   var today = new Date().toDateString();
   var todays = orders.filter(function(o){ return new Date(o.createdAt).toDateString() === today; });
   var newCount = orders.filter(function(o){ return o.status === 'new'; }).length;
   var prepCount = orders.filter(function(o){ return o.status === 'preparing'; }).length;
   var revenue = todays.reduce(function(s,o){ return s + (Number(o.total) || 0); }, 0);
+
+  document.getElementById('badgeOrders').textContent = newCount + prepCount;
 
   document.getElementById('stats').innerHTML =
     '<div class="stat-card new"><span class="num">' + newCount + '</span><span class="lbl">New Orders</span></div>' +
@@ -267,6 +352,22 @@ function renderStats(orders){
 
   var activeCount = newCount + prepCount;
   document.title = (activeCount > 0 ? '(' + activeCount + ') ' : '') + 'Hatch — Kitchen POS';
+}
+
+function renderReservationsStats(resvs){
+  var today = new Date().toISOString().slice(0,10);
+  var todays = resvs.filter(function(r){ return r.date === today; });
+  var confirmed = resvs.filter(function(r){ return r.status === 'confirmed'; }).length;
+  var seated = resvs.filter(function(r){ return r.status === 'seated'; }).length;
+  var totalGuests = todays.reduce(function(s,r){ return s + (Number(r.guests) || 0); }, 0);
+
+  document.getElementById('badgeReservations').textContent = confirmed;
+
+  document.getElementById('stats').innerHTML =
+    '<div class="stat-card new"><span class="num">' + confirmed + '</span><span class="lbl">Active Bookings</span></div>' +
+    '<div class="stat-card prep"><span class="num">' + todays.length + '</span><span class="lbl">Today\'s Bookings</span></div>' +
+    '<div class="stat-card"><span class="num">' + totalGuests + '</span><span class="lbl">Today\'s Expected Guests</span></div>' +
+    '<div class="stat-card rev"><span class="num">' + seated + '</span><span class="lbl">Tables Seated</span></div>';
 }
 
 function orderTypeExtra(o){
@@ -328,9 +429,10 @@ function printCustomerBill(o){
     '</p>' +
     '<hr>' + items + '<hr>' +
     '<div class="total-line"><span>Subtotal</span><span>₹' + (o.subtotal||0) + '</span></div>' +
+    (o.discount ? '<div class="total-line" style="color:#2e7d32;"><span>Promo (' + (o.promoCode||'PROMO') + ')</span><span>-₹' + o.discount + '</span></div>' : '') +
     '<div class="total-line"><span>GST (5%)</span><span>₹' + (o.gst||0) + '</span></div>' +
     '<div class="total-line grand"><span>Total</span><span>₹' + o.total + '</span></div>' +
-    '<p class="footer">Thank you for dining with Hatch.<br>Six kitchens, one room.</p>' +
+    '<p class="footer">Thank you for dining with Hatch.<br>Nine culinary counters, one roof.</p>' +
     '</body></html>'
   );
   win.document.close();
@@ -349,7 +451,7 @@ async function updateOrderStatus(orderId, newStatus){
       credentials:'include',
       body: JSON.stringify({status: newStatus})
     });
-    await loadOrders();
+    await loadAllData();
   } catch(e) {
     alert('Failed to update status.');
   }
@@ -365,13 +467,46 @@ async function deleteOrder(orderId){
       method:'DELETE',
       credentials:'include'
     });
-    await loadOrders();
+    await loadAllData();
   } catch(e) {
     alert('Failed to delete order.');
   }
 }
 
-function renderTable(orders){
+async function updateReservationStatus(resvId, newStatus){
+  var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+    ? 'http://localhost:3001/api/reservations/'
+    : '/api/reservations/';
+  try {
+    await fetch(apiBase + resvId, {
+      method:'PATCH',
+      headers:{'Content-Type':'application/json'},
+      credentials:'include',
+      body: JSON.stringify({status: newStatus})
+    });
+    await loadAllData();
+  } catch(e) {
+    alert('Failed to update reservation status.');
+  }
+}
+
+async function deleteReservation(resvId){
+  if (!confirm('Are you sure you want to cancel/void this reservation?')) return;
+  var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+    ? 'http://localhost:3001/api/reservations/'
+    : '/api/reservations/';
+  try {
+    await fetch(apiBase + resvId, {
+      method:'DELETE',
+      credentials:'include'
+    });
+    await loadAllData();
+  } catch(e) {
+    alert('Failed to cancel reservation.');
+  }
+}
+
+function renderOrdersTable(orders){
   var content = document.getElementById('content');
   var filtered = orders;
 
@@ -421,6 +556,8 @@ function renderTable(orders){
       actionHtml += '<button class="btn-action ready" onclick="updateOrderStatus(\'' + o.id + '\', \'done\')">✓ Mark Ready</button>';
     }
 
+    var discountInfo = o.discount ? '<div style="font-size:11px;color:#4da664;font-family:sans-serif;font-weight:600;margin-top:2px;">🎟️ ' + (o.promoCode || 'PROMO') + ' (-₹' + o.discount + ')</div>' : '';
+
     html += '<tr class="row-' + o.status + '">' +
       '<td>' +
         '<span class="order-num">#' + orderCode + '</span>' +
@@ -438,6 +575,7 @@ function renderTable(orders){
         (o.notes ? '<div class="notes-box">📝 ' + o.notes + '</div>' : '') +
       '</td>' +
       '<td class="total-cell">₹' + o.total +
+        discountInfo +
         '<div style="margin-top:8px; display:flex; gap:6px;">' +
           '<button class="btn-action" onclick="printCustomerBill(lastOrders.find(function(x){return x.id===\'' + o.id + '\'}))">🧾 Bill</button>' +
           '<button class="btn-action" onclick="printKOT(lastOrders.find(function(x){return x.id===\'' + o.id + '\'}))">🖨️ KOT</button>' +
@@ -457,26 +595,134 @@ function renderTable(orders){
   content.innerHTML = html;
 }
 
-function exportCSV(){
-  if (!lastOrders.length){ alert('No orders to export.'); return; }
-  var rows = [['Order Number','Time','Type','Customer','Phone','Table/Address','Items','Subtotal','GST','Total','Status']];
-  lastOrders.forEach(function(o){
-    var orderCode = o.orderNumber || ('HTC-' + o.id.slice(0,6).toUpperCase());
-    var items = o.items.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ')'; }).join('; ');
-    rows.push([
-      orderCode,
-      new Date(o.createdAt).toLocaleString(),
-      o.orderType || '',
-      o.customerName || '',
-      o.customerPhone || '',
-      o.tableNumber || o.deliveryAddress || '',
-      items,
-      o.subtotal || 0,
-      o.gst || 0,
-      o.total,
-      o.status
-    ]);
+function renderReservationsTable(resvs){
+  var content = document.getElementById('content');
+  var filtered = resvs;
+
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(function(r){ return r.status === currentFilter; });
+  }
+
+  if (searchQuery) {
+    var q = searchQuery.toLowerCase();
+    filtered = filtered.filter(function(r){
+      return (r.confirmation || '').toLowerCase().includes(q) ||
+        (r.name || '').toLowerCase().includes(q) ||
+        (r.phone || '').toLowerCase().includes(q) ||
+        (r.email || '').toLowerCase().includes(q) ||
+        (r.area || '').toLowerCase().includes(q) ||
+        (r.date || '').toLowerCase().includes(q);
+    });
+  }
+
+  if (!filtered.length){
+    content.innerHTML = '<p class="empty">' + (resvs.length === 0 ? 'No reservations received yet.' : 'No reservations matching the current filter.') + '</p>';
+    return;
+  }
+
+  var html = '<table><thead><tr>' +
+    '<th>Confirmation &amp; Booked</th>' +
+    '<th>Guest Details</th>' +
+    '<th>Date &amp; Time Slot</th>' +
+    '<th>Party &amp; Area</th>' +
+    '<th>Special Requests</th>' +
+    '<th>Status &amp; Actions</th>' +
+    '</tr></thead><tbody>';
+
+  filtered.forEach(function(r){
+    var code = r.confirmation || ('RES-' + r.id.slice(0,4).toUpperCase());
+    var cleanPhone = (r.phone || '').replace(/\D/g, '');
+    var waUrl = cleanPhone ? ('https://wa.me/91' + (cleanPhone.length > 10 ? cleanPhone.slice(-10) : cleanPhone) + '?text=' + encodeURIComponent('Hello ' + r.name + ', greetings from Hatch Indiranagar regarding your reservation #' + code)) : '#';
+
+    var actionHtml = '';
+    if (r.status === 'confirmed') {
+      actionHtml += '<button class="btn-action primary" onclick="updateReservationStatus(\'' + r.id + '\', \'seated\')">✓ Mark Seated</button>';
+    }
+
+    html += '<tr class="row-' + r.status + '">' +
+      '<td>' +
+        '<span class="order-num">#' + code + '</span>' +
+        '<span class="time-main">' + new Date(r.createdAt).toLocaleDateString() + '</span>' +
+        '<span class="time-rel">' + timeAgo(r.createdAt) + '</span>' +
+      '</td>' +
+      '<td>' +
+        '<span class="customer-line"><strong>' + r.name + '</strong></span>' +
+        '<span class="customer-line" style="opacity:0.8;">📞 ' + r.phone + '</span>' +
+        (r.email ? '<span class="customer-line" style="opacity:0.6;font-size:11px;">✉️ ' + r.email + '</span>' : '') +
+        (cleanPhone ? '<a class="wa-link" href="' + waUrl + '" target="_blank">💬 WhatsApp Guest</a>' : '') +
+      '</td>' +
+      '<td>' +
+        '<span class="time-main" style="color:var(--yolk);">' + r.date + '</span>' +
+        '<span class="customer-line">⏰ ' + r.time + '</span>' +
+      '</td>' +
+      '<td>' +
+        '<span class="customer-line"><strong>👥 ' + r.guests + ' Guests</strong></span>' +
+        '<span class="type-badge dine-in">' + (r.area || 'Main Dining Hall') + '</span>' +
+      '</td>' +
+      '<td>' +
+        (r.notes ? '<div class="notes-box">📝 ' + r.notes + '</div>' : '<span style="opacity:0.4;font-size:12px;">None</span>') +
+      '</td>' +
+      '<td>' +
+        '<div class="action-btns">' +
+          '<span class="status-badge ' + r.status + '">' + r.status + '</span>' +
+          actionHtml +
+          '<button class="btn-action danger" onclick="deleteReservation(\'' + r.id + '\')">✕ Cancel</button>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
   });
+
+  html += '</tbody></table>';
+  content.innerHTML = html;
+}
+
+function exportCSV(){
+  if (currentTab === 'orders') {
+    if (!lastOrders.length){ alert('No orders to export.'); return; }
+    var rows = [['Order Number','Time','Type','Customer','Phone','Table/Address','Items','Subtotal','Promo','Discount','GST','Total','Status']];
+    lastOrders.forEach(function(o){
+      var orderCode = o.orderNumber || ('HTC-' + o.id.slice(0,6).toUpperCase());
+      var items = o.items.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ')'; }).join('; ');
+      rows.push([
+        orderCode,
+        new Date(o.createdAt).toLocaleString(),
+        o.orderType || '',
+        o.customerName || '',
+        o.customerPhone || '',
+        o.tableNumber || o.deliveryAddress || '',
+        items,
+        o.subtotal || 0,
+        o.promoCode || '',
+        o.discount || 0,
+        o.gst || 0,
+        o.total,
+        o.status
+      ]);
+    });
+    downloadCSV(rows, 'hatch-kitchen-orders-' + new Date().toISOString().slice(0,10) + '.csv');
+  } else {
+    if (!lastReservations.length){ alert('No reservations to export.'); return; }
+    var rows = [['Confirmation','Booked At','Guest Name','Phone','Email','Date','Time','Guests','Area','Notes','Status']];
+    lastReservations.forEach(function(r){
+      rows.push([
+        r.confirmation || '',
+        new Date(r.createdAt).toLocaleString(),
+        r.name || '',
+        r.phone || '',
+        r.email || '',
+        r.date || '',
+        r.time || '',
+        r.guests || '',
+        r.area || '',
+        r.notes || '',
+        r.status || ''
+      ]);
+    });
+    downloadCSV(rows, 'hatch-table-reservations-' + new Date().toISOString().slice(0,10) + '.csv');
+  }
+}
+
+function downloadCSV(rows, filename){
   var csv = rows.map(function(r){
     return r.map(function(cell){ return '"' + String(cell).replace(/"/g, '""') + '"'; }).join(',');
   }).join('\n');
@@ -484,64 +730,75 @@ function exportCSV(){
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = 'hatch-kitchen-orders-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
 }
 
-async function loadOrders(){
+async function loadAllData(){
+  var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+    ? 'http://localhost:3001'
+    : '';
+
   try {
-    var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
-      ? 'http://localhost:3001/api/orders'
-      : '/api/orders';
-    var res = await fetch(apiBase, {credentials:'include'});
-    if (!res.ok) {
-      if (res.status === 401) {
-        document.getElementById('content').innerHTML = '<p class="empty">Authentication required. Please log in with admin credentials.</p>';
+    var [ordersRes, resvRes] = await Promise.all([
+      fetch(apiBase + '/api/orders', {credentials:'include'}),
+      fetch(apiBase + '/api/reservations', {credentials:'include'})
+    ]);
+
+    if (ordersRes.ok) {
+      var orders = await ordersRes.json();
+      var hasBrandNew = false;
+      orders.forEach(function(o){
+        if (!knownOrderIds.has(o.id)) {
+          if (knownOrderIds.size > 0 && o.status === 'new') hasBrandNew = true;
+          knownOrderIds.add(o.id);
+        }
+      });
+      if (hasBrandNew) playChime();
+      lastOrders = orders;
+      if (currentTab === 'orders') {
+        renderOrdersStats(orders);
+        renderOrdersTable(orders);
       }
-      return;
     }
-    var orders = await res.json();
 
-    // Check for brand new orders to trigger chime
-    var hasBrandNew = false;
-    orders.forEach(function(o){
-      if (!knownOrderIds.has(o.id)) {
-        if (knownOrderIds.size > 0 && o.status === 'new') hasBrandNew = true;
-        knownOrderIds.add(o.id);
+    if (resvRes.ok) {
+      var resvs = await resvRes.json();
+      lastReservations = resvs;
+      if (currentTab === 'reservations') {
+        renderReservationsStats(resvs);
+        renderReservationsTable(resvs);
       }
-    });
-    if (hasBrandNew) playChime();
+    }
 
-    lastOrders = orders;
-    renderStats(orders);
-    renderTable(orders);
+    // Refresh badge counts
+    var newCount = lastOrders.filter(function(o){ return o.status === 'new'; }).length;
+    var prepCount = lastOrders.filter(function(o){ return o.status === 'preparing'; }).length;
+    document.getElementById('badgeOrders').textContent = newCount + prepCount;
+    var confResv = lastReservations.filter(function(r){ return r.status === 'confirmed'; }).length;
+    document.getElementById('badgeReservations').textContent = confResv;
+
     document.getElementById('updatedAt').textContent = 'Live: ' + new Date().toLocaleTimeString();
   } catch (err) {
-    document.getElementById('content').innerHTML = '<p class="empty">Unable to connect to Hatch backend. Make sure the server is running on port 3001.</p>';
+    document.getElementById('content').innerHTML = '<p class="empty">Unable to connect to Hatch backend. Make sure server is running on port 3001.</p>';
   }
 }
 
-document.getElementById('refreshBtn').addEventListener('click', loadOrders);
+document.getElementById('refreshBtn').addEventListener('click', loadAllData);
 document.getElementById('exportBtn').addEventListener('click', exportCSV);
 
 document.getElementById('searchBox').addEventListener('input', function(e){
   searchQuery = e.target.value.trim();
-  renderTable(lastOrders);
+  if (currentTab === 'orders') renderOrdersTable(lastOrders);
+  else renderReservationsTable(lastReservations);
 });
 
-document.querySelectorAll('.filter-chip').forEach(function(chip){
-  chip.addEventListener('click', function(){
-    document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
-    chip.classList.add('active');
-    currentFilter = chip.getAttribute('data-filter');
-    renderTable(lastOrders);
-  });
-});
+bindFilterChips();
 
-// Load immediately and poll every 7 seconds
-loadOrders();
-setInterval(loadOrders, 7000);
+// Load immediately and poll every 6 seconds
+loadAllData();
+setInterval(loadAllData, 6000);
 </script>
 </body>
 </html>

@@ -1204,6 +1204,462 @@
     .receipt-card{ position:absolute; top:0; left:0; box-shadow:none; max-height:none; }
     .receipt-actions, .dish-modal-close{ display:none; }
   }
+
+  /* ---------- DARK THEME SUPPORT ---------- */
+  [data-theme="dark"] {
+    --ink: #f5ede1;
+    --ink-soft: #dcd0bd;
+    --paper: #121915;
+    --shell: #1b2620;
+    --line-on-paper: rgba(245,237,225,0.14);
+    --line-on-ink: rgba(245,237,225,0.14);
+  }
+  [data-theme="dark"] .panel.light {
+    background: #19241e;
+    color: #f5ede1;
+  }
+  [data-theme="dark"] .panel.dark {
+    background: #0f1612;
+    color: #eee2c8;
+  }
+  [data-theme="dark"] .cart-drawer,
+  [data-theme="dark"] .dish-modal,
+  [data-theme="dark"] .receipt-card,
+  [data-theme="dark"] .resv-modal {
+    background: #17211b;
+    color: #f5ede1;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.6);
+  }
+  [data-theme="dark"] .detail-field input,
+  [data-theme="dark"] .detail-field textarea,
+  [data-theme="dark"] .detail-field select,
+  [data-theme="dark"] .promo-input-row input {
+    background: #111714;
+    color: #f5ede1;
+    border-color: rgba(245,237,225,0.2);
+  }
+  [data-theme="dark"] .cart-item {
+    border-color: rgba(245,237,225,0.12);
+  }
+  [data-theme="dark"] .menu-controls-bar {
+    background: rgba(25, 36, 30, 0.85);
+    border-color: rgba(245,237,225,0.15);
+  }
+
+  /* ---------- THEME TOGGLE BUTTON ---------- */
+  .theme-toggle-btn {
+    background: rgba(246,239,225,0.12);
+    border: 1px solid rgba(246,239,225,0.3);
+    color: #f6efe1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .theme-toggle-btn:hover {
+    background: rgba(246,239,225,0.25);
+    transform: scale(1.08);
+  }
+
+  /* ---------- MENU CONTROLS & SEARCH BAR ---------- */
+  .menu-controls-bar {
+    margin: 32px auto 44px;
+    background: rgba(238,226,200,0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-on-paper);
+    border-radius: 20px;
+    padding: 22px 26px;
+    box-shadow: 0 8px 24px rgba(20,32,26,0.04);
+  }
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    width: 18px;
+    height: 18px;
+    stroke: var(--ink);
+    fill: none;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .menu-search-input {
+    width: 100%;
+    padding: 13px 44px 13px 44px;
+    border-radius: 999px;
+    border: 1px solid var(--line-on-paper);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .menu-search-input:focus {
+    border-color: var(--yolk);
+    box-shadow: 0 0 0 3px rgba(212,160,23,0.2);
+  }
+  .search-clear-btn {
+    position: absolute;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(20,32,26,0.15);
+    color: var(--ink);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .filter-pills-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-chip {
+    background: var(--paper);
+    border: 1px solid var(--line-on-paper);
+    color: var(--ink);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filter-chip:hover {
+    border-color: var(--ink);
+  }
+  .filter-chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 600;
+  }
+  .filter-count {
+    font-size: 11px;
+    opacity: 0.75;
+    background: rgba(255,255,255,0.2);
+    padding: 1px 6px;
+    border-radius: 999px;
+  }
+  .filter-chip:not(.active) .filter-count {
+    background: rgba(20,32,26,0.08);
+  }
+  .no-results-box {
+    text-align: center;
+    padding: 32px 16px;
+    background: rgba(20,32,26,0.03);
+    border-radius: 12px;
+    margin-top: 14px;
+  }
+  .no-results-box p {
+    font-size: 15px;
+    margin: 0 0 12px;
+    opacity: 0.8;
+  }
+  .reset-filter-btn {
+    background: var(--yolk);
+    color: var(--ink);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ---------- DISH CARD BADGES & RATING ---------- */
+  .dish-title-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .diet-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .diet-badge.veg { background: rgba(63,107,74,0.18); color: #2d6b38; }
+  .diet-badge.non-veg { background: rgba(181,80,46,0.18); color: #b5502e; }
+  .diet-badge.vegan { background: rgba(46,125,50,0.18); color: #2e7d32; }
+  .diet-badge.gluten-free { background: rgba(212,160,23,0.2); color: #916802; }
+  .diet-badge.spicy { background: rgba(204,51,0,0.18); color: #cc3300; }
+  .panel.dark .diet-badge.veg { background: rgba(63,107,74,0.35); color: #85e098; }
+  .panel.dark .diet-badge.non-veg { background: rgba(181,80,46,0.35); color: #ff9b7a; }
+  .panel.dark .diet-badge.vegan { background: rgba(46,125,50,0.35); color: #85e098; }
+  .panel.dark .diet-badge.gluten-free { background: rgba(212,160,23,0.35); color: #fedb72; }
+  .panel.dark .diet-badge.spicy { background: rgba(204,51,0,0.35); color: #ff8066; }
+
+  .dish-badge-pill {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    background: var(--accent);
+    color: #fff;
+  }
+  .dish-meta-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 6px;
+  }
+  .dish-star {
+    color: #e59a00;
+    font-weight: 600;
+  }
+  .dish.is-hidden {
+    display: none !important;
+  }
+  .panel.all-dishes-hidden {
+    display: none !important;
+  }
+
+  /* ---------- TABLE RESERVATION MODAL ---------- */
+  .resv-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,13,11,0.68);
+    z-index: 110;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .resv-modal-overlay.open { display: flex; }
+  .resv-modal {
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    position: relative;
+    padding: 32px 30px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  }
+  .resv-eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .resv-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 30px;
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+  .resv-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.75;
+    margin: 0 0 22px;
+  }
+  .resv-form .detail-row {
+    display: flex;
+    gap: 12px;
+  }
+  .resv-form .detail-field {
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .resv-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-bottom: 6px;
+  }
+  .resv-form input, .resv-form select {
+    width: 100%;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-family: var(--sans);
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .resv-form input:focus, .resv-form select:focus {
+    border-color: var(--yolk);
+    box-shadow: 0 0 0 2px rgba(212,160,23,0.2);
+  }
+  .resv-submit-btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 14px;
+    border-radius: 999px;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background .2s ease;
+  }
+  .resv-submit-btn:hover {
+    background: #000;
+  }
+  .resv-feedback {
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    min-height: 18px;
+  }
+  .resv-success-card {
+    text-align: center;
+    padding: 20px 10px;
+  }
+  .resv-check-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(63,107,74,0.15);
+    color: var(--sage);
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-weight: bold;
+  }
+  .resv-code-badge {
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--rust);
+    background: rgba(181,80,46,0.1);
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 10px 0 16px;
+    letter-spacing: 0.05em;
+  }
+  .resv-info-summary {
+    background: rgba(20,32,26,0.04);
+    border: 1px solid var(--line-on-paper);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: left;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .resv-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: 100%;
+    transition: opacity .2s;
+  }
+  .resv-whatsapp-btn:hover { opacity: 0.9; }
+
+  /* ---------- PROMO CODE IN CART DRAWER ---------- */
+  .promo-box {
+    margin: 12px 0;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line-on-paper);
+    border-bottom: 1px dashed var(--line-on-paper);
+  }
+  .promo-input-row {
+    display: flex;
+    gap: 8px;
+  }
+  .promo-input-row input {
+    flex: 1;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: var(--sans);
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .apply-promo-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .apply-promo-btn:hover { opacity: 0.85; }
+  .promo-message {
+    font-size: 12px;
+    margin-top: 6px;
+    min-height: 16px;
+  }
+  .promo-message.success { color: var(--sage); font-weight: 600; }
+  .promo-message.error { color: var(--rust); }
+
+  /* ---------- WHATSAPP BUTTON ON RECEIPT ---------- */
+  .receipt-wa-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: opacity .2s;
+  }
+  .receipt-wa-btn:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -1219,6 +1675,9 @@
   <symbol id="icon-wine" viewBox="0 0 24 24"><path d="M7 3h10c0 5-2 8-5 8s-5-3-5-8Z"/><path d="M12 11v7M8 20h8"/></symbol>
   <symbol id="icon-sashimi" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="4.5" rx="1.2"/><rect x="4" y="13.5" width="16" height="4.5" rx="1.2"/></symbol>
   <symbol id="icon-skewer" viewBox="0 0 24 24"><path d="M2 12h20"/><rect x="6" y="9" width="4" height="6" rx="1"/><rect x="12" y="9" width="4" height="6" rx="1"/></symbol>
+  <symbol id="icon-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></symbol>
+  <symbol id="icon-biryani" viewBox="0 0 24 24"><path d="M4 10h16v7a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-7zM2 10h20M12 3c-4 0-6 4-6 7h12c0-3-2-7-6-7zM12 1v2"/></symbol>
+  <symbol id="icon-salad" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9zM7 7a5 5 0 0 1 10 0"/></symbol>
 </svg>
 
 <nav class="top">
@@ -1226,7 +1685,13 @@
   <ul class="navlinks">
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
+    <li><a href="#book-table" id="navBookTableBtn" style="color:var(--yolk); font-weight:600;">Book Table</a></li>
     <li><a href="#visit">Visit</a></li>
+    <li>
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle theme">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </li>
     <li>
       <button class="cart-btn" id="cartOpenBtn" aria-label="Open your order">
         <svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
@@ -1270,7 +1735,10 @@
 <nav class="cuisine-quicknav" aria-label="Jump to a kitchen">
   <div class="wrap">
     <a class="quicknav-chip" href="#levant" data-panel-link="levant">Levant</a>
-    <a class="quicknav-chip" href="#malabar" data-panel-link="malabar">India</a>
+    <a class="quicknav-chip" href="#malabar" data-panel-link="malabar">Indian Kitchen</a>
+    <a class="quicknav-chip" href="#biryani" data-panel-link="biryani">Royal Biryani</a>
+    <a class="quicknav-chip" href="#bengaluru" data-panel-link="bengaluru">Roastery &amp; Bakery</a>
+    <a class="quicknav-chip" href="#salads" data-panel-link="salads">Farm Salads</a>
     <a class="quicknav-chip" href="#kyoto" data-panel-link="kyoto">Kyoto</a>
     <a class="quicknav-chip" href="#chengdu" data-panel-link="chengdu">Chengdu</a>
     <a class="quicknav-chip" href="#oaxaca" data-panel-link="oaxaca">Oaxaca</a>
@@ -1292,6 +1760,26 @@
 </section>
 
 <section class="menu-section" id="menu">
+
+  <div class="menu-controls-bar wrap" id="menuControls">
+    <div class="search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="Search dishes, ingredients (e.g. mutton biryani, cold brew, burrata, matcha, kebab)..." aria-label="Search menu">
+      <button type="button" id="menuSearchClear" class="search-clear-btn" style="display:none;" aria-label="Clear search">×</button>
+    </div>
+    <div class="filter-pills-row" id="dietaryFilters">
+      <button type="button" class="filter-chip active" data-filter="all">All Dishes <span class="filter-count" id="countAll">36</span></button>
+      <button type="button" class="filter-chip" data-filter="veg">Veg 🌱 <span class="filter-count" id="countVeg"></span></button>
+      <button type="button" class="filter-chip" data-filter="non-veg">Non-Veg 🍗 <span class="filter-count" id="countNonVeg"></span></button>
+      <button type="button" class="filter-chip" data-filter="vegan">Vegan 🌿 <span class="filter-count" id="countVegan"></span></button>
+      <button type="button" class="filter-chip" data-filter="gluten-free">Gluten-Free 🌾 <span class="filter-count" id="countGf"></span></button>
+      <button type="button" class="filter-chip" data-filter="spicy">Spicy 🌶️ <span class="filter-count" id="countSpicy"></span></button>
+    </div>
+    <div class="no-results-box" id="noResultsBox" style="display:none;">
+      <p>No dishes found matching your search or dietary filter.</p>
+      <button type="button" class="reset-filter-btn" id="resetFilterBtn">Reset Search &amp; Filters</button>
+    </div>
+  </div>
 
   <div class="panel light" id="levant" style="--accent:var(--rust)">
     <div class="wrap">
@@ -1415,8 +1903,205 @@
     </svg>
   </div>
 
+  <!-- Bengaluru Roastery & Artisanal Bakery -->
+  <div class="panel light" id="bengaluru" style="--accent:#9e6328">
+    <div class="wrap">
+      <div class="panel-head" data-reveal>
+        <h2 class="cuisine-name">Bengaluru Roastery &amp; Bakery</h2>
+        <p class="cuisine-origin">Single-origin Chikmagalur Arabica roasts, manual pourovers, sourdough croissants, and cardamom cruffins.</p>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="roastery-filter-cold-brew" data-accent="rust" data-tags="veg vegan gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Chikmagalur Cold Brew Tonic</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Single-origin 18-hour cold brew, artisanal tonic water, Valencia orange peel, ice.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(140 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹240</span>
+        </div>
+        <div class="dish" data-reveal data-id="roastery-monsooned-malabar" data-accent="rust" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Monsooned Malabar Flat White</h3>
+            </div>
+            <p class="dish-desc">Dark roast espresso, velvety textured whole milk, micro-foam, Dutch cocoa dusting.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(98 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹220</span>
+        </div>
+        <div class="dish" data-reveal data-id="roastery-cardamom-cruffin" data-accent="rust" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Cardamom &amp; Mysore Vanilla Cruffin</h3>
+              <span class="dish-badge-pill">Chef's Signature ⭐</span>
+            </div>
+            <p class="dish-desc">Flaky laminated croissant pastry filled with house Mysore vanilla bean custard and cardamom sugar.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(210 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹260</span>
+        </div>
+        <div class="dish" data-reveal data-id="roastery-sourdough-ricotta" data-accent="rust" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Whipped Ricotta &amp; Fig Toast</h3>
+            </div>
+            <p class="dish-desc">House-whipped buffalo ricotta, fresh seasonal figs, Coorg wild forest honey, crushed pistachios, sourdough.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(85 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹340</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crack-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <polygon points="0,34 0,10 60,18 130,4 205,20 280,8 350,22 430,6 505,18 580,2 660,20 735,10 810,24 890,6 965,18 1040,4 1120,22 1200,10 1200,34" fill="#14201a"/>
+    </svg>
+  </div>
 
-  <div class="panel light" id="kyoto" style="--accent:var(--rust)">
+  <!-- Royal Claypot Dum Biryanis -->
+  <div class="panel dark" id="biryani" style="--accent:var(--yolk)">
+    <div class="wrap">
+      <div class="panel-head" data-reveal>
+        <h2 class="cuisine-name">Royal Dum Biryani</h2>
+        <p class="cuisine-origin">Slow-sealed terracotta handis, aged Dehradun basmati, saffron dum aroma, Nizami &amp; Awadhi heritage.</p>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="biryani-hyderabadi-gosht" data-accent="yolk" data-tags="non-veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Hyderabadi Kachche Gosht Dum Biryani</h3>
+              <span class="dish-badge-pill">Chef's Signature ⭐</span>
+            </div>
+            <p class="dish-desc">Tender mutton cuts marinated in brown onion, mint, yogurt and pot-roasted with long-grain saffron rice. Served with mirchi ka salan and burani raita.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(340 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹620</span>
+        </div>
+        <div class="dish" data-reveal data-id="biryani-awadhi-murgh" data-accent="yolk" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Lucknowi Awadhi Murgh Pukhtan</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Gentle aromatic chicken dum biryani infused with kewra, star anise, cardamom, and saffron milk in sealed dough handi.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(190 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹520</span>
+        </div>
+        <div class="dish" data-reveal data-id="biryani-kathal-mushroom" data-accent="yolk" data-tags="veg vegan gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Wild Morel &amp; Raw Jackfruit Dum Handi</h3>
+            </div>
+            <p class="dish-desc">Slow-steamed spiced jackfruit tender cuts and Kashmiri wild morel mushrooms in fragrant basmati rice.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(115 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹440</span>
+        </div>
+        <div class="dish" data-reveal data-id="biryani-kolkata-egg-aloo" data-accent="yolk" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Kolkata Spiced Potato &amp; Egg Biryani</h3>
+            </div>
+            <p class="dish-desc">Mild fragrant rice with caramelized large golden potato and farm brown egg simmered in meetha attar.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.7</span> <span>(89 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹380</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crack-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <polygon points="0,34 0,14 70,26 145,8 220,24 300,10 375,26 450,6 530,20 610,4 690,22 765,8 845,24 920,6 995,20 1075,4 1150,22 1200,12 1200,34" fill="#eee2c8"/>
+    </svg>
+  </div>
+
+  <!-- Artisanal Farm Salads & Bowls -->
+  <div class="panel light" id="salads" style="--accent:var(--sage)">
+    <div class="wrap">
+      <div class="panel-head" data-reveal>
+        <h2 class="cuisine-name">Artisanal Farm Salads &amp; Bowls</h2>
+        <p class="cuisine-origin">Hydroponic greens from Nandi Hills, house-cultured vinaigrettes, sprouted seeds, and cold-pressed cold crunches.</p>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="salad-nandi-goat-cheese" data-accent="sage" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Nandi Hills Warm Chevre &amp; Beetroot</h3>
+              <span class="dish-badge-pill">Chef's Signature ⭐</span>
+            </div>
+            <p class="dish-desc">Roasted baby beets, caramelized walnuts, artisanal local goat cheese, baby arugula, wild berry reduction.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(102 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹390</span>
+        </div>
+        <div class="dish" data-reveal data-id="salad-burrata-peach" data-accent="sage" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Charred Peach &amp; Burrata Bowl</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Fresh creamy burrata ball, flame-charred seasonal stone fruit, heirloom cherry tomatoes, basil emulsion, pine nuts.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(165 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹460</span>
+        </div>
+        <div class="dish" data-reveal data-id="salad-levant-fattoush" data-accent="sage" data-tags="veg vegan">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <h3 class="dish-name">Crunchy Sumac Fattoush</h3>
+            </div>
+            <p class="dish-desc">Romaine hearts, Persian cucumber, radish, mint, pomegranate seeds, toasted pita crisps, zesty sumac-lemon glaze.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.7</span> <span>(74 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹320</span>
+        </div>
+        <div class="dish" data-reveal data-id="salad-kyoto-sesame-soba" data-accent="sage" data-tags="veg vegan">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <h3 class="dish-name">Kyoto Chilled Sesame Soba Bowl</h3>
+            </div>
+            <p class="dish-desc">Buckwheat noodles, edamame beans, shredded purple cabbage, avocado, toasted black sesame, ginger-tamari vinaigrette.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(120 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹420</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crack-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <polygon points="0,34 0,10 60,18 130,4 205,20 280,8 350,22 430,6 505,18 580,2 660,20 735,10 810,24 890,6 965,18 1040,4 1120,22 1200,10 1200,34" fill="#14201a"/>
+    </svg>
+  </div>
+
+  <div class="panel dark" id="kyoto" style="--accent:var(--rust)">
     <div class="wrap">
       <div class="panel-head" data-reveal>
         <h2 class="cuisine-name">Kyoto Counter</h2>
@@ -1617,7 +2302,7 @@
       <div class="visit-block" data-reveal>
         <p class="visit-label">Reservations</p>
         <p class="visit-value">Tables of 6 or more only — walk in for anything smaller.</p>
-        <a class="reserve-btn" href="mailto:reserve@hatchbengaluru.example">Request a table</a>
+        <button type="button" class="reserve-btn" id="visitReserveBtn">Request a table</button>
       </div>
     </div>
   </div>
@@ -1629,7 +2314,7 @@
   <a href="/admin" style="color:inherit; opacity:0.5; text-decoration:none; font-size:12px;">Staff</a>
 </footer>
 
-<a class="floating-cta" id="floatingCta" href="#visit">Reserve a table</a>
+<button type="button" class="floating-cta" id="floatingCta">Reserve a table</button>
 
 <div class="dish-modal-overlay" id="dishModalOverlay">
   <div class="dish-modal" role="dialog" aria-modal="true" aria-labelledby="modalDishName">
@@ -1696,10 +2381,24 @@
         <input type="text" id="orderNotes" placeholder="e.g. Less spicy, extra sauce, allergy note…">
       </div>
     </div>
+
+    <!-- Promo Code Engine -->
+    <div class="promo-box">
+      <div class="promo-input-row">
+        <input type="text" id="promoInput" placeholder="Promo code (WELCOME10, HATCH50, BENGALURU)" aria-label="Promo code">
+        <button type="button" class="apply-promo-btn" id="applyPromoBtn">Apply</button>
+      </div>
+      <div class="promo-message" id="promoMessage"></div>
+    </div>
+
     <div class="cart-drawer-foot">
       <div class="cart-total-row">
         <span>Subtotal</span>
         <strong id="cartSubtotal">₹0</strong>
+      </div>
+      <div class="cart-total-row" id="discountRow" style="display:none;">
+        <span>Promo Discount (<span id="discountCodeLabel"></span>)</span>
+        <strong id="cartDiscount" style="color:var(--sage);">-₹0</strong>
       </div>
       <div class="cart-total-row">
         <span>GST (5%)</span>
@@ -1723,9 +2422,102 @@
   <div class="receipt-card">
     <button class="dish-modal-close" id="receiptCloseBtn" aria-label="Close">×</button>
     <div class="receipt-body" id="receiptBody"></div>
-    <div class="receipt-actions">
-      <button class="add-to-order-btn" id="receiptPrintBtn">Print receipt</button>
-      <button class="cart-clear-btn" id="receiptDoneBtn">Done</button>
+    <div class="receipt-actions" style="flex-direction:column; gap:8px;">
+      <a class="receipt-wa-btn" id="receiptWaBtn" target="_blank" rel="noopener" style="display:none;">📱 Share Order on WhatsApp</a>
+      <div style="display:flex; gap:10px; width:100%;">
+        <button class="add-to-order-btn" id="receiptPrintBtn">Print receipt</button>
+        <button class="cart-clear-btn" id="receiptDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table Reservation Modal -->
+<div class="resv-modal-overlay" id="resvModalOverlay">
+  <div class="resv-modal" role="dialog" aria-modal="true" aria-labelledby="resvTitle">
+    <button class="dish-modal-close" id="resvModalClose" aria-label="Close">×</button>
+    <div class="resv-modal-head">
+      <p class="resv-eyebrow">Table Reservation · Hatch Bengaluru</p>
+      <h3 class="resv-title" id="resvTitle">Reserve a Table</h3>
+      <p class="resv-desc">Six open kitchen counters under one roof in Indiranagar. Book your table in advance.</p>
+    </div>
+    <form id="resvForm" class="resv-form">
+      <div class="detail-row">
+        <div class="detail-field">
+          <label for="resvName">Full Name *</label>
+          <input type="text" id="resvName" placeholder="e.g. Rahul Sharma" required>
+        </div>
+        <div class="detail-field">
+          <label for="resvPhone">Phone Number *</label>
+          <input type="tel" id="resvPhone" placeholder="10-digit mobile" required>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-field">
+          <label for="resvEmail">Email Address</label>
+          <input type="email" id="resvEmail" placeholder="you@example.com">
+        </div>
+        <div class="detail-field">
+          <label for="resvGuests">Number of Guests *</label>
+          <select id="resvGuests">
+            <option value="1">1 Guest (Solo Dining)</option>
+            <option value="2" selected>2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+            <option value="5">5 Guests</option>
+            <option value="6">6 Guests</option>
+            <option value="8">8 Guests (Large Table)</option>
+            <option value="10">10+ Guests (Group Celebration)</option>
+          </select>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-field">
+          <label for="resvDate">Date *</label>
+          <input type="date" id="resvDate" required>
+        </div>
+        <div class="detail-field">
+          <label for="resvTime">Time Slot *</label>
+          <select id="resvTime">
+            <optgroup label="Lunch">
+              <option value="12:30 PM">12:30 PM</option>
+              <option value="01:15 PM">01:15 PM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="02:45 PM">02:45 PM</option>
+            </optgroup>
+            <optgroup label="Dinner">
+              <option value="07:00 PM" selected>07:00 PM</option>
+              <option value="07:45 PM">07:45 PM</option>
+              <option value="08:30 PM">08:30 PM</option>
+              <option value="09:15 PM">09:15 PM</option>
+              <option value="10:00 PM">10:00 PM</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="detail-field">
+        <label for="resvArea">Preferred Seating Area</label>
+        <select id="resvArea">
+          <option value="Main Dining Hall" selected>Main Dining Hall (Center of all 6 counters)</option>
+          <option value="Courtyard Garden">Courtyard Garden (Open air & greens)</option>
+          <option value="Chef Counter (Front Row)">Chef's Counter (Watch the flame & wok)</option>
+          <option value="Private Alcove">Private Alcove (Quiet dining / meetings)</option>
+        </select>
+      </div>
+      <div class="detail-field">
+        <label for="resvNotes">Special Requests / Occasion</label>
+        <input type="text" id="resvNotes" placeholder="Birthday, anniversary, high chair, dietary notes…">
+      </div>
+      <button type="submit" class="resv-submit-btn" id="resvSubmitBtn">Confirm Reservation</button>
+      <p class="resv-feedback" id="resvFeedback"></p>
+    </form>
+    <div class="resv-success-card" id="resvSuccess" style="display:none;">
+      <div class="resv-check-icon">✓</div>
+      <h4 style="font-family:var(--serif); font-size:24px; margin:0 0 6px;">Reservation Confirmed!</h4>
+      <div class="resv-code-badge" id="resvSuccessCode">Confirmation #RES-1001</div>
+      <div class="resv-info-summary" id="resvSuccessDetails"></div>
+      <a class="resv-whatsapp-btn" id="resvWhatsAppBtn" target="_blank" rel="noopener">📱 Send Confirmation to WhatsApp</a>
+      <button type="button" class="cart-clear-btn" id="resvDoneBtn" style="width:100%; margin-top:8px;">Done</button>
     </div>
   </div>
 </div>
@@ -1756,7 +2548,7 @@
   ctaScroll();
 
   /* active state for the cuisine quick-nav */
-  var panelIds = ['levant','malabar','kyoto','chengdu','oaxaca','napoli','sweet'];
+  var panelIds = ['levant','malabar','bengaluru','biryani','salads','kyoto','chengdu','oaxaca','napoli','sweet'];
   var chips = {};
   panelIds.forEach(function(id){
     var chip = document.querySelector('[data-panel-link="' + id + '"]');
@@ -1771,7 +2563,7 @@
           chips[id].classList.add('active');
         }
       });
-    }, {threshold:0.5});
+    }, {threshold:0.4});
     panelIds.forEach(function(id){
       var el = document.getElementById(id);
       if (el) panelObserver.observe(el);
@@ -1839,7 +2631,72 @@
 
   /* ================= DISH DATA ================= */
   /* value shape: [origin label, icon name, ingredients[], sizes[[label,price],...]] */
-  var DISH_DATA = {"levant-muhammara-toast": ["The Levant · Beirut-style counter", "flatbread", ["walnut", "roasted red pepper", "pomegranate molasses", "sourdough"], [["Regular", 320]]], "levant-lamb-kofta-bowl": ["The Levant · Beirut-style counter", "bowl", ["lamb", "freekeh", "pickled turnip", "garlic toum", "charcoal"], [["Regular", 560], ["Large", 680]]], "levant-labneh-flatbread": ["The Levant · Beirut-style counter", "flatbread", ["labneh", "za'atar", "olive oil", "flatbread"], [["Regular", 380]]], "india-butter-chicken": ["Indian Kitchen · North", "curry", ["tandoori chicken", "tomato", "butter", "cream", "kasuri methi"], [["Half", 320], ["Full", 480]]], "india-dal-makhani": ["Indian Kitchen · North", "curry", ["black urad dal", "rajma", "butter", "cream", "tomato"], [["Half", 230], ["Full", 340]]], "india-amritsari-kulcha": ["Indian Kitchen · North", "flatbread", ["refined flour", "spiced potato", "onion", "chole", "ghee"], [["Regular", 280]]], "india-malabar-prawn-curry": ["Indian Kitchen · South", "curry", ["tiger prawns", "coconut milk", "kudampuli", "curry leaf", "red rice"], [["Half", 350], ["Full", 520]]], "india-appam-stew": ["Indian Kitchen · South", "flatbread", ["rice appam", "coconut vegetable stew", "cardamom"], [["Regular", 340]]], "india-mysore-dosa": ["Indian Kitchen · South", "flatbread", ["rice", "urad dal", "potato masala", "red chilli chutney"], [["Regular", 260]]], "india-kosha-mangsho": ["Indian Kitchen · East", "curry", ["mutton", "mustard oil", "panch phoron", "onion", "ginger-garlic"], [["Half", 380], ["Full", 560]]], "india-bhapa-maachh": ["Indian Kitchen · East", "curry", ["river fish", "mustard paste", "yogurt", "mustard oil", "banana leaf"], [["Regular", 460]]], "india-kathi-roll": ["Indian Kitchen · East", "roll", ["paratha", "spiced chicken", "egg", "onion", "mustard sauce"], [["Regular", 300]]], "india-dal-baati": ["Indian Kitchen · West", "flatbread", ["whole wheat flour", "ghee", "toor dal", "jaggery churma"], [["Regular", 380]]], "india-pav-bhaji": ["Indian Kitchen · West", "curry", ["mixed vegetables", "butter", "pav bread", "pav bhaji masala"], [["Regular", 260], ["Large", 340]]], "india-undhiyu": ["Indian Kitchen · West", "curry", ["purple yam", "surti papdi beans", "brinjal", "fenugreek dumplings"], [["Regular", 340]]], "kyoto-miso-eggplant": ["Kyoto Counter", "skewer", ["nasu (eggplant)", "white miso glaze", "toasted sesame", "shiso"], [["Regular", 360]]], "kyoto-katsu-curry-rice": ["Kyoto Counter", "curry", ["chicken thigh", "panko", "Japanese curry", "rice", "pickled ginger"], [["Regular", 420], ["Large", 520]]], "kyoto-salmon-nigiri": ["Kyoto Counter", "sashimi", ["salmon", "sushi rice", "wasabi", "soy"], [["6 pieces", 480]]], "chengdu-mapo-tofu": ["Chengdu Fire", "bowl", ["silken tofu", "ground pork", "broad bean paste", "Sichuan peppercorn", "rice"], [["Regular", 420], ["Large", 520]]], "chengdu-dan-dan-noodles": ["Chengdu Fire", "noodle", ["wheat noodles", "chili oil", "preserved mustard greens", "peanut"], [["Regular", 390], ["Large", 470]]], "chengdu-chili-dumplings": ["Chengdu Fire", "dumpling", ["pork", "chive", "black vinegar", "mala oil"], [["6 pieces", 340]]], "oaxaca-mole-negro": ["Oaxaca Comal", "curry", ["mole negro (20 ingredients)", "shredded chicken", "sesame", "crema"], [["Regular", 480], ["Large", 580]]], "oaxaca-tlayuda": ["Oaxaca Comal", "flatbread", ["masa", "black beans", "quesillo", "avocado", "salsa macha"], [["Regular", 450]]], "oaxaca-elote-crema": ["Oaxaca Comal", "bowl", ["charred corn", "lime", "cotija", "guajillo dust"], [["Regular", 220]]], "napoli-ragu-rigatoni": ["Naples Table", "noodle", ["pork and beef ragù", "rigatoni", "pecorino", "black pepper"], [["Regular", 460], ["Large", 560]]], "napoli-burrata-crostini": ["Naples Table", "flatbread", ["burrata", "San Marzano tomato", "basil oil", "charred bread"], [["Regular", 380]]], "napoli-sfogliatella": ["Naples Table", "dessert", ["hand-layered pastry", "candied orange", "ricotta"], [["Regular", 210]]], "sweet-gulab-jamun-cheesecake": ["Sweet & Cellar", "dessert", ["gulab jamun", "baked cheesecake", "saffron crumble"], [["Regular", 320]]], "sweet-matcha-tiramisu": ["Sweet & Cellar", "dessert", ["matcha", "ladyfingers", "mascarpone", "dark chocolate"], [["Regular", 340]]], "sweet-chikki-brulee": ["Sweet & Cellar", "dessert", ["peanut-jaggery chikki", "burnt caramel custard"], [["Regular", 280]]], "sweet-sula-shiraz": ["Sweet & Cellar · The Cellar", "wine", ["Sula Dindori Reserve Shiraz", "Nashik Valley"], [["Glass", 650], ["Bottle", 2400]]], "sweet-fratelli-chardonnay": ["Sweet & Cellar · The Cellar", "wine", ["Fratelli Sette Chardonnay", "Akluj"], [["Glass", 600], ["Bottle", 2200]]], "sweet-krsma-cabernet": ["Sweet & Cellar · The Cellar", "wine", ["KRSMA Cabernet–Shiraz", "Hampi Hills"], [["Glass", 750], ["Bottle", 2800]]]};
+  var DISH_DATA = {
+    // The Levant
+    "levant-muhammara-toast": ["The Levant · Beirut-style counter", "flatbread", ["walnut", "roasted red pepper", "pomegranate molasses", "sourdough"], [["Regular", 320]]],
+    "levant-lamb-kofta-bowl": ["The Levant · Beirut-style counter", "bowl", ["lamb", "freekeh", "pickled turnip", "garlic toum", "charcoal"], [["Regular", 560], ["Large", 680]]],
+    "levant-labneh-flatbread": ["The Levant · Beirut-style counter", "flatbread", ["labneh", "za'atar", "olive oil", "flatbread"], [["Regular", 380]]],
+
+    // Indian Kitchen
+    "india-butter-chicken": ["Indian Kitchen · North", "curry", ["tandoori chicken", "tomato", "butter", "cream", "kasuri methi"], [["Half", 320], ["Full", 480]]],
+    "india-dal-makhani": ["Indian Kitchen · North", "curry", ["black urad dal", "rajma", "butter", "cream", "tomato"], [["Half", 230], ["Full", 340]]],
+    "india-amritsari-kulcha": ["Indian Kitchen · North", "flatbread", ["refined flour", "spiced potato", "onion", "chole", "ghee"], [["Regular", 280]]],
+    "india-malabar-prawn-curry": ["Indian Kitchen · South", "curry", ["tiger prawns", "coconut milk", "kudampuli", "curry leaf", "red rice"], [["Half", 350], ["Full", 520]]],
+    "india-appam-stew": ["Indian Kitchen · South", "flatbread", ["rice appam", "coconut vegetable stew", "cardamom"], [["Regular", 340]]],
+    "india-mysore-dosa": ["Indian Kitchen · South", "flatbread", ["rice", "urad dal", "potato masala", "red chilli chutney"], [["Regular", 260]]],
+    "india-kosha-mangsho": ["Indian Kitchen · East", "curry", ["mutton", "mustard oil", "panch phoron", "onion", "ginger-garlic"], [["Half", 380], ["Full", 560]]],
+    "india-bhapa-maachh": ["Indian Kitchen · East", "curry", ["river fish", "mustard paste", "yogurt", "mustard oil", "banana leaf"], [["Regular", 460]]],
+    "india-kathi-roll": ["Indian Kitchen · East", "roll", ["paratha", "spiced chicken", "egg", "onion", "mustard sauce"], [["Regular", 300]]],
+    "india-dal-baati": ["Indian Kitchen · West", "flatbread", ["whole wheat flour", "ghee", "toor dal", "jaggery churma"], [["Regular", 380]]],
+    "india-pav-bhaji": ["Indian Kitchen · West", "curry", ["mixed vegetables", "butter", "pav bread", "pav bhaji masala"], [["Regular", 260], ["Large", 340]]],
+    "india-undhiyu": ["Indian Kitchen · West", "curry", ["purple yam", "surti papdi beans", "brinjal", "fenugreek dumplings"], [["Regular", 340]]],
+
+    // Bengaluru Roastery & Artisanal Bakery
+    "roastery-filter-cold-brew": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["cold brew coffee", "artisanal tonic water", "orange peel", "ice"], [["Standard", 240], ["Large", 290]]],
+    "roastery-monsooned-malabar": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["dark roast espresso", "textured whole milk", "cocoa dusting"], [["Regular", 220], ["Double Shot", 260]]],
+    "roastery-cardamom-cruffin": ["Bengaluru Roastery · Boulangerie", "dessert", ["croissant pastry", "Mysore vanilla", "cardamom sugar", "custard"], [["Single", 260], ["Box of 2", 480]]],
+    "roastery-sourdough-ricotta": ["Bengaluru Roastery · Boulangerie", "flatbread", ["sourdough", "buffalo ricotta", "fresh figs", "Coorg honey", "pistachio"], [["Regular", 340]]],
+
+    // Royal Claypot Dum Biryanis
+    "biryani-hyderabadi-gosht": ["Royal Dum Biryani · Nizami Heritage", "biryani", ["baby goat meat", "aged basmati", "saffron", "brown onions", "mint", "ghee"], [["Regular", 620], ["Handi for 2", 1150]]],
+    "biryani-awadhi-murgh": ["Royal Dum Biryani · Awadhi Counter", "biryani", ["chicken thigh", "aged basmati", "saffron milk", "kewra", "green cardamom"], [["Regular", 520], ["Handi for 2", 980]]],
+    "biryani-kathal-mushroom": ["Royal Dum Biryani · Shahi Handi", "biryani", ["raw jackfruit (kathal)", "wild morel mushrooms", "basmati rice", "saffron"], [["Regular", 440], ["Handi for 2", 820]]],
+    "biryani-kolkata-egg-aloo": ["Royal Dum Biryani · Bengal Awadh", "biryani", ["basmati rice", "spiced potato", "farm brown egg", "shahi jeera", "meetha attar"], [["Regular", 380]]],
+
+    // Artisanal Farm Salads & Bowls
+    "salad-nandi-goat-cheese": ["Farm Salads · Hydroponic Greens", "salad", ["local goat cheese", "roasted baby beets", "arugula", "walnuts", "berry reduction"], [["Regular", 390], ["Large Sharing", 540]]],
+    "salad-burrata-peach": ["Farm Salads · Seasonal Harvest", "salad", ["fresh burrata", "charred peach", "heirloom tomatoes", "basil oil", "pine nuts"], [["Regular", 460]]],
+    "salad-levant-fattoush": ["Farm Salads · Levantine Garden", "salad", ["romaine lettuce", "Persian cucumber", "radish", "pomegranate", "sumac", "pita crisps"], [["Regular", 320], ["Large", 420]]],
+    "salad-kyoto-sesame-soba": ["Farm Salads · Chilled Bowls", "noodle", ["buckwheat soba", "edamame", "avocado", "toasted sesame", "ginger-tamari"], [["Regular", 420], ["Large", 520]]],
+
+    // Kyoto Counter
+    "kyoto-miso-eggplant": ["Kyoto Counter", "skewer", ["nasu (eggplant)", "white miso glaze", "toasted sesame", "shiso"], [["Regular", 360]]],
+    "kyoto-katsu-curry-rice": ["Kyoto Counter", "curry", ["chicken thigh", "panko", "Japanese curry", "rice", "pickled ginger"], [["Regular", 420], ["Large", 520]]],
+    "kyoto-salmon-nigiri": ["Kyoto Counter", "sashimi", ["salmon", "sushi rice", "wasabi", "soy"], [["6 pieces", 480]]],
+
+    // Chengdu Fire
+    "chengdu-mapo-tofu": ["Chengdu Fire", "bowl", ["silken tofu", "ground pork", "broad bean paste", "Sichuan peppercorn", "rice"], [["Regular", 420], ["Large", 520]]],
+    "chengdu-dan-dan-noodles": ["Chengdu Fire", "noodle", ["wheat noodles", "chili oil", "preserved mustard greens", "peanut"], [["Regular", 390], ["Large", 470]]],
+    "chengdu-chili-dumplings": ["Chengdu Fire", "dumpling", ["pork", "chive", "black vinegar", "mala oil"], [["6 pieces", 340]]],
+
+    // Oaxaca Comal
+    "oaxaca-mole-negro": ["Oaxaca Comal", "curry", ["mole negro (20 ingredients)", "shredded chicken", "sesame", "crema"], [["Regular", 480], ["Large", 580]]],
+    "oaxaca-tlayuda": ["Oaxaca Comal", "flatbread", ["masa", "black beans", "quesillo", "avocado", "salsa macha"], [["Regular", 450]]],
+    "oaxaca-elote-crema": ["Oaxaca Comal", "bowl", ["charred corn", "lime", "cotija", "guajillo dust"], [["Regular", 220]]],
+
+    // Naples Table
+    "napoli-ragu-rigatoni": ["Naples Table", "noodle", ["pork and beef ragù", "rigatoni", "pecorino", "black pepper"], [["Regular", 460], ["Large", 560]]],
+    "napoli-burrata-crostini": ["Naples Table", "flatbread", ["burrata", "San Marzano tomato", "basil oil", "charred bread"], [["Regular", 380]]],
+    "napoli-sfogliatella": ["Naples Table", "dessert", ["hand-layered pastry", "candied orange", "ricotta"], [["Regular", 210]]],
+
+    // Sweet & Cellar
+    "sweet-gulab-jamun-cheesecake": ["Sweet & Cellar", "dessert", ["gulab jamun", "baked cheesecake", "saffron crumble"], [["Regular", 320]]],
+    "sweet-matcha-tiramisu": ["Sweet & Cellar", "dessert", ["matcha", "ladyfingers", "mascarpone", "dark chocolate"], [["Regular", 340]]],
+    "sweet-chikki-brulee": ["Sweet & Cellar", "dessert", ["peanut-jaggery chikki", "burnt caramel custard"], [["Regular", 280]]],
+    "sweet-sula-shiraz": ["Sweet & Cellar · The Cellar", "wine", ["Sula Dindori Reserve Shiraz", "Nashik Valley"], [["Glass", 650], ["Bottle", 2400]]],
+    "sweet-fratelli-chardonnay": ["Sweet & Cellar · The Cellar", "wine", ["Fratelli Sette Chardonnay", "Akluj"], [["Glass", 600], ["Bottle", 2200]]],
+    "sweet-krsma-cabernet": ["Sweet & Cellar · The Cellar", "wine", ["KRSMA Cabernet–Shiraz", "Hampi Hills"], [["Glass", 750], ["Bottle", 2800]]]
+  };
 
   /* ================= DISH MODAL ================= */
   var overlay = document.getElementById('dishModalOverlay');
@@ -1939,6 +2796,14 @@
     updateAddBtn();
   });
 
+  /* ================= PROMO CODES ENGINE ================= */
+  var PROMO_CODES = {
+    'WELCOME10': { type: 'percent', value: 10, min: 0, label: '10% OFF' },
+    'HATCH50': { type: 'flat', value: 50, min: 300, label: '₹50 OFF' },
+    'BENGALURU': { type: 'percent', value: 15, min: 500, label: '15% OFF' }
+  };
+  var appliedPromo = null;
+
   /* ================= CART ================= */
   var CART_KEY = 'hatch_cart_v1';
   var GST_RATE = 0.05;
@@ -1952,12 +2817,18 @@
   var cartBadge = document.getElementById('cartBadge');
   var cartItemsEl = document.getElementById('cartItems');
   var cartSubtotalEl = document.getElementById('cartSubtotal');
+  var cartDiscountEl = document.getElementById('cartDiscount');
+  var discountRow = document.getElementById('discountRow');
+  var discountCodeLabel = document.getElementById('discountCodeLabel');
   var cartGstEl = document.getElementById('cartGst');
   var cartTotalEl = document.getElementById('cartTotal');
   var cartOverlay = document.getElementById('cartOverlay');
   var cartEmailBtn = document.getElementById('cartEmailBtn');
   var fieldTable = document.getElementById('fieldTable');
   var fieldAddress = document.getElementById('fieldAddress');
+  var promoInput = document.getElementById('promoInput');
+  var applyPromoBtn = document.getElementById('applyPromoBtn');
+  var promoMessage = document.getElementById('promoMessage');
 
   document.querySelectorAll('.type-chip').forEach(function(chip){
     chip.addEventListener('click', function(){
@@ -1975,8 +2846,22 @@
 
   function cartTotals(){
     var subtotal = cart.reduce(function(sum, it){ return sum + it.price * it.qty; }, 0);
-    var gst = Math.round(subtotal * GST_RATE);
-    return { subtotal: subtotal, gst: gst, total: subtotal + gst };
+    var discount = 0;
+    if (appliedPromo && PROMO_CODES[appliedPromo]) {
+      var rule = PROMO_CODES[appliedPromo];
+      if (subtotal >= rule.min) {
+        if (rule.type === 'percent') {
+          discount = Math.round(subtotal * (rule.value / 100));
+        } else if (rule.type === 'flat') {
+          discount = Math.min(subtotal, rule.value);
+        }
+      } else {
+        appliedPromo = null; // Minimum not met
+      }
+    }
+    var taxable = Math.max(0, subtotal - discount);
+    var gst = Math.round(taxable * GST_RATE);
+    return { subtotal: subtotal, discount: discount, gst: gst, total: taxable + gst };
   }
 
   function renderCart(){
@@ -1986,6 +2871,8 @@
 
     if (cart.length === 0){
       cartItemsEl.innerHTML = '<p class="cart-empty">Nothing added yet — tap any dish on the menu.</p>';
+      appliedPromo = null;
+      if (promoMessage) { promoMessage.textContent = ''; promoMessage.className = 'promo-message'; }
     } else {
       cartItemsEl.innerHTML = '';
       cart.forEach(function(item, idx){
@@ -2036,6 +2923,13 @@
 
     var t = cartTotals();
     cartSubtotalEl.textContent = '₹' + t.subtotal;
+    if (t.discount > 0) {
+      discountRow.style.display = 'flex';
+      discountCodeLabel.textContent = appliedPromo;
+      cartDiscountEl.textContent = '-₹' + t.discount;
+    } else {
+      discountRow.style.display = 'none';
+    }
     cartGstEl.textContent = '₹' + t.gst;
     cartTotalEl.textContent = '₹' + t.total;
 
@@ -2043,9 +2937,37 @@
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order');
     } else {
       var lines = cart.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ') - Rs.' + (it.price*it.qty); });
-      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
+      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + (t.discount ? '\nDiscount (' + appliedPromo + '): -Rs.' + t.discount : '') + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order&body=' + body);
     }
+  }
+
+  if (applyPromoBtn) {
+    applyPromoBtn.addEventListener('click', function(){
+      var code = (promoInput.value || '').trim().toUpperCase();
+      if (!code) return;
+      var subtotal = cart.reduce(function(sum, it){ return sum + it.price * it.qty; }, 0);
+      if (!subtotal) {
+        promoMessage.className = 'promo-message error';
+        promoMessage.textContent = 'Please add dishes to your order first.';
+        return;
+      }
+      if (!PROMO_CODES[code]) {
+        promoMessage.className = 'promo-message error';
+        promoMessage.textContent = 'Invalid promo code. Try WELCOME10, HATCH50, or BENGALURU.';
+        return;
+      }
+      var rule = PROMO_CODES[code];
+      if (subtotal < rule.min) {
+        promoMessage.className = 'promo-message error';
+        promoMessage.textContent = 'Min order of ₹' + rule.min + ' required for ' + code + '.';
+        return;
+      }
+      appliedPromo = code;
+      promoMessage.className = 'promo-message success';
+      promoMessage.textContent = '✓ ' + rule.label + ' promo applied!';
+      renderCart();
+    });
   }
 
   addBtn.addEventListener('click', function(){
@@ -2073,6 +2995,7 @@
   document.getElementById('cartClearBtn').addEventListener('click', function(){
     if (cart.length && confirm('Clear all dishes from your order?')){
       cart = [];
+      appliedPromo = null;
       saveCart();
       renderCart();
     }
@@ -2112,9 +3035,28 @@
       lines +
       '<hr class="receipt-divider">' +
       '<div class="receipt-total-line"><span>Subtotal</span><span>₹' + totals.subtotal + '</span></div>' +
+      (totals.discount ? '<div class="receipt-total-line" style="color:var(--sage);"><span>Discount (' + (details.promoCode || 'PROMO') + ')</span><span>-₹' + totals.discount + '</span></div>' : '') +
       '<div class="receipt-total-line"><span>GST (5%)</span><span>₹' + totals.gst + '</span></div>' +
       '<div class="receipt-total-line receipt-grand"><span>Total Amount</span><span>₹' + totals.total + '</span></div>' +
       '<p class="receipt-footer-note">Thank you for dining with Hatch.<br>Six kitchens, one room.</p>';
+
+    // Configure WhatsApp share button
+    var waBtn = document.getElementById('receiptWaBtn');
+    if (waBtn) {
+      var trackerUrl = window.location.origin + '/api/orders/' + (orderId || '') + '/status';
+      var orderSummary = '🍳 *Hatch Order #' + displayCode + '*\n' +
+        'Guest: ' + (details.customerName || 'Diner') + '\n' +
+        'Type: ' + details.orderType.toUpperCase() + (extra ? ' (' + extra + ')' : '') + '\n\n' +
+        items.map(function(it){ return '• ' + it.qty + 'x ' + it.name + ' (' + it.size + ') - ₹' + (it.price*it.qty); }).join('\n') +
+        '\n\n' +
+        (totals.discount ? 'Discount: -₹' + totals.discount + '\n' : '') +
+        'Subtotal: ₹' + totals.subtotal + '\n' +
+        'GST (5%): ₹' + totals.gst + '\n' +
+        '*Total: ₹' + totals.total + '*\n\n' +
+        'Hatch Indiranagar · 100 Feet Rd';
+      waBtn.href = 'https://wa.me/?text=' + encodeURIComponent(orderSummary);
+      waBtn.style.display = 'flex';
+    }
 
     receiptOverlay.classList.add('open');
 
@@ -2203,7 +3145,9 @@
       customerPhone: phoneVal,
       tableNumber: tableVal,
       deliveryAddress: addrVal,
-      notes: notesVal
+      notes: notesVal,
+      promoCode: appliedPromo,
+      discount: t.discount
     };
     var orderItems = cart.slice();
     cartNote.textContent = 'Sending to kitchen…';
@@ -2219,6 +3163,8 @@
         items: cart,
         total: t.total,
         subtotal: t.subtotal,
+        discount: t.discount,
+        promoCode: appliedPromo,
         gst: t.gst,
         orderType: details.orderType,
         customerName: details.customerName,
@@ -2235,6 +3181,7 @@
       cartOverlay.classList.remove('open');
       showReceipt(data.id || 'HATCH', data.orderNumber || null, orderItems, t, details);
       cart = [];
+      appliedPromo = null;
       saveCart();
       renderCart();
     }).catch(function(){
@@ -2242,7 +3189,235 @@
     });
   });
 
+  /* ================= LIVE MENU SEARCH & DIETARY FILTERS ================= */
+  var searchInput = document.getElementById('menuSearchInput');
+  var searchClear = document.getElementById('menuSearchClear');
+  var noResultsBox = document.getElementById('noResultsBox');
+  var resetFilterBtn = document.getElementById('resetFilterBtn');
+  var currentDietFilter = 'all';
+  var currentMenuQuery = '';
+
+  function filterMenu(){
+    var dishes = document.querySelectorAll('.dish[data-id]');
+    var q = currentMenuQuery.toLowerCase();
+    var matchCount = 0;
+
+    var counts = { all: dishes.length, veg: 0, 'non-veg': 0, vegan: 0, 'gluten-free': 0, spicy: 0 };
+    dishes.forEach(function(d){
+      var tags = (d.getAttribute('data-tags') || '').toLowerCase();
+      if (tags.includes('veg') && !tags.includes('non-veg')) counts.veg++;
+      if (tags.includes('non-veg')) counts['non-veg']++;
+      if (tags.includes('vegan')) counts.vegan++;
+      if (tags.includes('gluten-free')) counts['gluten-free']++;
+      if (tags.includes('spicy')) counts.spicy++;
+    });
+    if (document.getElementById('countAll')) document.getElementById('countAll').textContent = counts.all;
+    if (document.getElementById('countVeg')) document.getElementById('countVeg').textContent = counts.veg;
+    if (document.getElementById('countNonVeg')) document.getElementById('countNonVeg').textContent = counts['non-veg'];
+    if (document.getElementById('countVegan')) document.getElementById('countVegan').textContent = counts.vegan;
+    if (document.getElementById('countGf')) document.getElementById('countGf').textContent = counts['gluten-free'];
+    if (document.getElementById('countSpicy')) document.getElementById('countSpicy').textContent = counts.spicy;
+
+    dishes.forEach(function(dish){
+      var id = dish.getAttribute('data-id') || '';
+      var name = (dish.querySelector('.dish-name') ? dish.querySelector('.dish-name').textContent : '').toLowerCase();
+      var desc = (dish.querySelector('.dish-desc') ? dish.querySelector('.dish-desc').textContent : '').toLowerCase();
+      var tags = (dish.getAttribute('data-tags') || '').toLowerCase();
+      var data = DISH_DATA[id];
+      var ingredients = data ? data[2].join(' ').toLowerCase() : '';
+
+      var matchesQuery = !q || name.includes(q) || desc.includes(q) || ingredients.includes(q);
+      var matchesDiet = true;
+      if (currentDietFilter !== 'all') {
+        if (currentDietFilter === 'veg') matchesDiet = tags.includes('veg') && !tags.includes('non-veg');
+        else matchesDiet = tags.includes(currentDietFilter);
+      }
+
+      var isVisible = matchesQuery && matchesDiet;
+      dish.classList.toggle('is-hidden', !isVisible);
+      if (isVisible) matchCount++;
+    });
+
+    // Toggle panels if all dishes inside are hidden
+    document.querySelectorAll('.panel[id]').forEach(function(panel){
+      var panelDishes = panel.querySelectorAll('.dish[data-id]');
+      if (panelDishes.length > 0) {
+        var anyVisible = Array.from(panelDishes).some(function(d){ return !d.classList.contains('is-hidden'); });
+        panel.classList.toggle('all-dishes-hidden', !anyVisible);
+      }
+    });
+
+    if (noResultsBox) noResultsBox.style.display = matchCount === 0 ? 'block' : 'none';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e){
+      currentMenuQuery = e.target.value.trim();
+      if (searchClear) searchClear.style.display = currentMenuQuery ? 'flex' : 'none';
+      filterMenu();
+    });
+  }
+  if (searchClear) {
+    searchClear.addEventListener('click', function(){
+      searchInput.value = '';
+      currentMenuQuery = '';
+      searchClear.style.display = 'none';
+      filterMenu();
+    });
+  }
+  if (resetFilterBtn) {
+    resetFilterBtn.addEventListener('click', function(){
+      currentMenuQuery = '';
+      currentDietFilter = 'all';
+      if (searchInput) searchInput.value = '';
+      if (searchClear) searchClear.style.display = 'none';
+      document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
+      var allChip = document.querySelector('.filter-chip[data-filter="all"]');
+      if (allChip) allChip.classList.add('active');
+      filterMenu();
+    });
+  }
+  document.querySelectorAll('.filter-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      currentDietFilter = chip.getAttribute('data-filter') || 'all';
+      filterMenu();
+    });
+  });
+
+  /* ================= TABLE RESERVATIONS ================= */
+  var resvOverlay = document.getElementById('resvModalOverlay');
+  var resvForm = document.getElementById('resvForm');
+  var resvSuccess = document.getElementById('resvSuccess');
+  var resvFeedback = document.getElementById('resvFeedback');
+  var navBookBtn = document.getElementById('navBookTableBtn');
+  var visitResvBtn = document.getElementById('visitReserveBtn');
+  var floatCta = document.getElementById('floatingCta');
+
+  function openReservationModal(){
+    if (!resvOverlay) return;
+    var today = new Date().toISOString().slice(0,10);
+    var dateInput = document.getElementById('resvDate');
+    if (dateInput && !dateInput.value) {
+      dateInput.value = today;
+      dateInput.min = today;
+    }
+    resvForm.style.display = 'block';
+    resvSuccess.style.display = 'none';
+    resvFeedback.textContent = '';
+    resvOverlay.classList.add('open');
+  }
+
+  function closeReservationModal(){
+    if (resvOverlay) resvOverlay.classList.remove('open');
+  }
+
+  if (navBookBtn) navBookBtn.addEventListener('click', function(e){ e.preventDefault(); openReservationModal(); });
+  if (visitResvBtn) visitResvBtn.addEventListener('click', function(e){ e.preventDefault(); openReservationModal(); });
+  if (floatCta) floatCta.addEventListener('click', function(e){ e.preventDefault(); openReservationModal(); });
+
+  var resvCloseBtn = document.getElementById('resvModalClose');
+  if (resvCloseBtn) resvCloseBtn.addEventListener('click', closeReservationModal);
+  var resvDoneBtn = document.getElementById('resvDoneBtn');
+  if (resvDoneBtn) resvDoneBtn.addEventListener('click', closeReservationModal);
+  if (resvOverlay) {
+    resvOverlay.addEventListener('click', function(e){ if (e.target === resvOverlay) closeReservationModal(); });
+  }
+
+  if (resvForm) {
+    resvForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('resvName').value.trim();
+      var phone = document.getElementById('resvPhone').value.trim();
+      var email = document.getElementById('resvEmail').value.trim();
+      var guests = document.getElementById('resvGuests').value;
+      var date = document.getElementById('resvDate').value;
+      var time = document.getElementById('resvTime').value;
+      var area = document.getElementById('resvArea').value;
+      var notes = document.getElementById('resvNotes').value.trim();
+
+      if (!name || !phone || !date || !time) {
+        resvFeedback.style.color = 'var(--rust)';
+        resvFeedback.textContent = 'Please fill in your name, phone, date, and time.';
+        return;
+      }
+
+      resvFeedback.style.color = 'var(--ink)';
+      resvFeedback.textContent = 'Securing your table reservation…';
+
+      var apiUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+        ? 'http://localhost:3001/api/reservations'
+        : '/api/reservations';
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          email: email,
+          guests: guests,
+          date: date,
+          time: time,
+          area: area,
+          notes: notes
+        })
+      }).then(function(res){
+        if (!res.ok) throw new Error('Booking failed');
+        return res.json();
+      }).then(function(data){
+        var resv = data.reservation || {};
+        resvForm.style.display = 'none';
+        resvSuccess.style.display = 'block';
+        document.getElementById('resvSuccessCode').textContent = 'Confirmation #' + resv.confirmation;
+        document.getElementById('resvSuccessDetails').innerHTML =
+          '<strong>' + resv.name + '</strong> (' + resv.guests + ' Guests)<br>' +
+          '📅 ' + resv.date + ' at ' + resv.time + '<br>' +
+          '📍 ' + resv.area + '<br>' +
+          '📞 ' + resv.phone + (resv.notes ? '<br><em>Special note: ' + resv.notes + '</em>' : '');
+
+        var waText = '🍽️ *Hatch Table Reservation Confirmed*\n' +
+          'Confirmation: #' + resv.confirmation + '\n' +
+          'Guest: ' + resv.name + ' (' + resv.guests + ' Guests)\n' +
+          'Date & Time: ' + resv.date + ' at ' + resv.time + '\n' +
+          'Seating Area: ' + resv.area + '\n' +
+          'Location: Hatch, 142 100 Feet Rd, Indiranagar, Bengaluru';
+        document.getElementById('resvWhatsAppBtn').href = 'https://wa.me/?text=' + encodeURIComponent(waText);
+      }).catch(function(){
+        resvFeedback.style.color = 'var(--rust)';
+        resvFeedback.textContent = 'Could not reach server. Please try again or call +91 80 4123 5566.';
+      });
+    });
+  }
+
+  /* ================= THEME TOGGLE ================= */
+  var themeToggleBtn = document.getElementById('themeToggleBtn');
+  var themeIcon = document.getElementById('themeIcon');
+  var savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('hatch_theme') || 'light'; } catch(e) {}
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    if (themeIcon) themeIcon.textContent = '☀️';
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function(){
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('hatch_theme', 'light'); } catch(e) {}
+        if (themeIcon) themeIcon.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        try { localStorage.setItem('hatch_theme', 'dark'); } catch(e) {}
+        if (themeIcon) themeIcon.textContent = '☀️';
+      }
+    });
+  }
+
   renderCart();
+  filterMenu();
 })();
 </script>
 
