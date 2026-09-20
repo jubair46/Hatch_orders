@@ -1642,24 +1642,503 @@
   .promo-message.success { color: var(--sage); font-weight: 600; }
   .promo-message.error { color: var(--rust); }
 
-  /* ---------- WHATSAPP BUTTON ON RECEIPT ---------- */
-  .receipt-wa-btn {
+  /* ---------- SERVICE MODE SWITCHER ---------- */
+  .service-mode-bar {
+    display: flex;
+    gap: 10px;
+    margin: 28px 0 14px;
+    background: rgba(20, 32, 26, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(246, 239, 225, 0.22);
+    padding: 6px;
+    border-radius: 999px;
+    max-width: 680px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+  }
+  .mode-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f6efe1;
+    padding: 10px 16px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background: #25d366;
-    color: #fff;
-    text-decoration: none;
-    padding: 11px 16px;
-    border-radius: 6px;
+    gap: 10px;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: var(--sans);
+    text-align: left;
+  }
+  .mode-btn .mode-icon { font-size: 20px; transition: transform .2s ease; }
+  .mode-btn:hover .mode-icon { transform: scale(1.15); }
+  .mode-btn .mode-text strong { display: block; font-size: 13.5px; font-weight: 600; }
+  .mode-btn .mode-text small { display: block; font-size: 10.5px; opacity: 0.7; }
+  .mode-btn.active {
+    background: var(--yolk);
+    color: var(--ink);
+    box-shadow: 0 4px 18px rgba(212, 160, 23, 0.45);
+  }
+  .mode-btn.active .mode-text small { opacity: 0.85; }
+
+  .mode-status-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(20, 32, 26, 0.35);
+    border: 1px solid rgba(246, 239, 225, 0.15);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 12.5px;
+    color: #f6efe1;
+    max-width: 680px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+  }
+  .pulse-status-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #4da664;
+    animation: pulseGlow 1.8s infinite ease-in-out;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px #4da664; }
+    50% { transform: scale(0.8); opacity: 0.4; box-shadow: none; }
+  }
+  .mode-action-btn {
+    margin-left: auto;
+    background: rgba(246, 239, 225, 0.15);
+    border: 1px solid rgba(246, 239, 225, 0.25);
+    color: #f6efe1;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s ease;
+    white-space: nowrap;
+  }
+  .mode-action-btn:hover {
+    background: var(--yolk);
+    color: var(--ink);
+    border-color: var(--yolk);
+  }
+
+  /* Floating Steward Call */
+  .floating-steward-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 45;
+    background: var(--ink);
+    color: var(--yolk);
+    border: 1px solid rgba(212, 160, 23, 0.45);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(12px);
+    transition: transform .25s ease, box-shadow .25s ease, background .2s;
+  }
+  .floating-steward-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 16px 36px rgba(212, 160, 23, 0.3);
+    background: #0d1612;
+  }
+  @media (max-width: 640px) {
+    .floating-steward-btn { bottom: 20px; right: 20px; padding: 10px 16px; font-size: 12px; }
+  }
+
+  /* Floor Plan & Table Selection Modal */
+  .table-map-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 13, 11, 0.75);
+    z-index: 130;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .table-map-overlay.open { display: flex; }
+  .table-map-modal {
+    background: var(--paper);
+    color: var(--ink);
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    position: relative;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .map-zone-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 18px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--rust);
+  }
+  .table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .table-card {
+    border: 1px solid var(--line-on-paper);
+    background: rgba(20, 32, 26, 0.03);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .table-card:hover {
+    border-color: var(--yolk);
+    background: rgba(212, 160, 23, 0.08);
+    transform: translateY(-2px);
+  }
+  .table-card.selected {
+    border-color: var(--yolk);
+    background: rgba(212, 160, 23, 0.18);
+    box-shadow: 0 0 0 2px var(--yolk);
+  }
+  .table-card.occupied {
+    opacity: 0.45;
+    pointer-events: none;
+    background: rgba(0,0,0,0.06);
+  }
+  .table-card-num {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+  .table-card-cap {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+  .table-card-status {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+  .table-card-status.available { background: rgba(63,107,74,0.18); color: #2e7d32; }
+  .table-card-status.reserved { background: rgba(212,160,23,0.2); color: #916802; }
+  .table-card-status.occupied { background: rgba(201,74,74,0.18); color: #c94a4a; }
+
+  /* Steward Call Modal */
+  .steward-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 13, 11, 0.7);
+    z-index: 130;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+  .steward-overlay.open { display: flex; }
+  .steward-modal {
+    background: var(--paper);
+    color: var(--ink);
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+    position: relative;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .steward-quick-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .steward-opt-btn {
+    border: 1px solid var(--line-on-paper);
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    transition: all .15s ease;
+  }
+  .steward-opt-btn:hover {
+    border-color: var(--yolk);
+    background: rgba(212,160,23,0.08);
+  }
+  .steward-opt-btn.active {
+    border-color: var(--yolk);
+    background: var(--yolk);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Dine-In Tip & Split UI in Cart */
+  .table-select-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background: rgba(212, 160, 23, 0.08);
+    border: 1px solid rgba(212, 160, 23, 0.25);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .table-selected-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .table-badge-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #4da664;
+  }
+  .btn-floor-plan {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-floor-plan:hover { opacity: 0.85; }
+
+  .tip-section {
+    margin: 12px 0;
+  }
+  .tip-section label {
+    display: block; font-size: 11.5px; opacity: 0.65; margin-bottom: 6px; font-weight: 500;
+  }
+  .tip-chips {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .tip-chip {
+    flex: 1 1 50px;
+    background: var(--paper);
+    border: 1px solid var(--line-on-paper);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s ease;
+  }
+  .tip-chip.active {
+    background: var(--ink);
+    color: var(--shell);
+    border-color: var(--ink);
+    font-weight: 600;
+  }
+
+  .split-section {
+    background: rgba(20,32,26,0.03);
+    border: 1px solid var(--line-on-paper);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 10px 0;
+  }
+  .split-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .split-stepper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 999px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .split-stepper button {
+    border: none; background: none; width: 24px; height: 22px; cursor: pointer; font-size: 13px;
+  }
+  .split-stepper span {
+    font-size: 11.5px; font-weight: 600; min-width: 50px; text-align: center;
+  }
+  .split-result {
+    margin-top: 6px; font-size: 12px; color: var(--sage); font-weight: 500; text-align: right;
+  }
+
+  /* Takeaway timing & curbside */
+  .pickup-timing-chips {
+    display: flex; gap: 8px; margin-bottom: 8px;
+  }
+  .timing-chip {
+    flex: 1; padding: 7px 10px; border-radius: 999px; border: 1px solid var(--line-on-paper);
+    background: none; font-size: 12px; cursor: pointer; color: var(--ink);
+  }
+  .timing-chip.active {
+    background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 600;
+  }
+  .toggle-row {
+    display: flex; align-items: center; gap: 8px; font-size: 12.5px; cursor: pointer; margin-top: 6px;
+  }
+  .toggle-row input { width: 16px; height: 16px; accent-color: var(--yolk); }
+
+  .curbside-box {
+    background: rgba(20,32,26,0.03); border: 1px solid var(--line-on-paper);
+    border-radius: 8px; padding: 10px; margin: 10px 0;
+  }
+
+  /* Delivery Zone & Instructions */
+  .instruction-pills {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;
+  }
+  .inst-pill {
+    background: var(--paper); border: 1px solid var(--line-on-paper);
+    border-radius: 999px; padding: 5px 11px; font-size: 11.5px; cursor: pointer;
+    color: var(--ink); transition: all .15s;
+  }
+  .inst-pill.active {
+    background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 600;
+  }
+
+  /* Animated Stepper in Receipt */
+  .order-stepper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 20px 0 24px;
+    padding: 0 4px;
+  }
+  .order-stepper::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 24px;
+    right: 24px;
+    height: 3px;
+    background: rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+  .order-stepper-progress {
+    position: absolute;
+    top: 14px;
+    left: 24px;
+    height: 3px;
+    background: #4da664;
+    z-index: 1;
+    transition: width .4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .step-node {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 60px;
+  }
+  .step-circle {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #fff; border: 2px solid rgba(0,0,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 6px; font-size: 13px; font-weight: 600;
+    transition: all .3s ease;
+  }
+  .step-node.completed .step-circle {
+    background: #4da664; border-color: #4da664; color: #fff;
+  }
+  .step-node.active .step-circle {
+    background: var(--yolk); border-color: var(--yolk); color: var(--ink);
+    box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.25);
+    animation: pulseStep 1.6s infinite;
+  }
+  @keyframes pulseStep {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .step-lbl {
+    font-size: 10px; font-family: var(--sans); opacity: 0.7; font-weight: 500;
+    line-height: 1.2; display: block;
+  }
+  .step-node.active .step-lbl {
+    opacity: 1; font-weight: 700; color: var(--ink);
+  }
+
+  /* Courier Card */
+  .courier-card {
+    background: rgba(20, 32, 26, 0.04);
+    border: 1px solid var(--line-on-paper);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 14px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+  .courier-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--ink); color: var(--yolk);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .courier-info { flex: 1; font-size: 12px; }
+  .courier-name { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+  .courier-vehicle { opacity: 0.7; }
+  .courier-call-btn {
+    background: #25d366; color: #fff; border: none; padding: 6px 12px;
+    border-radius: 999px; font-size: 11.5px; font-weight: 600; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+
+  /* Toast Notification */
+  .toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--yolk);
+    padding: 12px 24px;
+    border-radius: 999px;
     font-size: 13.5px;
     font-weight: 600;
-    margin-top: 8px;
-    transition: opacity .2s;
+    z-index: 200;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
   }
-  .receipt-wa-btn:hover { opacity: 0.9; }
+  .toast-notification.show {
+    transform: translateX(-50%) translateY(0);
+  }
 </style>
 </head>
 <body>
@@ -1716,19 +2195,40 @@
         <path class="crack-path" d="M0,132 L96,124 L138,148 L182,108 L221,140 L268,96 L312,150 L360,112 L402,142 L452,104 L498,146 L548,118 L596,150 L648,110 L700,138 L748,102 L800,140 L900,120" />
       </svg>
     </div>
-    <p class="hero-sub">Six cooks, six countries, one open kitchen in Bengaluru. Nothing here is fused — every dish stays exactly where it's from, plated a few feet apart.</p>
+    <p class="hero-sub">Nine masters, nine culinary traditions, one open hall in Indiranagar, Bengaluru. Nothing here is fused — every dish stays authentic, crafted fresh across 9 specialized counters.</p>
     <div class="hero-cues">
-      <div class="cue"><span class="num">6</span><span class="lbl">kitchens, one room</span></div>
-      <div class="cue"><span class="num">8a–11p</span><span class="lbl">daily</span></div>
-      <div class="cue"><span class="num">est. 2019</span><span class="lbl">Bengaluru</span></div>
+      <div class="cue"><span class="num">9</span><span class="lbl">culinary counters</span></div>
+      <div class="cue"><span class="num">8a–11p</span><span class="lbl">daily service</span></div>
+      <div class="cue"><span class="num">4.9 ★</span><span class="lbl">1,400+ reviews</span></div>
+    </div>
+
+    <!-- Service Mode Switcher -->
+    <div class="service-mode-bar" id="heroServiceModes">
+      <button type="button" class="mode-btn active" data-mode="dine-in" id="modeBtnDineIn">
+        <span class="mode-icon">🍽️</span>
+        <span class="mode-text"><strong>Dine-In</strong><small>Table &amp; Steward</small></span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="takeaway" id="modeBtnTakeaway">
+        <span class="mode-icon">🥡</span>
+        <span class="mode-text"><strong>Takeaway</strong><small>15-Min Express</small></span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="delivery" id="modeBtnDelivery">
+        <span class="mode-icon">🛵</span>
+        <span class="mode-text"><strong>Delivery</strong><small>Hot &amp; Live Track</small></span>
+      </button>
+    </div>
+    <div class="mode-status-banner" id="modeStatusBanner">
+      <span class="pulse-status-dot"></span>
+      <span id="modeBannerText">Dine-In Active: Indoor &amp; Courtyard Tables Available • Instant Steward Calling</span>
+      <button type="button" class="mode-action-btn" id="modeBannerActionBtn">Floor Plan 🗺️</button>
     </div>
   </div>
 </header>
 
 <div class="marquee-band" aria-hidden="true">
   <div class="marquee-track">
-    <span>Beirut</span><span>Kochi</span><span>Kyoto</span><span>Chengdu</span><span>Oaxaca</span><span>Napoli</span>
-    <span>Beirut</span><span>Kochi</span><span>Kyoto</span><span>Chengdu</span><span>Oaxaca</span><span>Napoli</span>
+    <span>Beirut</span><span>Malabar</span><span>Bengaluru Roastery</span><span>Awadh Biryani</span><span>Ooty Farm Salads</span><span>Kyoto</span><span>Chengdu</span><span>Oaxaca</span><span>Napoli</span>
+    <span>Beirut</span><span>Malabar</span><span>Bengaluru Roastery</span><span>Awadh Biryani</span><span>Ooty Farm Salads</span><span>Kyoto</span><span>Chengdu</span><span>Oaxaca</span><span>Napoli</span>
   </div>
 </div>
 
@@ -2352,33 +2852,130 @@
       <p class="cart-empty">Nothing added yet — tap any dish on the menu.</p>
     </div>
     <div class="order-details">
-      <p class="dish-modal-label">Order type</p>
+      <p class="dish-modal-label">Service Type</p>
       <div class="ordertype-options" id="orderTypeOptions">
-        <button type="button" class="type-chip selected" data-type="dine-in">Dine-in</button>
-        <button type="button" class="type-chip" data-type="takeaway">Takeaway</button>
-        <button type="button" class="type-chip" data-type="delivery">Delivery</button>
+        <button type="button" class="type-chip selected" data-type="dine-in" id="chipDineIn">🍽️ Dine-in</button>
+        <button type="button" class="type-chip" data-type="takeaway" id="chipTakeaway">🥡 Takeaway</button>
+        <button type="button" class="type-chip" data-type="delivery" id="chipDelivery">🛵 Delivery</button>
       </div>
-      <div class="detail-field" id="fieldTable">
-        <label for="tableNumber">Table number</label>
-        <input type="text" id="tableNumber" placeholder="e.g. 12">
+
+      <!-- DINE-IN OPTIONS -->
+      <div id="boxDineIn">
+        <div class="table-select-row">
+          <div class="table-selected-badge" id="selectedTableBadge">
+            <span class="table-badge-dot"></span>
+            <span id="selectedTableText">Table #T3 · Main Hall (4 Seats)</span>
+          </div>
+          <button type="button" class="btn-floor-plan" id="openTableMapBtn">Floor Plan 🗺️</button>
+        </div>
+        <div class="detail-field" id="fieldTable">
+          <label for="tableNumber">Table Number *</label>
+          <input type="text" id="tableNumber" placeholder="e.g. T3 or choose on floor plan" value="T3">
+        </div>
+        <div class="tip-section">
+          <label>Add Steward Gratuity / Tip (optional)</label>
+          <div class="tip-chips" id="tipChips">
+            <button type="button" class="tip-chip active" data-tip="0">No Tip</button>
+            <button type="button" class="tip-chip" data-tip="0.05">5%</button>
+            <button type="button" class="tip-chip" data-tip="0.10">10%</button>
+            <button type="button" class="tip-chip" data-tip="0.15">15%</button>
+            <button type="button" class="tip-chip" data-tip="custom">Custom</button>
+          </div>
+          <input type="number" id="customTipInput" placeholder="Custom Tip ₹" style="display:none; margin-top:6px;" min="0">
+        </div>
+        <div class="split-section">
+          <div class="split-header">
+            <span>Split Bill Calculator</span>
+            <div class="split-stepper">
+              <button type="button" id="splitMinus">−</button>
+              <span id="splitCountVal">1 Diner</span>
+              <button type="button" id="splitPlus">+</button>
+            </div>
+          </div>
+          <div class="split-result" id="splitResult" style="display:none;">Each diner pays: <strong>₹0</strong></div>
+        </div>
       </div>
-      <div class="detail-field" id="fieldAddress" style="display:none">
-        <label for="deliveryAddress">Delivery address</label>
-        <textarea id="deliveryAddress" rows="2" placeholder="Flat, street, area, landmark"></textarea>
+
+      <!-- TAKEAWAY OPTIONS -->
+      <div id="boxTakeaway" style="display:none;">
+        <div class="detail-field">
+          <label>Pickup Timing</label>
+          <div class="pickup-timing-chips">
+            <button type="button" class="timing-chip active" data-timing="asap" id="timingAsap">⚡ ASAP (15–20 min)</button>
+            <button type="button" class="timing-chip" data-timing="scheduled" id="timingScheduled">🕒 Scheduled</button>
+          </div>
+          <select id="takeawaySlotSelect" style="display:none; margin-top:8px;">
+            <option value="Today at 01:30 PM">Today at 01:30 PM</option>
+            <option value="Today at 02:00 PM">Today at 02:00 PM</option>
+            <option value="Today at 02:30 PM">Today at 02:30 PM</option>
+            <option value="Today at 07:30 PM">Today at 07:30 PM</option>
+            <option value="Today at 08:15 PM">Today at 08:15 PM</option>
+            <option value="Today at 09:00 PM">Today at 09:00 PM</option>
+          </select>
+        </div>
+        <div class="curbside-box">
+          <label class="toggle-row">
+            <input type="checkbox" id="curbsideToggle">
+            <span>🚗 Curbside Express (Bring to car/bike outside)</span>
+          </label>
+          <div id="curbsideFields" style="display:none; margin-top:8px;">
+            <input type="text" id="curbsideVehicle" placeholder="Car/Bike model & color (e.g. Silver Swift)" style="margin-bottom:6px;">
+            <input type="text" id="curbsideReg" placeholder="Registration plate # (e.g. KA 01 MJ 1234)">
+          </div>
+        </div>
+        <div class="packaging-options">
+          <label class="toggle-row">
+            <input type="checkbox" id="cutleryOptOut">
+            <span>🌱 Opt-out of plastic cutlery (Eco-friendly)</span>
+          </label>
+          <label class="toggle-row" style="margin-top:6px;">
+            <input type="checkbox" id="thermalPackaging" checked>
+            <span>♨️ Thermal heat-retention seal (Piping hot for 45m)</span>
+          </label>
+        </div>
       </div>
-      <div class="detail-row">
+
+      <!-- ONLINE DELIVERY OPTIONS -->
+      <div id="boxDelivery" style="display:none;">
+        <div class="detail-field">
+          <label for="deliveryZoneSelect">Bengaluru Delivery Zone &amp; Distance</label>
+          <select id="deliveryZoneSelect">
+            <option value="Indiranagar|0|20-25 mins" selected>Indiranagar (1.2 km) · 20–25 min · FREE</option>
+            <option value="Domlur & HAL|30|25-30 mins">Domlur &amp; HAL (3.4 km) · 25–30 min · ₹30</option>
+            <option value="Koramangala|45|35-40 mins">Koramangala (5.2 km) · 35–40 min · ₹45</option>
+            <option value="CBD & MG Road|50|35-45 mins">CBD &amp; MG Road (6.0 km) · 35–45 min · ₹50</option>
+            <option value="Whitefield|80|50-60 mins">Whitefield (12.0 km) · 50–60 min · ₹80</option>
+          </select>
+        </div>
+        <div class="detail-field" id="fieldAddress">
+          <label for="deliveryAddress">Delivery Address *</label>
+          <textarea id="deliveryAddress" rows="2" placeholder="House/Flat #, Building/Apartment, Street, Landmark"></textarea>
+        </div>
+        <div class="detail-field">
+          <label>Delivery Instructions (optional)</label>
+          <div class="instruction-pills" id="deliveryInstructionPills">
+            <button type="button" class="inst-pill" data-val="Leave at door">🚪 Leave at door</button>
+            <button type="button" class="inst-pill" data-val="Don't ring bell">🔔 Don't ring bell</button>
+            <button type="button" class="inst-pill" data-val="Call upon arrival">📞 Call on arrival</button>
+            <button type="button" class="inst-pill" data-val="Leave with security">🛡️ Leave with guard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUSTOMER CONTACT -->
+      <div class="detail-row" style="margin-top:10px;">
         <div class="detail-field" id="fieldCustName">
-          <label for="customerName">Name *</label>
-          <input type="text" id="customerName" placeholder="Your name">
+          <label for="customerName">Your Name *</label>
+          <input type="text" id="customerName" placeholder="Full name">
         </div>
         <div class="detail-field" id="fieldCustPhone">
-          <label for="customerPhone">Phone *</label>
-          <input type="tel" id="customerPhone" placeholder="10-digit number">
+          <label for="customerPhone">Phone Number *</label>
+          <input type="tel" id="customerPhone" placeholder="10-digit mobile">
         </div>
       </div>
       <div class="detail-field" id="fieldNotes">
-        <label for="orderNotes">Special Instructions / Allergies (optional)</label>
-        <input type="text" id="orderNotes" placeholder="e.g. Less spicy, extra sauce, allergy note…">
+        <label for="orderNotes">Special Cooking Instructions / Allergies (optional)</label>
+        <input type="text" id="orderNotes" placeholder="e.g. Less spicy, extra sauce, nut allergy note…">
       </div>
     </div>
 
@@ -2400,6 +2997,14 @@
         <span>Promo Discount (<span id="discountCodeLabel"></span>)</span>
         <strong id="cartDiscount" style="color:var(--sage);">-₹0</strong>
       </div>
+      <div class="cart-total-row" id="tipRow" style="display:none;">
+        <span>Steward Gratuity / Tip</span>
+        <strong id="cartTip">₹0</strong>
+      </div>
+      <div class="cart-total-row" id="deliveryFeeRow" style="display:none;">
+        <span>Delivery Fee</span>
+        <strong id="cartDeliveryFee">₹0</strong>
+      </div>
       <div class="cart-total-row">
         <span>GST (5%)</span>
         <strong id="cartGst">₹0</strong>
@@ -2409,27 +3014,170 @@
         <strong id="cartTotal">₹0</strong>
       </div>
       <div class="cart-actions">
-        <button class="cart-send-btn" id="cartSendBtn">Send to kitchen</button>
+        <button class="cart-send-btn" id="cartSendBtn">Send Order to Kitchen 🍳</button>
         <a class="cart-email-btn" id="cartEmailBtn" href="mailto:orders@hatchbengaluru.in">Email Order</a>
         <button class="cart-clear-btn" id="cartClearBtn">Clear</button>
       </div>
-      <p class="cart-note" id="cartNote">Tap "Send to kitchen" to dispatch your order directly to the chef.</p>
+      <p class="cart-note" id="cartNote">Dispatches directly to our kitchen dispatch station.</p>
     </div>
   </div>
 </div>
 
+<!-- Interactive Live Order Tracking Modal -->
 <div class="receipt-overlay" id="receiptOverlay">
   <div class="receipt-card">
     <button class="dish-modal-close" id="receiptCloseBtn" aria-label="Close">×</button>
     <div class="receipt-body" id="receiptBody"></div>
     <div class="receipt-actions" style="flex-direction:column; gap:8px;">
-      <a class="receipt-wa-btn" id="receiptWaBtn" target="_blank" rel="noopener" style="display:none;">📱 Share Order on WhatsApp</a>
+      <a class="receipt-wa-btn" id="receiptWaBtn" target="_blank" rel="noopener" style="display:none;">📱 Share Live Order on WhatsApp</a>
       <div style="display:flex; gap:10px; width:100%;">
-        <button class="add-to-order-btn" id="receiptPrintBtn">Print receipt</button>
+        <button class="add-to-order-btn" id="receiptPrintBtn">Print Receipt</button>
         <button class="cart-clear-btn" id="receiptDoneBtn">Done</button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Interactive Floor Plan Modal -->
+<div class="table-map-overlay" id="tableMapModalOverlay">
+  <div class="table-map-modal" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+    <button class="dish-modal-close" id="tableMapCloseBtn" aria-label="Close">×</button>
+    <h3 id="mapModalTitle" style="font-family:var(--serif); font-style:italic; font-size:26px; margin:0 0 4px;">Hatch Seating Floor Plan</h3>
+    <p style="font-size:13px; opacity:0.65; margin:0 0 16px;">100ft Rd, Indiranagar · Tap any available table to seat yourself instantly.</p>
+
+    <div class="map-zone-title">🏛️ Main Dining Hall (Centre of All Kitchens)</div>
+    <div class="table-grid" id="gridMainHall">
+      <div class="table-card selected" data-table="T3" data-area="Main Dining Hall" data-seats="4">
+        <div class="table-card-num">T-3</div>
+        <div class="table-card-cap">4 Seats · Center Hall</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="T1" data-area="Main Dining Hall" data-seats="2">
+        <div class="table-card-num">T-1</div>
+        <div class="table-card-cap">2 Seats · Window View</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="T2" data-area="Main Dining Hall" data-seats="2">
+        <div class="table-card-num">T-2</div>
+        <div class="table-card-cap">2 Seats · Leather Booth</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="T4" data-area="Main Dining Hall" data-seats="4">
+        <div class="table-card-num">T-4</div>
+        <div class="table-card-cap">4 Seats · Center Hall</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="T5" data-area="Main Dining Hall" data-seats="6">
+        <div class="table-card-num">T-5</div>
+        <div class="table-card-cap">6 Seats · Family Table</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="T6" data-area="Main Dining Hall" data-seats="4">
+        <div class="table-card-num">T-6</div>
+        <div class="table-card-cap">4 Seats · Near Roastery</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+    </div>
+
+    <div class="map-zone-title">🌿 Courtyard Garden (Open-Air &amp; Frangipani Canopy)</div>
+    <div class="table-grid" id="gridGarden">
+      <div class="table-card" data-table="G1" data-area="Courtyard Garden" data-seats="2">
+        <div class="table-card-num">G-1</div>
+        <div class="table-card-cap">2 Seats · Frangipani Shade</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="G2" data-area="Courtyard Garden" data-seats="4">
+        <div class="table-card-num">G-2</div>
+        <div class="table-card-cap">4 Seats · Fountain Side</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="G3" data-area="Courtyard Garden" data-seats="4">
+        <div class="table-card-num">G-3</div>
+        <div class="table-card-cap">4 Seats · Garden Canopy</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="G4" data-area="Courtyard Garden" data-seats="6">
+        <div class="table-card-num">G-4</div>
+        <div class="table-card-cap">6 Seats · Pergola Booth</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+    </div>
+
+    <div class="map-zone-title">🔥 Chef's Counter (Watch the Wok, Grill &amp; Hearth)</div>
+    <div class="table-grid" id="gridCounter">
+      <div class="table-card" data-table="C1" data-area="Chef Counter" data-seats="2">
+        <div class="table-card-num">C-1</div>
+        <div class="table-card-cap">2 Stools · Chengdu Wok</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="C2" data-area="Chef Counter" data-seats="2">
+        <div class="table-card-num">C-2</div>
+        <div class="table-card-cap">2 Stools · Tandoor &amp; Grill</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="C3" data-area="Chef Counter" data-seats="2">
+        <div class="table-card-num">C-3</div>
+        <div class="table-card-cap">2 Stools · Roastery Bar</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+    </div>
+
+    <div class="map-zone-title">🍸 Verandah &amp; Private Alcoves</div>
+    <div class="table-grid" id="gridAlcove">
+      <div class="table-card" data-table="V1" data-area="Verandah Lounge" data-seats="4">
+        <div class="table-card-num">V-1</div>
+        <div class="table-card-cap">4 Seats · Cocktail Lounge</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+      <div class="table-card" data-table="V2" data-area="Private Alcove" data-seats="8">
+        <div class="table-card-num">V-2</div>
+        <div class="table-card-cap">8 Seats · Private Alcove</div>
+        <span class="table-card-status available">🟢 Available</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Digital Steward Call Modal -->
+<div class="steward-overlay" id="stewardModalOverlay">
+  <div class="steward-modal" role="dialog" aria-modal="true" aria-labelledby="stewardModalTitle">
+    <button class="dish-modal-close" id="stewardCloseBtn" aria-label="Close">×</button>
+    <h3 id="stewardModalTitle" style="font-family:var(--serif); font-style:italic; font-size:24px; margin:0 0 4px;">Call Table Steward 🛎️</h3>
+    <p style="font-size:13px; opacity:0.65; margin:0 0 16px;">Our staff dispatch console alerts our team immediately.</p>
+
+    <div class="detail-field">
+      <label for="stewardTableInput">Your Table Number *</label>
+      <input type="text" id="stewardTableInput" placeholder="e.g. T3" value="T3">
+    </div>
+
+    <label style="font-size:12px; opacity:0.7; font-weight:600; display:block; margin-bottom:6px;">Select Assistance Request:</label>
+    <div class="steward-quick-options" id="stewardOptionsList">
+      <button type="button" class="steward-opt-btn active" data-req="Call Steward to Table">🛎️ Call Steward to Table</button>
+      <button type="button" class="steward-opt-btn" data-req="Request Fresh Drinking Water">💧 Request Fresh Drinking Water</button>
+      <button type="button" class="steward-opt-btn" data-req="Request Pre-Bill / Payment QR">🧾 Request Pre-Bill &amp; Payment QR</button>
+      <button type="button" class="steward-opt-btn" data-req="Clear Used Plates & Glasses">🧹 Clear Used Plates &amp; Cutlery</button>
+      <button type="button" class="steward-opt-btn" data-req="Extra Condiments & Chili Oil">🧂 Extra Sauces &amp; Chili Oil</button>
+    </div>
+
+    <div class="detail-field">
+      <label for="stewardNotes">Additional Note (optional)</label>
+      <input type="text" id="stewardNotes" placeholder="e.g. Warm water, extra napkins">
+    </div>
+
+    <button type="button" class="resv-submit-btn" id="stewardSubmitBtn" style="margin-top:10px;">Send Call to Kitchen POS</button>
+    <p class="resv-feedback" id="stewardFeedback"></p>
+  </div>
+</div>
+
+<!-- Floating Table Steward Call Button -->
+<button type="button" class="floating-steward-btn" id="floatingStewardBtn" title="Call Steward to Table">
+  🛎️ <span>Call Steward</span>
+</button>
+
+<!-- Toast Notification -->
+<div class="toast-notification" id="toastNotification">
+  <span id="toastIcon">✓</span>
+  <span id="toastMsg">Request sent successfully</span>
 </div>
 
 <!-- Table Reservation Modal -->
@@ -2813,30 +3561,310 @@
     if (stored) cart = JSON.parse(stored);
   } catch(e) { cart = []; }
 
+  /* ================= ADVANCED SERVICE MODES & CART ================= */
+  var CART_KEY = 'hatch_cart_v2';
+  var GST_RATE = 0.05;
+  var cart = [];
+  try {
+    var stored = window.localStorage.getItem(CART_KEY);
+    if (stored) cart = JSON.parse(stored);
+  } catch(e) { cart = []; }
+
   var orderType = 'dine-in';
+  var selectedTable = { number: 'T3', area: 'Main Dining Hall', seats: 4 };
+  var selectedTipRate = 0;
+  var customTipAmount = 0;
+  var splitDinersCount = 1;
+  var takeawaySlot = 'ASAP (15–20 min)';
+  var isCurbside = false;
+  var curbsideCarInfo = '';
+  var optNoCutlery = false;
+  var thermalSeal = true;
+  var currentDeliveryZone = 'Indiranagar (1.2 km)';
+  var currentDeliveryFee = 0;
+  var currentDeliveryEta = '20–25 mins';
+  var deliveryInstructionList = [];
+
   var cartBadge = document.getElementById('cartBadge');
   var cartItemsEl = document.getElementById('cartItems');
   var cartSubtotalEl = document.getElementById('cartSubtotal');
   var cartDiscountEl = document.getElementById('cartDiscount');
   var discountRow = document.getElementById('discountRow');
   var discountCodeLabel = document.getElementById('discountCodeLabel');
+  var tipRow = document.getElementById('tipRow');
+  var cartTipEl = document.getElementById('cartTip');
+  var deliveryFeeRow = document.getElementById('deliveryFeeRow');
+  var cartDeliveryFeeEl = document.getElementById('cartDeliveryFee');
   var cartGstEl = document.getElementById('cartGst');
   var cartTotalEl = document.getElementById('cartTotal');
   var cartOverlay = document.getElementById('cartOverlay');
   var cartEmailBtn = document.getElementById('cartEmailBtn');
-  var fieldTable = document.getElementById('fieldTable');
-  var fieldAddress = document.getElementById('fieldAddress');
   var promoInput = document.getElementById('promoInput');
   var applyPromoBtn = document.getElementById('applyPromoBtn');
   var promoMessage = document.getElementById('promoMessage');
 
-  document.querySelectorAll('.type-chip').forEach(function(chip){
+  /* Toast helper */
+  function showToast(msg, icon){
+    var toast = document.getElementById('toastNotification');
+    if (!toast) return;
+    document.getElementById('toastMsg').textContent = msg;
+    document.getElementById('toastIcon').textContent = icon || '✓';
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 3200);
+  }
+
+  /* Mode Switcher Handler */
+  function setServiceMode(mode){
+    orderType = mode;
+
+    // Update Hero buttons
+    document.querySelectorAll('#heroServiceModes .mode-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-mode') === mode);
+    });
+
+    // Update Cart drawer chips
+    document.querySelectorAll('#orderTypeOptions .type-chip').forEach(function(c){
+      c.classList.toggle('selected', c.getAttribute('data-type') === mode);
+    });
+
+    // Update Banner Text
+    var bannerText = document.getElementById('modeBannerText');
+    var bannerBtn = document.getElementById('modeBannerActionBtn');
+    if (mode === 'dine-in') {
+      bannerText.textContent = 'Dine-In Active: Indoor & Courtyard Tables Available • Instant Steward Calling';
+      bannerBtn.textContent = 'Floor Plan 🗺️';
+      bannerBtn.style.display = '';
+    } else if (mode === 'takeaway') {
+      bannerText.textContent = 'Takeaway Active: 15-Min Express Counter • Curbside Bay 3 Parking Ready';
+      bannerBtn.textContent = 'Pickup Timing 🕒';
+      bannerBtn.style.display = '';
+    } else {
+      bannerText.textContent = 'Delivery Active: Hot Thermal Dispatch across Bengaluru • Live GPS Tracking';
+      bannerBtn.textContent = 'Select Zone 📍';
+      bannerBtn.style.display = '';
+    }
+
+    // Toggle Cart Drawer Sub-panels
+    document.getElementById('boxDineIn').style.display = (mode === 'dine-in') ? 'block' : 'none';
+    document.getElementById('boxTakeaway').style.display = (mode === 'takeaway') ? 'block' : 'none';
+    document.getElementById('boxDelivery').style.display = (mode === 'delivery') ? 'block' : 'none';
+
+    renderCart();
+  }
+
+  document.querySelectorAll('#heroServiceModes .mode-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      setServiceMode(btn.getAttribute('data-mode'));
+    });
+  });
+  document.querySelectorAll('#orderTypeOptions .type-chip').forEach(function(chip){
     chip.addEventListener('click', function(){
-      document.querySelectorAll('.type-chip').forEach(function(c){ c.classList.remove('selected'); });
-      chip.classList.add('selected');
-      orderType = chip.getAttribute('data-type');
-      fieldTable.style.display = orderType === 'dine-in' ? '' : 'none';
-      fieldAddress.style.display = orderType === 'delivery' ? '' : 'none';
+      setServiceMode(chip.getAttribute('data-type'));
+    });
+  });
+
+  var modeBannerActionBtn = document.getElementById('modeBannerActionBtn');
+  if (modeBannerActionBtn) {
+    modeBannerActionBtn.addEventListener('click', function(){
+      if (orderType === 'dine-in') {
+        openTableMapModal();
+      } else {
+        cartOverlay.classList.add('open');
+      }
+    });
+  }
+
+  /* Table Floor Plan Modal */
+  var tableMapOverlay = document.getElementById('tableMapModalOverlay');
+  function openTableMapModal(){
+    if (tableMapOverlay) tableMapOverlay.classList.add('open');
+  }
+  function closeTableMapModal(){
+    if (tableMapOverlay) tableMapOverlay.classList.remove('open');
+  }
+  document.getElementById('openTableMapBtn').addEventListener('click', openTableMapModal);
+  document.getElementById('tableMapCloseBtn').addEventListener('click', closeTableMapModal);
+  if (tableMapOverlay) {
+    tableMapOverlay.addEventListener('click', function(e){ if (e.target === tableMapOverlay) closeTableMapModal(); });
+  }
+
+  document.querySelectorAll('.table-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      var num = card.getAttribute('data-table');
+      var area = card.getAttribute('data-area');
+      var seats = card.getAttribute('data-seats');
+      selectedTable = { number: num, area: area, seats: seats };
+
+      document.querySelectorAll('.table-card').forEach(function(c){ c.classList.remove('selected'); });
+      card.classList.add('selected');
+
+      document.getElementById('selectedTableText').textContent = 'Table #' + num + ' · ' + area + ' (' + seats + ' Seats)';
+      document.getElementById('tableNumber').value = num;
+      document.getElementById('stewardTableInput').value = num;
+
+      closeTableMapModal();
+      showToast('Table #' + num + ' selected from floor plan', '🏛️');
+    });
+  });
+
+  document.getElementById('tableNumber').addEventListener('input', function(e){
+    selectedTable.number = e.target.value.trim();
+    document.getElementById('selectedTableText').textContent = 'Table #' + selectedTable.number;
+  });
+
+  /* Dine-In Tip Selection */
+  document.querySelectorAll('#tipChips .tip-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('#tipChips .tip-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var val = chip.getAttribute('data-tip');
+      var customInput = document.getElementById('customTipInput');
+      if (val === 'custom') {
+        customInput.style.display = 'block';
+        customInput.focus();
+        selectedTipRate = 'custom';
+      } else {
+        customInput.style.display = 'none';
+        selectedTipRate = parseFloat(val);
+      }
+      renderCart();
+    });
+  });
+  document.getElementById('customTipInput').addEventListener('input', function(e){
+    customTipAmount = Math.max(0, parseFloat(e.target.value) || 0);
+    renderCart();
+  });
+
+  /* Split Bill Stepper */
+  document.getElementById('splitMinus').addEventListener('click', function(){
+    splitDinersCount = Math.max(1, splitDinersCount - 1);
+    document.getElementById('splitCountVal').textContent = splitDinersCount + (splitDinersCount > 1 ? ' Diners' : ' Diner');
+    renderCart();
+  });
+  document.getElementById('splitPlus').addEventListener('click', function(){
+    splitDinersCount = Math.min(12, splitDinersCount + 1);
+    document.getElementById('splitCountVal').textContent = splitDinersCount + ' Diners';
+    renderCart();
+  });
+
+  /* Takeaway timing & curbside */
+  document.getElementById('timingAsap').addEventListener('click', function(){
+    this.classList.add('active');
+    document.getElementById('timingScheduled').classList.remove('active');
+    document.getElementById('takeawaySlotSelect').style.display = 'none';
+    takeawaySlot = 'ASAP (15–20 min)';
+  });
+  document.getElementById('timingScheduled').addEventListener('click', function(){
+    this.classList.add('active');
+    document.getElementById('timingAsap').classList.remove('active');
+    var sel = document.getElementById('takeawaySlotSelect');
+    sel.style.display = 'block';
+    takeawaySlot = sel.value;
+  });
+  document.getElementById('takeawaySlotSelect').addEventListener('change', function(e){
+    takeawaySlot = e.target.value;
+  });
+
+  document.getElementById('curbsideToggle').addEventListener('change', function(e){
+    isCurbside = e.target.checked;
+    document.getElementById('curbsideFields').style.display = isCurbside ? 'block' : 'none';
+  });
+  document.getElementById('cutleryOptOut').addEventListener('change', function(e){
+    optNoCutlery = e.target.checked;
+  });
+  document.getElementById('thermalPackaging').addEventListener('change', function(e){
+    thermalSeal = e.target.checked;
+  });
+
+  /* Delivery zone & instructions */
+  document.getElementById('deliveryZoneSelect').addEventListener('change', function(e){
+    var parts = e.target.value.split('|');
+    currentDeliveryZone = parts[0];
+    currentDeliveryFee = parseInt(parts[1], 10) || 0;
+    currentDeliveryEta = parts[2] || '30 mins';
+    renderCart();
+  });
+
+  document.querySelectorAll('#deliveryInstructionPills .inst-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      pill.classList.toggle('active');
+      var val = pill.getAttribute('data-val');
+      if (pill.classList.contains('active')) {
+        if (!deliveryInstructionList.includes(val)) deliveryInstructionList.push(val);
+      } else {
+        deliveryInstructionList = deliveryInstructionList.filter(function(x){ return x !== val; });
+      }
+    });
+  });
+
+  /* Digital Steward Assistance Modal */
+  var stewardOverlay = document.getElementById('stewardModalOverlay');
+  var stewardFeedback = document.getElementById('stewardFeedback');
+  var currentStewardReq = 'Call Steward to Table';
+
+  function openStewardModal(){
+    if (stewardOverlay) {
+      document.getElementById('stewardTableInput').value = selectedTable.number || 'T3';
+      stewardFeedback.textContent = '';
+      stewardOverlay.classList.add('open');
+    }
+  }
+  function closeStewardModal(){
+    if (stewardOverlay) stewardOverlay.classList.remove('open');
+  }
+  document.getElementById('floatingStewardBtn').addEventListener('click', openStewardModal);
+  document.getElementById('stewardCloseBtn').addEventListener('click', closeStewardModal);
+  if (stewardOverlay) {
+    stewardOverlay.addEventListener('click', function(e){ if (e.target === stewardOverlay) closeStewardModal(); });
+  }
+
+  document.querySelectorAll('#stewardOptionsList .steward-opt-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('#stewardOptionsList .steward-opt-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentStewardReq = btn.getAttribute('data-req');
+    });
+  });
+
+  document.getElementById('stewardSubmitBtn').addEventListener('click', function(){
+    var tbl = document.getElementById('stewardTableInput').value.trim();
+    var notes = document.getElementById('stewardNotes').value.trim();
+    var guest = document.getElementById('customerName').value.trim();
+
+    if (!tbl) {
+      stewardFeedback.style.color = 'var(--rust)';
+      stewardFeedback.textContent = 'Please enter your table number.';
+      return;
+    }
+
+    stewardFeedback.style.color = 'var(--ink)';
+    stewardFeedback.textContent = 'Alerting kitchen staff POS…';
+
+    var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+      ? 'http://localhost:3001/api/assistance'
+      : '/api/assistance';
+
+    fetch(apiBase, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        tableNumber: tbl,
+        area: selectedTable.area || 'Main Dining Hall',
+        requestType: currentStewardReq,
+        guestName: guest || 'Table Guest',
+        notes: notes
+      })
+    }).then(function(res){
+      if (!res.ok) throw new Error('Failed');
+      return res.json();
+    }).then(function(){
+      stewardFeedback.style.color = 'var(--sage)';
+      stewardFeedback.textContent = '✓ Request dispatched! A steward is on the way.';
+      showToast('Steward alerted for Table #' + tbl + ' (' + currentStewardReq + ')', '🛎️');
+      setTimeout(closeStewardModal, 1600);
+    }).catch(function(){
+      stewardFeedback.style.color = 'var(--rust)';
+      stewardFeedback.textContent = 'Could not notify server. Please call steward directly.';
     });
   });
 
@@ -2856,12 +3884,31 @@
           discount = Math.min(subtotal, rule.value);
         }
       } else {
-        appliedPromo = null; // Minimum not met
+        appliedPromo = null;
       }
     }
     var taxable = Math.max(0, subtotal - discount);
     var gst = Math.round(taxable * GST_RATE);
-    return { subtotal: subtotal, discount: discount, gst: gst, total: taxable + gst };
+
+    // Tip calculation (Dine-in only)
+    var tip = 0;
+    if (orderType === 'dine-in') {
+      if (selectedTipRate === 'custom') tip = customTipAmount;
+      else if (selectedTipRate > 0) tip = Math.round(taxable * selectedTipRate);
+    }
+
+    // Delivery fee (Delivery only)
+    var deliveryFee = (orderType === 'delivery') ? currentDeliveryFee : 0;
+
+    var total = taxable + gst + tip + deliveryFee;
+    return {
+      subtotal: subtotal,
+      discount: discount,
+      tip: tip,
+      deliveryFee: deliveryFee,
+      gst: gst,
+      total: total
+    };
   }
 
   function renderCart(){
@@ -2923,6 +3970,7 @@
 
     var t = cartTotals();
     cartSubtotalEl.textContent = '₹' + t.subtotal;
+
     if (t.discount > 0) {
       discountRow.style.display = 'flex';
       discountCodeLabel.textContent = appliedPromo;
@@ -2930,14 +3978,38 @@
     } else {
       discountRow.style.display = 'none';
     }
+
+    if (t.tip > 0) {
+      tipRow.style.display = 'flex';
+      cartTipEl.textContent = '+₹' + t.tip;
+    } else {
+      tipRow.style.display = 'none';
+    }
+
+    if (t.deliveryFee > 0) {
+      deliveryFeeRow.style.display = 'flex';
+      cartDeliveryFeeEl.textContent = '+₹' + t.deliveryFee;
+    } else {
+      deliveryFeeRow.style.display = 'none';
+    }
+
     cartGstEl.textContent = '₹' + t.gst;
     cartTotalEl.textContent = '₹' + t.total;
+
+    // Split result
+    var splitRes = document.getElementById('splitResult');
+    if (splitDinersCount > 1 && t.total > 0) {
+      splitRes.style.display = 'block';
+      splitRes.innerHTML = 'Each of ' + splitDinersCount + ' diners pays: <strong>₹' + Math.ceil(t.total / splitDinersCount) + '</strong>';
+    } else {
+      splitRes.style.display = 'none';
+    }
 
     if (cart.length === 0){
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order');
     } else {
       var lines = cart.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ') - Rs.' + (it.price*it.qty); });
-      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + (t.discount ? '\nDiscount (' + appliedPromo + '): -Rs.' + t.discount : '') + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
+      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + (t.discount ? '\nDiscount (' + appliedPromo + '): -Rs.' + t.discount : '') + (t.tip ? '\nTip: Rs.' + t.tip : '') + (t.deliveryFee ? '\nDelivery Fee: Rs.' + t.deliveryFee : '') + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order&body=' + body);
     }
   }
@@ -2983,6 +4055,7 @@
     renderCart();
     closeModal();
     cartOverlay.classList.add('open');
+    showToast(currentDish.name + ' added to order', '🍳');
   });
 
   document.getElementById('cartOpenBtn').addEventListener('click', function(){
@@ -3001,55 +4074,100 @@
     }
   });
 
-  /* ================= RECEIPT & TRACKER ================= */
+  /* ================= INTERACTIVE ANIMATED TRACKER & RECEIPT ================= */
   var receiptOverlay = document.getElementById('receiptOverlay');
   var receiptBody = document.getElementById('receiptBody');
   var livePollTimer = null;
 
-  function showReceipt(orderId, orderNum, items, totals, details){
+  function showReceipt(orderId, orderNum, items, totals, details, riderInfo){
     var d = new Date();
     var lines = items.map(function(it){
       return '<div class="receipt-line"><span class="item-label">' + it.qty + ' × ' + it.name + ' (' + it.size + ')</span><span>₹' + (it.price*it.qty) + '</span></div>';
     }).join('');
     var extra = '';
-    if (details.orderType === 'dine-in' && details.tableNumber) extra = 'Table #' + details.tableNumber;
-    if (details.orderType === 'delivery' && details.deliveryAddress) extra = details.deliveryAddress;
+    if (details.orderType === 'dine-in') extra = 'Table #' + (details.tableNumber || 'T3') + ' (' + (details.tableArea || 'Main Hall') + ')';
+    if (details.orderType === 'takeaway') extra = details.pickupTime || 'ASAP Pickup';
+    if (details.orderType === 'delivery') extra = (details.deliveryZone || 'Bengaluru') + ' · ' + (details.deliveryAddress || '');
 
     var displayCode = orderNum || (orderId ? ('HTC-' + orderId.slice(0,6).toUpperCase()) : 'HATCH');
+
+    var courierHtml = '';
+    if (details.orderType === 'delivery') {
+      var r = riderInfo || { name: 'Ramesh K.', phone: '+91 98860 12345', vehicle: 'Ather 450X · KA 03 EN 9122', rating: '4.95 ★', estimatedMins: currentDeliveryEta };
+      courierHtml =
+        '<div class="courier-card">' +
+          '<div class="courier-avatar">🛵</div>' +
+          '<div class="courier-info">' +
+            '<div class="courier-name">' + r.name + ' <span style="font-size:11px;color:#e59a00;">' + r.rating + '</span></div>' +
+            '<div class="courier-vehicle">' + r.vehicle + '</div>' +
+            '<div style="font-size:11px;color:#4da664;font-weight:600;margin-top:2px;">⚡ Live ETA: ' + r.estimatedMins + '</div>' +
+          '</div>' +
+          '<a href="tel:' + r.phone + '" class="courier-call-btn">📞 Call</a>' +
+        '</div>';
+    } else if (details.orderType === 'dine-in') {
+      courierHtml =
+        '<div class="courier-card">' +
+          '<div class="courier-avatar">🍽️</div>' +
+          '<div class="courier-info">' +
+            '<div class="courier-name">Table #' + (details.tableNumber || 'T3') + ' · ' + (details.tableArea || 'Main Dining Hall') + '</div>' +
+            '<div class="courier-vehicle">Floor Steward Assigned · Direct Service</div>' +
+          '</div>' +
+          '<button type="button" class="btn-floor-plan" onclick="document.getElementById(\'floatingStewardBtn\').click()">Call 🛎️</button>' +
+        '</div>';
+    } else {
+      courierHtml =
+        '<div class="courier-card">' +
+          '<div class="courier-avatar">🥡</div>' +
+          '<div class="courier-info">' +
+            '<div class="courier-name">Takeaway Counter Pickup</div>' +
+            '<div class="courier-vehicle">' + (details.pickupTime || 'Ready in 15–20 minutes') + (details.curbsideVehicle ? ' · Car: ' + details.curbsideVehicle : '') + '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    var lastStepLbl = (details.orderType === 'delivery') ? 'Out for Delivery' : (details.orderType === 'takeaway' ? 'Ready for Pickup' : 'Served to Table');
 
     receiptBody.innerHTML =
       '<h4>Hatch</h4>' +
       '<p class="receipt-meta">100 Feet Road, Indiranagar, Bengaluru 560038<br>' + d.toLocaleDateString('en-IN') + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + '<br><strong>Order #' + displayCode + '</strong></p>' +
-      '<div class="receipt-tracker" id="receiptTracker">' +
-        '<div class="tracker-status new" id="trackerBadge">⏳ Order Dispatched</div>' +
-        '<p class="tracker-note" id="trackerNote">Sent to the kitchen. The chef will prepare it shortly.</p>' +
+      '<div class="order-stepper">' +
+        '<div class="order-stepper-progress" id="stepperProgressBar" style="width: 15%;"></div>' +
+        '<div class="step-node active" id="stepNode1"><div class="step-circle">📋</div><span class="step-lbl">Confirmed</span></div>' +
+        '<div class="step-node" id="stepNode2"><div class="step-circle">👨‍🍳</div><span class="step-lbl">Crafting</span></div>' +
+        '<div class="step-node" id="stepNode3"><div class="step-circle">🥡</div><span class="step-lbl">Quality Pack</span></div>' +
+        '<div class="step-node" id="stepNode4"><div class="step-circle">' + (details.orderType === 'delivery' ? '🛵' : '🍽️') + '</div><span class="step-lbl">' + lastStepLbl + '</span></div>' +
       '</div>' +
+      courierHtml +
       '<hr class="receipt-divider">' +
       '<p class="receipt-meta" style="text-align:left;">' +
         (details.customerName ? 'Guest: ' + details.customerName + '<br>' : '') +
         (details.customerPhone ? 'Phone: ' + details.customerPhone + '<br>' : '') +
         details.orderType.toUpperCase() + (extra ? ' — ' + extra : '') +
-        (details.notes ? '<br><em>Note: ' + details.notes + '</em>' : '') +
+        (details.notes ? '<br><em>Instructions: ' + details.notes + '</em>' : '') +
       '</p>' +
       '<hr class="receipt-divider">' +
       lines +
       '<hr class="receipt-divider">' +
       '<div class="receipt-total-line"><span>Subtotal</span><span>₹' + totals.subtotal + '</span></div>' +
       (totals.discount ? '<div class="receipt-total-line" style="color:var(--sage);"><span>Discount (' + (details.promoCode || 'PROMO') + ')</span><span>-₹' + totals.discount + '</span></div>' : '') +
+      (totals.tip ? '<div class="receipt-total-line" style="color:var(--rust);"><span>Steward Gratuity / Tip</span><span>+₹' + totals.tip + '</span></div>' : '') +
+      (totals.deliveryFee ? '<div class="receipt-total-line"><span>Delivery Fee (' + details.deliveryZone + ')</span><span>+₹' + totals.deliveryFee + '</span></div>' : '') +
       '<div class="receipt-total-line"><span>GST (5%)</span><span>₹' + totals.gst + '</span></div>' +
-      '<div class="receipt-total-line receipt-grand"><span>Total Amount</span><span>₹' + totals.total + '</span></div>' +
-      '<p class="receipt-footer-note">Thank you for dining with Hatch.<br>Six kitchens, one room.</p>';
+      '<div class="receipt-total-line receipt-grand"><span>Total Paid</span><span>₹' + totals.total + '</span></div>' +
+      (details.splitCount > 1 ? '<div class="receipt-total-line" style="font-size:12px;opacity:0.8;"><span>Split bill (' + details.splitCount + ' diners)</span><span>₹' + Math.ceil(totals.total/details.splitCount) + ' each</span></div>' : '') +
+      '<p class="receipt-footer-note">Thank you for dining with Hatch.<br>Nine culinary kitchens, one roof.</p>';
 
     // Configure WhatsApp share button
     var waBtn = document.getElementById('receiptWaBtn');
     if (waBtn) {
-      var trackerUrl = window.location.origin + '/api/orders/' + (orderId || '') + '/status';
       var orderSummary = '🍳 *Hatch Order #' + displayCode + '*\n' +
         'Guest: ' + (details.customerName || 'Diner') + '\n' +
         'Type: ' + details.orderType.toUpperCase() + (extra ? ' (' + extra + ')' : '') + '\n\n' +
         items.map(function(it){ return '• ' + it.qty + 'x ' + it.name + ' (' + it.size + ') - ₹' + (it.price*it.qty); }).join('\n') +
         '\n\n' +
         (totals.discount ? 'Discount: -₹' + totals.discount + '\n' : '') +
+        (totals.tip ? 'Tip: +₹' + totals.tip + '\n' : '') +
+        (totals.deliveryFee ? 'Delivery Fee: +₹' + totals.deliveryFee + '\n' : '') +
         'Subtotal: ₹' + totals.subtotal + '\n' +
         'GST (5%): ₹' + totals.gst + '\n' +
         '*Total: ₹' + totals.total + '*\n\n' +
@@ -3060,7 +4178,7 @@
 
     receiptOverlay.classList.add('open');
 
-    // Live order tracking
+    // Live Stepper Animation & Poller
     if (livePollTimer) clearInterval(livePollTimer);
     if (orderId && orderId !== 'HATCH') {
       var pollStatus = function(){
@@ -3070,22 +4188,31 @@
         fetch(apiBase + orderId + '/status')
           .then(function(res){ return res.json(); })
           .then(function(data){
-            var badge = document.getElementById('trackerBadge');
-            var note = document.getElementById('trackerNote');
-            if (!badge || !note) return;
-            if (data.status === 'preparing') {
-              badge.className = 'tracker-status preparing';
-              badge.textContent = '👨‍🍳 In Preparation';
-              note.textContent = 'The kitchen is actively crafting your dishes now.';
+            var bar = document.getElementById('stepperProgressBar');
+            var s1 = document.getElementById('stepNode1');
+            var s2 = document.getElementById('stepNode2');
+            var s3 = document.getElementById('stepNode3');
+            var s4 = document.getElementById('stepNode4');
+            if (!bar) return;
+
+            if (data.status === 'new') {
+              bar.style.width = '15%';
+              if (s1) { s1.className = 'step-node active'; }
+            } else if (data.status === 'preparing') {
+              bar.style.width = '50%';
+              if (s1) { s1.className = 'step-node completed'; }
+              if (s2) { s2.className = 'step-node active'; }
             } else if (data.status === 'done') {
-              badge.className = 'tracker-status done';
-              badge.textContent = (details.orderType === 'delivery') ? '🛵 Out for Delivery' : '✓ Ready to Serve';
-              note.textContent = (details.orderType === 'delivery') ? 'Your order is on the way!' : 'Hot and ready! Serving to your table.';
+              bar.style.width = '100%';
+              if (s1) { s1.className = 'step-node completed'; }
+              if (s2) { s2.className = 'step-node completed'; }
+              if (s3) { s3.className = 'step-node completed'; }
+              if (s4) { s4.className = 'step-node active'; }
               clearInterval(livePollTimer);
             }
           }).catch(function(){});
       };
-      livePollTimer = setInterval(pollStatus, 4000);
+      livePollTimer = setInterval(pollStatus, 3000);
     }
   }
 
@@ -3110,7 +4237,7 @@
     var nameVal = document.getElementById('customerName').value.trim();
     var phoneVal = document.getElementById('customerPhone').value.trim();
     var tableVal = document.getElementById('tableNumber').value.trim();
-    var addrVal = document.getElementById('deliveryAddress').value.trim();
+    var addrVal = document.getElementById('deliveryAddress') ? document.getElementById('deliveryAddress').value.trim() : '';
     var notesVal = document.getElementById('orderNotes') ? document.getElementById('orderNotes').value.trim() : '';
 
     if (!nameVal) {
@@ -3127,30 +4254,43 @@
     }
     if (orderType === 'dine-in' && !tableVal) {
       document.getElementById('fieldTable').classList.add('has-error');
-      cartNote.textContent = 'Please enter your table number.';
+      cartNote.textContent = 'Please enter or select your table number.';
       document.getElementById('tableNumber').focus();
       return;
     }
     if (orderType === 'delivery' && !addrVal) {
       document.getElementById('fieldAddress').classList.add('has-error');
-      cartNote.textContent = 'Please enter your delivery address.';
+      cartNote.textContent = 'Please enter your complete delivery address.';
       document.getElementById('deliveryAddress').focus();
       return;
     }
 
     var t = cartTotals();
+    var curbsideVeh = isCurbside ? (document.getElementById('curbsideVehicle').value.trim() + ' ' + document.getElementById('curbsideReg').value.trim()) : '';
+
     var details = {
       orderType: orderType,
       customerName: nameVal,
       customerPhone: phoneVal,
       tableNumber: tableVal,
+      tableArea: selectedTable.area || 'Main Dining Hall',
       deliveryAddress: addrVal,
+      deliveryZone: currentDeliveryZone,
+      deliveryFee: t.deliveryFee,
+      tip: t.tip,
+      splitCount: splitDinersCount,
+      pickupTime: takeawaySlot,
+      curbside: isCurbside,
+      curbsideVehicle: curbsideVeh,
+      noCutlery: optNoCutlery,
+      thermalPackaging: thermalSeal,
+      deliveryInstructions: deliveryInstructionList,
       notes: notesVal,
       promoCode: appliedPromo,
       discount: t.discount
     };
     var orderItems = cart.slice();
-    cartNote.textContent = 'Sending to kitchen…';
+    cartNote.textContent = 'Transmitting order to kitchen…';
 
     var apiUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
       ? 'http://localhost:3001/api/orders'
@@ -3165,12 +4305,23 @@
         subtotal: t.subtotal,
         discount: t.discount,
         promoCode: appliedPromo,
+        tip: t.tip,
+        deliveryFee: t.deliveryFee,
         gst: t.gst,
         orderType: details.orderType,
         customerName: details.customerName,
         customerPhone: details.customerPhone,
         tableNumber: details.tableNumber,
+        tableArea: details.tableArea,
+        splitCount: details.splitCount,
+        pickupTime: details.pickupTime,
+        curbside: details.curbside,
+        curbsideVehicle: details.curbsideVehicle,
+        noCutlery: details.noCutlery,
+        thermalPackaging: details.thermalPackaging,
+        deliveryZone: details.deliveryZone,
         deliveryAddress: details.deliveryAddress,
+        deliveryInstructions: details.deliveryInstructions,
         notes: details.notes
       })
     }).then(function(res){
@@ -3179,11 +4330,12 @@
     }).then(function(data){
       cartNote.textContent = 'Dispatched to kitchen!';
       cartOverlay.classList.remove('open');
-      showReceipt(data.id || 'HATCH', data.orderNumber || null, orderItems, t, details);
+      showReceipt(data.id || 'HATCH', data.orderNumber || null, orderItems, t, details, data.order ? data.order.rider : null);
       cart = [];
       appliedPromo = null;
       saveCart();
       renderCart();
+      showToast('Order #' + (data.orderNumber || 'HTC') + ' confirmed!', '🍳');
     }).catch(function(){
       cartNote.textContent = "Couldn't reach the kitchen server — try Email Order instead.";
     });
