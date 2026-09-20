@@ -3680,7 +3680,9 @@
 
   /* ================= LUXURY OBSIDIAN & GOLD THEME OVERHAUL ================= */
   :root {
-    --ink: #070e0a;
+    --ink: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #cbd5e1;
     --ink-card: #0e1a14;
     --ink-border: rgba(230,184,76,0.22);
     --paper: #08100b;
@@ -4539,6 +4541,306 @@
   font-size: 14px;
 }
 
+
+/* ==========================================================================
+   ULTRA HIGH-CONTRAST MASTER STYLING (ZERO INVISIBLE TEXT / ZERO WASHED-OUT)
+   ========================================================================== */
+:root {
+  --ink: #ffffff !important;
+  --ink-soft: #cbd5e1 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #cbd5e1 !important;
+  --paper: #08100b !important;
+  --shell: #122119 !important;
+  --yolk: #f5c542 !important;
+  --yolk-gold: #f5c542 !important;
+}
+
+body {
+  background: #08100b !important;
+  color: #ffffff !important;
+}
+
+/* About Lede Quote - Pure High-Contrast Elegance */
+.about-lede {
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.95), 0 0 30px rgba(245,197,66,0.2) !important;
+  font-family: var(--serif) !important;
+  font-style: italic !important;
+  font-weight: 600 !important;
+  font-size: clamp(26px, 3.6vw, 42px) !important;
+  line-height: 1.35 !important;
+  opacity: 1 !important;
+}
+
+.about-body p {
+  color: #cbd5e1 !important;
+  font-size: 16px !important;
+  line-height: 1.8 !important;
+  opacity: 1 !important;
+}
+
+/* Cuisine Quick-Nav Bar - Bright, Visible, Highly Clickable */
+.cuisine-quicknav {
+  background: rgba(10, 18, 13, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1.5px solid rgba(245, 197, 66, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6) !important;
+}
+
+.quicknav-chip {
+  background: #142219 !important;
+  color: #ffffff !important;
+  border: 1.5px solid rgba(245, 197, 66, 0.35) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  transition: all 0.2s ease !important;
+}
+
+.quicknav-chip:hover, .quicknav-chip.active {
+  background: #f5c542 !important;
+  color: #08100b !important;
+  border-color: #f5c542 !important;
+  box-shadow: 0 0 16px rgba(245, 197, 66, 0.5) !important;
+}
+
+/* Dish Card High-Contrast Visibility */
+.dish {
+  background: #122017 !important;
+  border: 1px solid rgba(245, 197, 66, 0.22) !important;
+  border-radius: 14px !important;
+  padding: 18px 20px !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+.dish:hover {
+  border-color: #f5c542 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 18px rgba(245, 197, 66, 0.2) !important;
+  transform: translateY(-2px) !important;
+}
+.dish-name {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 17px !important;
+  margin: 0 0 6px 0 !important;
+}
+.dish-desc {
+  color: #cbd5e1 !important;
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  opacity: 1 !important;
+  margin: 0 0 10px 0 !important;
+}
+.dish-price {
+  color: #f5c542 !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
+/* Remove Overlapping Duplicate Floating Buttons */
+#floatingCta {
+  display: none !important;
+}
+#floatingCopilotBtn {
+  display: none !important;
+}
+#hatchConciergeFab {
+  display: none !important;
+}
+
+/* Unified Floating AI Copilot & Concierge Trigger */
+.unified-ai-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 95;
+  background: linear-gradient(135deg, #1b3323, #0a160f);
+  color: #f5c542;
+  border: 1.5px solid #f5c542;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.85), 0 0 20px rgba(245, 197, 66, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.unified-ai-fab:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.95), 0 0 30px rgba(245, 197, 66, 0.55);
+}
+@media (max-width: 768px) {
+  .unified-ai-fab {
+    bottom: 78px;
+    right: 16px;
+    padding: 10px 16px;
+    font-size: 12.5px;
+  }
+}
+
+/* Full-Screen / Side Drawer for AI Concierge & Copilot */
+.unified-ai-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(10px);
+  z-index: 150;
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+}
+.unified-ai-drawer-overlay.active {
+  display: flex;
+}
+.unified-ai-drawer {
+  background: #0a130e;
+  border-left: 1.5px solid rgba(245, 197, 66, 0.4);
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 50px rgba(0,0,0,0.9), 0 0 30px rgba(245, 197, 66, 0.15);
+  animation: slideAiDrawer 0.25s ease-out;
+}
+@keyframes slideAiDrawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@media (max-width: 600px) {
+  .unified-ai-drawer {
+    max-width: 100%;
+    border-left: none;
+  }
+}
+
+.ai-drawer-header {
+  padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(245,197,66,0.14), rgba(27,51,35,0.5));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ai-drawer-title-box { display: flex; align-items: center; gap: 12px; }
+.ai-drawer-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #14261b; border: 1.5px solid #f5c542;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 12px rgba(245,197,66,0.3);
+}
+
+.ai-chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ai-bubble {
+  max-width: 88%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.ai-bubble.agent {
+  background: #132218;
+  color: #f8fafc;
+  border: 1px solid rgba(245, 197, 66, 0.25);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.ai-bubble.user {
+  background: linear-gradient(135deg, #f5c542, #d4a017);
+  color: #08100b;
+  font-weight: 700;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.ai-quick-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5c542;
+  color: #08100b;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.15s ease;
+}
+.ai-quick-add-btn:hover {
+  background: #ffffff;
+  transform: scale(1.03);
+}
+.ai-chips-bar {
+  padding: 12px 18px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.3);
+}
+.ai-chip {
+  white-space: nowrap;
+  background: rgba(245,197,66,0.12);
+  color: #f5c542;
+  border: 1px solid rgba(245,197,66,0.3);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ai-chip:hover {
+  background: #f5c542;
+  color: #08100b;
+}
+.ai-drawer-foot {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  gap: 10px;
+  background: #070d09;
+}
+.ai-drawer-input {
+  flex: 1;
+  background: #111d15;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.ai-drawer-input:focus {
+  border-color: #f5c542;
+  box-shadow: 0 0 12px rgba(245,197,66,0.3);
+}
+.ai-drawer-send-btn {
+  background: #f5c542;
+  color: #08100b;
+  border: none;
+  border-radius: 12px;
+  padding: 0 20px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -4567,7 +4869,7 @@
     <li><a href="#book-table" id="navBookTableBtn" style="color:var(--yolk); font-weight:600;">Book Table</a></li>
     <li><a href="#visit">Visit</a></li>
     <li>
-      <button class="copilot-nav-btn" id="headerCopilotBtn" onclick="openCopilotModal()" title="Hatch Dining Copilot" style="background:linear-gradient(135deg, rgba(230,184,76,0.2), rgba(212,160,23,0.3)); border:1px solid rgba(245,197,66,0.5); color:#f5c542; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 0 10px rgba(245,197,66,0.2);">
+      <button class="copilot-nav-btn" id="headerCopilotBtn" onclick="openUnifiedAi()" title="Hatch Dining Copilot" style="background:linear-gradient(135deg, rgba(230,184,76,0.2), rgba(212,160,23,0.3)); border:1px solid rgba(245,197,66,0.5); color:#f5c542; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 0 10px rgba(245,197,66,0.2);">
         <span>✨ Copilot</span>
       </button>
     </li>
@@ -4597,7 +4899,7 @@
       </button>
     </li>
     <li>
-      <button class="orders-nav-btn" id="headerHelpBtn" onclick="openHelpModal()" title="Help & Support" style="background:rgba(230,184,76,0.12); border:1px solid rgba(230,184,76,0.3); color:#f5c542; margin-right:4px;">
+      <button class="orders-nav-btn" id="headerHelpBtn" onclick="openUnifiedAi()" title="Help & Support" style="background:rgba(230,184,76,0.12); border:1px solid rgba(230,184,76,0.3); color:#f5c542; margin-right:4px;">
         <span>💬 Support</span>
       </button>
       <button class="auth-header-btn" id="headerAuthBtn" onclick="toggleUserAuthOrProfile()">
@@ -6343,7 +6645,7 @@
 
 
 <!-- Floating AI Dining Copilot Button -->
-<button type="button" class="floating-copilot-btn" id="floatingCopilotBtn" onclick="openCopilotModal()" title="Hatch Dining Copilot">
+<button type="button" class="floating-copilot-btn" id="floatingCopilotBtn" onclick="openUnifiedAi()" title="Hatch Dining Copilot">
   <span>✨</span> <span>Dining Copilot</span>
 </button>
 
@@ -9637,7 +9939,7 @@ function processPaymentAndDispatch(method) {
 }
 
 /* ================= HELP & SUPPORT MODAL LOGIC ================= */
-function openHelpModal() {
+function openUnifiedAi() {
   var modal = document.getElementById('helpModalOverlay');
   if (modal) modal.classList.add('active');
   if (HATCH_USER) {
@@ -10045,5 +10347,290 @@ function escapeHtml(text) {
   </div>
 </div>
 
+<script>
+
+/* ==========================================================================
+   UNIFIED HATCH AI CONCIERGE & COPILOT CONVERSATIONAL ENGINE
+   ========================================================================== */
+var lastRecommendedDish = null;
+var unifiedAiHistory = [];
+
+function openUnifiedAi() {
+  var overlay = document.getElementById('unifiedAiOverlay');
+  if (overlay) overlay.classList.add('active');
+  setTimeout(function() {
+    var inp = document.getElementById('unifiedAiInput');
+    if (inp) inp.focus();
+  }, 100);
+}
+
+function closeUnifiedAi() {
+  var overlay = document.getElementById('unifiedAiOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function askUnifiedAi(q) {
+  var inp = document.getElementById('unifiedAiInput');
+  if (inp) {
+    inp.value = q;
+    submitUnifiedAiMessage();
+  }
+}
+
+function submitUnifiedAiMessage() {
+  var inp = document.getElementById('unifiedAiInput');
+  if (!inp) return;
+  var text = inp.value.trim();
+  if (!text) return;
+
+  var msgBox = document.getElementById('unifiedAiMessages');
+
+  // 1. Render User Bubble
+  var userDiv = document.createElement('div');
+  userDiv.className = 'ai-bubble user';
+  userDiv.textContent = text;
+  msgBox.appendChild(userDiv);
+  inp.value = '';
+  msgBox.scrollTop = msgBox.scrollHeight;
+
+  // 2. Typing Indicator
+  var typingDiv = document.createElement('div');
+  typingDiv.className = 'ai-bubble agent';
+  typingDiv.id = 'unifiedAiTyping';
+  typingDiv.innerHTML = 'Consulting kitchen masters across 9 counters… ⏳';
+  msgBox.appendChild(typingDiv);
+  msgBox.scrollTop = msgBox.scrollHeight;
+
+  setTimeout(function() {
+    if (typingDiv) typingDiv.remove();
+    processUnifiedAiResponse(text, msgBox);
+  }, 450);
+}
+
+function processUnifiedAiResponse(text, container) {
+  var q = text.toLowerCase().trim();
+  var replyHtml = '';
+  var actionBtnHtml = '';
+  var newChips = [];
+
+  // --- 1. HANDLE AFFIRMATION / 'YES' CONTEXT ---
+  var isAffirmative = /^(yes|yeah|yep|sure|y|add|add it|please add|order this|ok|okay|do it|add to cart|confirm)$/i.test(q) ||
+                      q.includes('add it') || q.includes('add this') || q.includes('order this') || (q.includes('yes') && q.length < 15);
+
+  if (isAffirmative && lastRecommendedDish) {
+    var dish = lastRecommendedDish;
+    
+    // Add to cart array
+    cart.push({
+      id: dish.id,
+      name: dish.name,
+      size: dish.size || 'Regular',
+      price: dish.price,
+      protein: dish.protein || null,
+      spiceLevel: dish.spiceLevel || null,
+      addOns: dish.addOns || [],
+      customNote: dish.customNote || '',
+      lineTotal: dish.price,
+      qty: 1
+    });
+    saveCart();
+    renderCart();
+
+    replyHtml = '🎉 <strong>Added to your order!</strong><br>' +
+      '• <strong>' + dish.name + '</strong> — ₹' + dish.price + '<br>' +
+      'Your cart now has <strong>' + cart.length + ' item(s)</strong> (Subtotal: ₹' + cartTotals().subtotal + ' + 5% GST: ₹' + cartTotals().gst + ' = <strong>Total: ₹' + cartTotals().total + '</strong>).<br><br>' +
+      'Would you like me to recommend a craft beverage, an artisanal gelato, or are you ready to checkout?';
+
+    actionBtnHtml = '<div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">' +
+      '<button type="button" class="ai-quick-add-btn" onclick="openCartDrawer(); closeUnifiedAi();">🛒 Open Cart &amp; Checkout (₹' + cartTotals().total + ') ➔</button>' +
+      '<button type="button" class="ai-quick-add-btn" style="background:#1f3326; color:#f5c542; border:1px solid #f5c542;" onclick="askUnifiedAi(\'Artisanal Ice Creams\')">🍨 Add Gelato</button>' +
+    '</div>';
+
+    newChips = ['View Cart & Pay', 'Pistachio Gelato', 'Belgian Gianduja', 'Craft Beverages', 'Reserve a table'];
+    lastRecommendedDish = null; // reset context
+  }
+  // --- 2. RAMEN / NOODLES ---
+  else if (q.includes('ramen') || (q.includes('noodle') && !q.includes('pad thai'))) {
+    lastRecommendedDish = { id: 'kyoto-shoyu-ramen', name: 'Tokyo Shoyu Paitan Ramen', price: 620, size: 'Regular' };
+    replyHtml = '🍜 <strong>Tokyo Shoyu Paitan Ramen (Kyoto Counter)</strong> is our gold standard!<br>' +
+      '14-hour rich chicken paitan broth, house-pulled noodles, soft ajitsuke tamago egg, and slow-braised chashu.<br>' +
+      'Price: <strong>₹620</strong> (+5% GST).<br><br>' +
+      'Would you like me to add it to your order?';
+    actionBtnHtml = '<button type="button" class="ai-quick-add-btn" onclick="addDishDirectly(\'kyoto-shoyu-ramen\', \'Tokyo Shoyu Paitan Ramen\', 620)">➕ Add Tokyo Ramen to Cart — ₹620</button>';
+    newChips = ['Yes, add it', 'Make it Spicy', 'View Pizzas', 'View Burgers'];
+  }
+  // --- 3. PIZZAS ---
+  else if (q.includes('pizza') || q.includes('napoli') || q.includes('margherita') || q.includes('burrata') || q.includes('diavola')) {
+    lastRecommendedDish = { id: 'pizza-margherita', name: 'Margherita di Bufala D.O.P', price: 595, size: 'Regular' };
+    replyHtml = '🍕 <strong>Wood-Fired Gourmet Pizzas (Naples Table)</strong>:<br>' +
+      'Baked in our 450°C wood-fired oven on 48h cold-fermented sourdough crust:<br>' +
+      '1. <strong>Margherita di Bufala D.O.P</strong> (₹595) — San Marzano tomatoes, buffalo mozzarella, fresh basil.<br>' +
+      '2. <strong>Truffle Funghi & Burrata</strong> (₹745) — Wild porcini, whole pugliese burrata, white truffle oil.<br>' +
+      '3. <strong>Diavola Piccante</strong> (₹685) — Artisanal spicy salami, hot fermented chili honey.<br><br>' +
+      'Would you like me to add the <strong>Margherita di Bufala</strong> (₹595) to your cart?';
+    actionBtnHtml = '<div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">' +
+      '<button type="button" class="ai-quick-add-btn" onclick="addDishDirectly(\'pizza-margherita\', \'Margherita di Bufala D.O.P\', 595)">➕ Add Margherita Pizza (₹595)</button>' +
+      '<button type="button" class="ai-quick-add-btn" style="background:#1f3326; color:#f5c542; border:1px solid #f5c542;" onclick="addDishDirectly(\'pizza-truffle-funghi\', \'Truffle Funghi & Burrata Pizza\', 745)">➕ Add Truffle Pizza (₹745)</button>' +
+    '</div>';
+    newChips = ['Yes, add it', 'Truffle Pizza', 'Diavola Piccante', 'Show Burgers', 'Artisanal Ice Creams'];
+  }
+  // --- 4. CRAFT BURGERS ---
+  else if (q.includes('burger') || q.includes('slider') || q.includes('wagyu') || q.includes('katsu')) {
+    lastRecommendedDish = { id: 'burger-wagyu-truffle', name: 'The Hatch Smoked Wagyu Truffle Burger', price: 725, size: 'Regular' };
+    replyHtml = '🍔 <strong>Hatch Craft Burger Bar</strong>:<br>' +
+      'Served on butter-toasted brioche with house rosemary sea-salt fries:<br>' +
+      '1. <strong>The Hatch Smoked Wagyu Truffle</strong> (₹725) — Aged beef patty, smoked scamorza, black truffle aioli.<br>' +
+      '2. <strong>Crispy Buttermilk Katsu</strong> (₹565) — Panko fried chicken thigh, yuzu-kosho slaw, pickled ginger.<br>' +
+      '3. <strong>Portobello Mushroom Melt</strong> (₹525, Veg) — Balsamic-roasted giant portobello, molten fontina.<br><br>' +
+      'Would you like me to add the <strong>Wagyu Truffle Burger</strong> (₹725) to your cart?';
+    actionBtnHtml = '<div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">' +
+      '<button type="button" class="ai-quick-add-btn" onclick="addDishDirectly(\'burger-wagyu-truffle\', \'The Hatch Smoked Wagyu Truffle Burger\', 725)">➕ Add Wagyu Burger (₹725)</button>' +
+      '<button type="button" class="ai-quick-add-btn" style="background:#1f3326; color:#f5c542; border:1px solid #f5c542;" onclick="addDishDirectly(\'burger-buttermilk-katsu\', \'Crispy Buttermilk Katsu Burger\', 565)">➕ Add Katsu Burger (₹565)</button>' +
+    '</div>';
+    newChips = ['Yes, add it', 'Crispy Katsu Burger', 'Portobello Melt', 'Wood-Fired Pizzas', 'Artisanal Ice Creams'];
+  }
+  // --- 5. ARTISANAL ICE CREAMS & GELATOS ---
+  else if (q.includes('ice cream') || q.includes('gelato') || q.includes('sweet') || q.includes('dessert') || q.includes('sorbet')) {
+    lastRecommendedDish = { id: 'sweet-pistachio-gelato', name: 'Pistachio di Bronte Gelato', price: 320, size: 'Double Scoop' };
+    replyHtml = '🍨 <strong>Artisanal Gelatos & Sorbets (Sweet & Cellar)</strong>:<br>' +
+      'Slow-churned Italian micro-batches:<br>' +
+      '1. <strong>Pistachio di Bronte</strong> (₹320) — Sicilian green gold pistachios, crushed roasted nuts.<br>' +
+      '2. <strong>Dark Belgian Gianduja 72%</strong> (₹340) — Callebaut chocolate, roasted Piedmont hazelnut praline.<br>' +
+      '3. <strong>Alfonso Mango & Passion Fruit</strong> (₹290, Vegan Sorbet) — Ratnagiri mango & tropical passion fruit.<br><br>' +
+      'Shall I add the signature <strong>Pistachio di Bronte Gelato</strong> (₹320) to your order?';
+    actionBtnHtml = '<div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">' +
+      '<button type="button" class="ai-quick-add-btn" onclick="addDishDirectly(\'sweet-pistachio-gelato\', \'Pistachio di Bronte Gelato\', 320)">➕ Add Pistachio Gelato (₹320)</button>' +
+      '<button type="button" class="ai-quick-add-btn" style="background:#1f3326; color:#f5c542; border:1px solid #f5c542;" onclick="addDishDirectly(\'sweet-belgian-gianduja\', \'Dark Belgian Gianduja 72%\', 340)">➕ Add Belgian Chocolate (₹340)</button>' +
+    '</div>';
+    newChips = ['Yes, add it', 'Belgian Gianduja', 'Mango Sorbet', 'View Pizzas', 'View Burgers'];
+  }
+  // --- 6. BIRYANI / AWADH ---
+  else if (q.includes('biryani') || q.includes('awadh') || q.includes('mutton') || q.includes('dum')) {
+    lastRecommendedDish = { id: 'awadh-dum-biryani', name: 'Awadhi Dum Gosht Biryani', price: 695, size: 'Regular' };
+    replyHtml = '🔥 <strong>Awadhi Dum Gosht Biryani (Awadh Counter 3)</strong>:<br>' +
+      'Cooked in sealed copper handis by Ustad Noman with aged daawat basmati, saffron milk, and melt-in-mouth mutton shank. Paired with Burani garlic raita.<br>' +
+      'Price: <strong>₹695</strong>.<br><br>' +
+      'Would you like me to add this to your order?';
+    actionBtnHtml = '<button type="button" class="ai-quick-add-btn" onclick="addDishDirectly(\'awadh-dum-biryani\', \'Awadhi Dum Gosht Biryani\', 695)">➕ Add Awadhi Biryani (₹695)</button>';
+    newChips = ['Yes, add it', 'Beirut Mezze Platter', 'Craft Burgers', 'Pizzas'];
+  }
+  // --- 7. VEGAN & DIETARY ---
+  else if (q.includes('vegan') || q.includes('jain') || q.includes('veg') || q.includes('gluten')) {
+    replyHtml = '🌱 <strong>Dietary & Plant-Based Specialties</strong>:<br>' +
+      '• <strong>Beirut Mezze Platter</strong> (₹525) — Silky hummus, smoked mutabbal, warm sourdough pita.<br>' +
+      '• <strong>Portobello Mushroom Melt Burger</strong> (₹525) — Balsamic-roasted giant portobello.<br>' +
+      '• <strong>Margherita di Bufala Pizza</strong> (₹595) — Hand-tossed San Marzano tomato & buffalo cheese.<br>' +
+      '• <strong>Alfonso Mango & Passion Fruit Sorbet</strong> (₹290) — 100% dairy-free vegan dessert.';
+    newChips = ['Margherita Pizza', 'Portobello Melt', 'Mango Sorbet', 'Mezze Platter'];
+  }
+  // --- 8. 5% GST & BILLING ---
+  else if (q.includes('gst') || q.includes('tax') || q.includes('bill') || q.includes('cost') || q.includes('price')) {
+    var totals = cartTotals();
+    replyHtml = '🧾 <strong>Transparent 5% GST Restaurant Billing</strong>:<br>' +
+      'In accordance with Indian hospitality tax norms, all Hatch bills include an itemized <strong>5% GST</strong> breakdown with zero surprise platform markups.<br><br>' +
+      '• Current Items in Cart: <strong>' + cart.length + '</strong><br>' +
+      '• Item Subtotal: <strong>₹' + totals.subtotal + '</strong><br>' +
+      '• 5% GST: <strong>₹' + totals.gst + '</strong><br>' +
+      '• <strong>Total Payable: ₹' + totals.total + '</strong><br><br>' +
+      'You can pay seamlessly via Instant UPI QR, Credit/Debit Card (256-bit SSL), or Cash/Table.';
+    actionBtnHtml = '<button type="button" class="ai-quick-add-btn" onclick="openCartDrawer(); closeUnifiedAi();">🛒 Review Bill in Cart Drawer ➔</button>';
+    newChips = ['View Cart & Pay', 'Recommend Pizzas', 'Show Craft Burgers', 'Track Order'];
+  }
+  // --- 9. TRACKING ---
+  else if (q.includes('track') || q.includes('status') || q.includes('where is my order') || q.includes('delivery')) {
+    var hist = [];
+    try { hist = JSON.parse(localStorage.getItem('hatch_order_history') || '[]'); } catch(e) {}
+    if (hist.length > 0) {
+      var latest = hist[0];
+      replyHtml = '🛵 <strong>Live Order Tracking (Order #' + (latest.orderNumber || 'HTC-1001') + ')</strong>:<br>' +
+        'Status: <span class="tag-pill" style="background:#14532d; color:#86efac; font-weight:700;">' + (latest.status || 'PREPARING').toUpperCase() + '</span><br>' +
+        'Kitchen Dispatch: <strong>100ft Road, Indiranagar</strong><br>' +
+        'Total Paid: <strong>₹' + latest.total + '</strong> (5% GST included)<br>' +
+        'Assigned Rider: <strong>Vikram Singh (Ather 450X)</strong> · ETA ~15 mins.';
+      actionBtnHtml = '<button type="button" class="ai-quick-add-btn" onclick="openLiveTracker(); closeUnifiedAi();">🗺️ View Animated Map Telemetry ➔</button>';
+    } else {
+      replyHtml = '📦 You have no active orders yet today. Browse our 9 kitchens or ask me for a recommendation to place your first order!';
+      newChips = ['Recommend Pizzas', 'Show Craft Burgers', 'Artisanal Ice Creams', 'Tokyo Ramen'];
+    }
+  }
+  // --- 10. TABLE RESERVATIONS ---
+  else if (q.includes('book') || q.includes('table') || q.includes('reserve') || q.includes('seat')) {
+    replyHtml = '📅 <strong>Hatch Table Reservations · Indiranagar</strong>:<br>' +
+      'We accept advance reservations for parties of all sizes. Choose between our Main Dining Room, Veranda Garden, or High-Top Chef Counters.';
+    actionBtnHtml = '<button type="button" class="ai-quick-add-btn" onclick="openReservationModal(); closeUnifiedAi();">📅 Book Table Now ➔</button>';
+    newChips = ['View Menu', 'Recommend Pizzas', 'Craft Burgers', 'Call Steward'];
+  }
+  // --- 11. CALL STEWARD ---
+  else if (q.includes('steward') || q.includes('waiter') || q.includes('call') || q.includes('water')) {
+    replyHtml = '🛎️ <strong>Floor Steward Dispatched</strong>:<br>' +
+      'Floor Lead <strong>Karthik M.</strong> has received your alert on the floor POS. A steward will arrive at your table with mineral water and fresh cutlery within 60 seconds.';
+    newChips = ['Order More Food', 'Ask for Bill', 'Pistachio Gelato'];
+  }
+  // --- DEFAULT HELPFUL FALLBACK ---
+  else {
+    replyHtml = '✨ <strong>Hatch Dining Concierge &amp; Copilot</strong>:<br>' +
+      'I specialize in our nine culinary kitchens in Indiranagar. I can help you with:<br>' +
+      '• 🍕 <strong>Wood-Fired Pizzas</strong> (Margherita, Truffle Funghi, Diavola)<br>' +
+      '• 🍔 <strong>Hatch Craft Burgers</strong> (Wagyu Truffle, Crispy Katsu, Portobello Melt)<br>' +
+      '• 🍨 <strong>Artisanal Gelatos</strong> (Pistachio Bronte, Belgian Gianduja, Mango Sorbet)<br>' +
+      '• 🍜 <strong>Tokyo Ramen</strong> &amp; 🔥 <strong>Awadhi Dum Biryani</strong><br>' +
+      '• 🧾 <strong>5% GST Bill Calculation &amp; Instant UPI/Card Checkout</strong><br><br>' +
+      'What would you like to explore or add to your order?';
+    newChips = ['Recommend Pizzas', 'Show Craft Burgers', 'Artisanal Ice Creams', 'Tokyo Ramen', '5% GST Bill Info'];
+  }
+
+  // Render Agent Message
+  var agentDiv = document.createElement('div');
+  agentDiv.className = 'ai-bubble agent';
+  agentDiv.innerHTML = '✨ <strong>Hatch Concierge</strong><br>' + replyHtml + (actionBtnHtml || '');
+  container.appendChild(agentDiv);
+  container.scrollTop = container.scrollHeight;
+
+  // Update Suggestion Chips
+  if (newChips.length) {
+    var chipsWrap = document.getElementById('unifiedAiChips');
+    if (chipsWrap) {
+      chipsWrap.innerHTML = newChips.map(function(c) {
+        return '<button type="button" class="ai-chip" onclick="askUnifiedAi(\'' + c.replace(/'/g, "\\'") + '\')">' + c + '</button>';
+      }).join('');
+    }
+  }
+}
+
+function addDishDirectly(id, name, price) {
+  cart.push({
+    id: id,
+    name: name,
+    size: 'Regular',
+    price: price,
+    protein: null,
+    spiceLevel: null,
+    addOns: [],
+    customNote: '',
+    lineTotal: price,
+    qty: 1
+  });
+  saveCart();
+  renderCart();
+  showToast('Added ' + name + ' to order (₹' + price + ')', '🎉');
+
+  var msgBox = document.getElementById('unifiedAiMessages');
+  if (msgBox) {
+    var confDiv = document.createElement('div');
+    confDiv.className = 'ai-bubble agent';
+    confDiv.innerHTML = '✅ <strong>Added ' + name + ' (₹' + price + ') to your cart!</strong><br>' +
+      'Current Cart Total: <strong>₹' + cartTotals().total + '</strong> (5% GST included).<br>' +
+      '<button type="button" class="ai-quick-add-btn" style="margin-top:8px;" onclick="openCartDrawer(); closeUnifiedAi();">🛒 Open Cart &amp; Checkout ➔</button>';
+    msgBox.appendChild(confDiv);
+    msgBox.scrollTop = msgBox.scrollHeight;
+  }
+}
+
+function openReservationModal() {
+  var m = document.getElementById('resvModalOverlay');
+  if (m) m.classList.add('open');
+}
+
+</script>
 </body>
 </html>
