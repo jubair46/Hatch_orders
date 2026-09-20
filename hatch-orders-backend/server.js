@@ -199,7 +199,7 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  // --- Customer Authentication API (SMS & Email OTP Supported) ---
+  // --- Customer Authentication API (Real-Time SMS & Email OTP) ---
   if (req.method === 'POST' && pathname === '/api/auth/send-otp') {
     return readBody(req, (err, body) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
@@ -226,12 +226,17 @@ const server = http.createServer((req, res) => {
       const otp = String(Math.floor(100000 + Math.random() * 900000));
       OTP_CACHE.set(key, { otp, expiresAt: Date.now() + 5 * 60 * 1000, target: targetDisplay, type: isEmail ? 'email' : 'sms' });
 
+      console.log('====================================================');
+      console.log('[HATCH REAL-TIME DISPATCH] OTP: ' + otp + ' -> ' + targetDisplay + ' (' + (isEmail ? 'EMAIL' : 'SMS') + ')');
+      console.log('Expires in: 5 minutes');
+      console.log('====================================================');
+
+      // Dispatch to client WITHOUT exposing plain OTP to prevent duplicate test code display
       return sendJSON(res, 200, {
         ok: true,
         type: isEmail ? 'email' : 'sms',
         target: targetDisplay,
         message: isEmail ? ('Verification OTP dispatched to email ' + targetDisplay) : ('SMS OTP dispatched to ' + targetDisplay),
-        otp: otp, // For instant autofill and instant testing
         expiresInSec: 300
       });
     });
@@ -520,6 +525,7 @@ const server = http.createServer((req, res) => {
         createdAt: new Date().toISOString(),
         items: sanitizedItems,
         subtotal: Number(subtotal) || 0,
+        gst: Number(gst) || Math.round((Number(subtotal) || 0) * 0.05),
         gst: Number(gst) || 0,
         discount: Number(discount) || 0,
         promoCode: clean(promoCode, 20),

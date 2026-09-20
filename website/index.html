@@ -4224,6 +4224,160 @@
     font-size: 12px;
   }
 
+
+  /* ================= HIGH-CONTRAST LUXURY MENU COLOR GRADING ================= */
+  .panel.light, .panel.dark {
+    background: #08100b !important;
+    color: #f5ede1 !important;
+  }
+
+  .dish-list, .finale-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
+    gap: 20px !important;
+    margin-top: 28px !important;
+  }
+
+  .dish {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #0f1c15 !important;
+    border: 1px solid rgba(230, 184, 76, 0.25) !important;
+    border-radius: 18px !important;
+    padding: 22px 24px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    position: relative !important;
+  }
+
+  .dish:hover {
+    transform: translateY(-4px) !important;
+    border-color: #f5c542 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(230, 184, 76, 0.3) !important;
+    background: #14281e !important;
+  }
+
+  .dish-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .diet-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .diet-badge.veg {
+    background: rgba(34, 197, 94, 0.18);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+  }
+  .diet-badge.non-veg {
+    background: rgba(239, 68, 68, 0.18);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+  }
+  .diet-badge.vegan {
+    background: rgba(16, 185, 129, 0.18);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  .dish-badge.gold {
+    background: rgba(245, 197, 66, 0.15);
+    color: #f5c542;
+    border: 1px solid rgba(245, 197, 66, 0.35);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .dish-name {
+    font-family: var(--serif) !important;
+    font-weight: 700 !important;
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    color: #ffffff !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.01em !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+  }
+
+  .dish-desc {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    color: #cbd5e1 !important;
+    opacity: 1 !important;
+    margin: 0 0 16px 0 !important;
+    flex-grow: 1 !important;
+    font-weight: 400 !important;
+  }
+
+  .dish-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 14px;
+    margin-top: auto;
+  }
+
+  .dish-price {
+    font-family: var(--serif) !important;
+    font-weight: 800 !important;
+    font-size: 21px !important;
+    color: #f5c542 !important;
+    text-shadow: 0 0 12px rgba(245, 197, 66, 0.4) !important;
+    white-space: nowrap !important;
+  }
+
+  .btn-quick-add {
+    background: linear-gradient(135deg, #e6b84c, #c4942e) !important;
+    border: none !important;
+    color: #070d0a !important;
+    font-weight: 700 !important;
+    font-size: 12.5px !important;
+    padding: 8px 16px !important;
+    border-radius: 999px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 14px rgba(230, 184, 76, 0.3) !important;
+  }
+  .btn-quick-add:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 6px 20px rgba(230, 184, 76, 0.5) !important;
+    background: #f5c542 !important;
+  }
+
+  .cuisine-name {
+    font-family: var(--serif) !important;
+    font-size: clamp(28px, 3.2vw, 42px) !important;
+    font-weight: 800 !important;
+    color: #f5c542 !important;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 20px rgba(245,197,66,0.3) !important;
+    margin: 0 0 8px 0 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  .cuisine-origin {
+    font-size: 16px !important;
+    color: #e2e8f0 !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    font-weight: 450 !important;
+    max-width: 65ch !important;
+  }
+
 </style>
 </head>
 <body>
@@ -5329,7 +5483,88 @@
     </svg>
   </div>
 
-  <div class="panel finale" id="sweet">
+  
+  <!-- ================= HATCH CRAFT BURGER BAR ================= -->
+  <div class="panel dark" id="burgers" style="--accent:var(--yolk)">
+    <div class="wrap">
+      <div class="panel-head" data-reveal>
+        <h2 class="cuisine-name">Hatch Craft Burgers &amp; Sliders</h2>
+        <p class="cuisine-origin">Buttered brioche, smashed tenderloin patties, and house-fermented secret sauce on the flat top.</p>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="burger-double-smash" data-accent="yolk">
+          <div class="dish-header-row">
+            <span class="diet-badge non-veg">🍗 Non-Veg</span>
+            <span class="dish-badge gold">Signature Smash</span>
+          </div>
+          <h3 class="dish-name">The Hatch Double Smash Cheeseburger</h3>
+          <p class="dish-desc">Two smashed tenderloin patties seared with crispy lacy edges, double aged yellow cheddar, bread &amp; butter pickles, secret Hatch sauce, toasted brioche bun.</p>
+          <div class="dish-bottom-row">
+            <span class="dish-price">₹460</span>
+            <button type="button" class="btn-quick-add" onclick="event.stopPropagation(); openModalFor(this.closest('.dish'))">+ Customize &amp; Add</button>
+          </div>
+        </div>
+
+        <div class="dish" data-reveal data-id="burger-nashville-chicken" data-accent="yolk">
+          <div class="dish-header-row">
+            <span class="diet-badge non-veg">🍗 Non-Veg</span>
+            <span class="dish-badge gold">Fiery Crisp</span>
+          </div>
+          <h3 class="dish-name">Crispy Nashville Hot Chicken Burger</h3>
+          <p class="dish-desc">Buttermilk-brined fried chicken thigh dunked in spiced cayenne hot oil, creamy southern slaw, dill pickles, chipotle aioli, buttered bun.</p>
+          <div class="dish-bottom-row">
+            <span class="dish-price">₹440</span>
+            <button type="button" class="btn-quick-add" onclick="event.stopPropagation(); openModalFor(this.closest('.dish'))">+ Customize &amp; Add</button>
+          </div>
+        </div>
+
+        <div class="dish" data-reveal data-id="burger-truffle-bacon" data-accent="yolk">
+          <div class="dish-header-row">
+            <span class="diet-badge non-veg">🍗 Non-Veg</span>
+            <span class="dish-badge gold">Gourmet Luxury</span>
+          </div>
+          <h3 class="dish-name">Truffle Umami Bacon &amp; Cheddar Burger</h3>
+          <p class="dish-desc">Thick smashed patty, crispy smoked bacon rashers, truffle gouda melt, slow-cooked balsamic onions, house black truffle aioli.</p>
+          <div class="dish-bottom-row">
+            <span class="dish-price">₹540</span>
+            <button type="button" class="btn-quick-add" onclick="event.stopPropagation(); openModalFor(this.closest('.dish'))">+ Customize &amp; Add</button>
+          </div>
+        </div>
+
+        <div class="dish" data-reveal data-id="burger-pulled-jackfruit" data-accent="yolk">
+          <div class="dish-header-row">
+            <span class="diet-badge vegan">🌿 100% Vegan</span>
+            <span class="dish-badge gold">Plant-Based</span>
+          </div>
+          <h3 class="dish-name">Smoked Pulled Jackfruit &amp; Guacamole Burger</h3>
+          <p class="dish-desc">8-hour hickory-smoked pulled jackfruit in tangy BBQ reduction, fresh avocado guacamole, purple cabbage slaw on a toasted vegan charcoal bun.</p>
+          <div class="dish-bottom-row">
+            <span class="dish-price">₹390</span>
+            <button type="button" class="btn-quick-add" onclick="event.stopPropagation(); openModalFor(this.closest('.dish'))">+ Customize &amp; Add</button>
+          </div>
+        </div>
+
+        <div class="dish" data-reveal data-id="burger-panko-paneer" data-accent="yolk">
+          <div class="dish-header-row">
+            <span class="diet-badge veg">🌱 Veg</span>
+            <span class="dish-badge gold">Crispy Classic</span>
+          </div>
+          <h3 class="dish-name">Crispy Panko Paneer &amp; Chimichurri Burger</h3>
+          <p class="dish-desc">Golden panko-crusted fresh cottage cheese steak, herbaceous Argentine chimichurri relish, melted cheddar slice, roasted garlic tomato jam.</p>
+          <div class="dish-bottom-row">
+            <span class="dish-price">₹380</span>
+            <button type="button" class="btn-quick-add" onclick="event.stopPropagation(); openModalFor(this.closest('.dish'))">+ Customize &amp; Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crack-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <polygon points="0,34 0,10 60,18 130,4 205,20 280,8 350,22 430,6 505,18 580,2 660,20 735,10 810,24 890,6 965,18 1040,4 1120,22 1200,10 1200,34" fill="#0b140e"/>
+    </svg>
+  </div>
+<div class="panel finale" id="sweet">
     <div class="wrap">
       <div class="panel-head" data-reveal>
         <h2 class="cuisine-name">Sweet &amp; Cellar</h2>
@@ -6076,10 +6311,7 @@
 
         <button class="auth-submit-btn" onclick="submitOtpCode()">Verify & Login ➔</button>
 
-        <div class="otp-test-badge" onclick="autofillDemoOtp()">
-          <span>⚡ <b>Instant Test Code:</b> <span id="demoOtpCode">123456</span></span>
-          <span style="text-decoration:underline;">Click to Auto-fill</span>
-        </div>
+        
         
         <div style="text-align:center; margin-top:14px;">
           <button style="background:transparent; border:none; color:#cbd5e1; font-size:0.82rem; cursor:pointer; text-decoration:underline;" onclick="resetPhoneStep()">← Change mobile number</button>
@@ -6473,6 +6705,29 @@
   /* ================= DISH DATA ================= */
   /* shape: [origin, icon, ingredients[], sizes[[label,price],...], proteinType, addOnType, spiceType] */
   var DISH_DATA = {
+
+    // --- Naples Table: Wood-Fired Sourdough Pizzas ---
+    "napoli-margherita-bufala": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["San Marzano DOP tomatoes", "fresh buffalo mozzarella", "sweet basil", "cold-pressed olive oil", "mother sourdough"], [["11-Inch Regular", 480], ["13-Inch Large", 640]], "pizza_crust", "pizza_addons", "mild"],
+    "napoli-truffle-burrata": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["roasted portobello mushrooms", "creamy Puglia burrata", "white truffle oil", "parmesan", "fresh thyme"], [["11-Inch Regular", 640], ["13-Inch Large", 790]], "pizza_crust", "pizza_addons", "mild"],
+    "napoli-pepperoni-honey": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["smoked pork pepperoni", "calabrian chili", "wild hot honey drizzle", "mozzarella", "oregano"], [["11-Inch Regular", 680], ["13-Inch Large", 840]], "pizza_crust", "pizza_addons", "spicy"],
+    "napoli-bbq-chicken": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["charred BBQ chicken thigh", "smoked scamorza cheese", "pickled jalapeños", "caramelized red onions"], [["11-Inch Regular", 590], ["13-Inch Large", 740]], "pizza_crust", "pizza_addons", "curry"],
+    "napoli-quattro-formaggi": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["creamy gorgonzola", "aged parmesan", "taleggio", "fresh mozzarella", "rosemary honey"], [["11-Inch Regular", 620], ["13-Inch Large", 780]], "pizza_crust", "pizza_addons", "mild"],
+    "napoli-paneer-tikka-pizza": ["Naples Table · Wood-Fired Sourdough Pizza", "flatbread", ["tandoor paneer tikka", "red onion petals", "charred bell peppers", "mozzarella", "cilantro drizzle"], [["11-Inch Regular", 520], ["13-Inch Large", 680]], "pizza_crust", "pizza_addons", "curry"],
+
+    // --- Hatch Craft Burger Bar ---
+    "burger-double-smash": ["Hatch Craft Burger Bar · Flat-Top Griddle", "bowl", ["double smashed beef/tenderloin patties", "aged cheddar melt", "dill pickles", "secret Hatch sauce", "brioche bun"], [["Single Patty", 380], ["Double Smash", 460], ["Triple Beast", 580]], "burger_bun", "burger_addons", "mild"],
+    "burger-nashville-chicken": ["Hatch Craft Burger Bar · Crispy Fryer", "bowl", ["buttermilk fried chicken thigh", "fiery nashville hot oil", "creamy southern slaw", "butter-toasted brioche"], [["Classic Hot", 440], ["Double Nashville", 540]], "burger_bun", "burger_addons", "spicy"],
+    "burger-truffle-bacon": ["Hatch Craft Burger Bar · Flat-Top Griddle", "bowl", ["thick smash patty", "crispy smoked bacon rashers", "truffle gouda", "balsamic onions", "black truffle aioli"], [["Regular", 540], ["Double Bacon", 660]], "burger_bun", "burger_addons", "mild"],
+    "burger-pulled-jackfruit": ["Hatch Craft Burger Bar · Plant-Based Counter", "bowl", ["8-hour hickory-smoked pulled jackfruit", "zesty avocado guacamole", "purple cabbage slaw", "vegan charcoal bun"], [["Regular", 390]], "burger_bun", "burger_addons", "mild"],
+    "burger-panko-paneer": ["Hatch Craft Burger Bar · Crispy Counter", "bowl", ["golden panko-crusted cottage cheese steak", "argentine chimichurri", "melted cheddar", "tomato jam"], [["Regular", 380], ["Double Patty", 480]], "burger_bun", "burger_addons", "curry"],
+
+    // --- Artisanal Gelato & Ice Creams ---
+    "icecream-bourbon-vanilla": ["Artisanal Ice Creams · Gelato Parlour", "bowl", ["Madagascar bourbon vanilla pods", "fresh Malabar dairy cream", "vanilla sugar crystals"], [["Single Scoop (Cup)", 240], ["Handmade Waffle Cone", 280], ["Takeaway Pint (500ml)", 580]], "icecream_serving", "icecream_toppings", "sweet"],
+    "icecream-dark-chocolate": ["Artisanal Ice Creams · Gelato Parlour", "bowl", ["70% Callebaut dark chocolate", "molten dark fudge ribbon", "roasted cocoa nibs"], [["Single Scoop (Cup)", 280], ["Handmade Waffle Cone", 320], ["Takeaway Pint (500ml)", 640]], "icecream_serving", "icecream_toppings", "sweet"],
+    "icecream-sicilian-pistachio": ["Artisanal Ice Creams · Gelato Parlour", "bowl", ["pure Sicilian Bronte pistachio paste", "roasted pistachio praline", "flaky sea salt"], [["Single Scoop (Cup)", 320], ["Handmade Waffle Cone", 360], ["Takeaway Pint (500ml)", 720]], "icecream_serving", "icecream_toppings", "sweet"],
+    "icecream-salted-caramel": ["Artisanal Ice Creams · Gelato Parlour", "bowl", ["fleur de sel caramel swirl", "crushed Lotus Biscoff cookies", "butter waffle crunch"], [["Single Scoop (Cup)", 290], ["Handmade Waffle Cone", 330], ["Takeaway Pint (500ml)", 680]], "icecream_serving", "icecream_toppings", "sweet"],
+    "icecream-mango-sorbet": ["Artisanal Ice Creams · Gelato Parlour", "bowl", ["100% Ratnagiri Alfonso mango purée", "passionfruit coulis", "refreshing lime zest", "vegan"], [["Single Scoop (Cup)", 260], ["Handmade Waffle Cone", 300], ["Takeaway Pint (500ml)", 620]], "icecream_serving", "icecream_toppings", "sweet"],
+
     // The Levant
     "levant-muhammara-toast": ["The Levant · Beirut-style counter", "flatbread", ["walnut", "roasted red pepper", "pomegranate molasses", "sourdough"], [["Regular", 320], ["Large", 420]], "bread", "bakery", "mild"],
     "levant-lamb-kofta-bowl": ["The Levant · Beirut-style counter", "bowl", ["lamb", "freekeh", "pickled turnip", "garlic toum", "charcoal"], [["Regular", 560], ["Large Sharing", 680]], "meat", "savory", "curry"],
@@ -6607,6 +6862,24 @@
 
   // Preset customization catalogs
   var PROTEIN_CATALOG = {
+
+    pizza_crust: [
+      { name: "Hand-Tossed Sourdough Crust", price: 0 },
+      { name: "Thin & Crispy Roman Crust", price: 0 },
+      { name: "Cheese Burst Crust (+Melted Mozzarella)", price: 80 }
+    ],
+    burger_bun: [
+      { name: "Golden Toasted Brioche Bun", price: 0 },
+      { name: "Charcoal Sesame Bun", price: 20 },
+      { name: "Gluten-Free Artisan Bun", price: 40 },
+      { name: "Lettuce Wrap (Low-Carb / Keto)", price: 0 }
+    ],
+    icecream_serving: [
+      { name: "Chilled Porcelain Cup", price: 0 },
+      { name: "Handmade Butter Waffle Cone", price: 30 },
+      { name: "Loaded Sundae Glass Bowl", price: 50 }
+    ],
+
     curry_protein: [
       { name: "Farm Paneer / Veg", price: 0 },
       { name: "Organic Tofu", price: 0 },
@@ -6643,6 +6916,30 @@
   };
 
   var ADDONS_CATALOG = {
+
+    pizza_addons: [
+      { name: "Extra Fresh Buffalo Mozzarella", price: 70 },
+      { name: "Shaved Aged Parmesan Reggiano", price: 60 },
+      { name: "White Truffle Oil Drizzle", price: 70 },
+      { name: "Pickled Jalapeños & Kalamata Olives", price: 40 },
+      { name: "Hot Calabrian Chili Honey Drizzle", price: 45 }
+    ],
+    burger_addons: [
+      { name: "Extra Aged Yellow Cheddar Slice", price: 40 },
+      { name: "Crispy Smoked Bacon Rashers", price: 75 },
+      { name: "Sunny-Side Fried Farm Egg", price: 30 },
+      { name: "Caramelized Balsamic Onions", price: 35 },
+      { name: "Peri-Peri Seasoned Fries Combo", price: 80 }
+    ],
+    icecream_toppings: [
+      { name: "Warm Dark Chocolate Fudge Drizzle", price: 45 },
+      { name: "Warm Salted Caramel Drizzle", price: 40 },
+      { name: "Crushed Lotus Biscoff Crumble", price: 35 },
+      { name: "Roasted Almond Flakes & Praline", price: 40 },
+      { name: "Fudge Brownie Chunks", price: 50 },
+      { name: "Rainbow Sprinkles & Maraschino Cherry", price: 25 }
+    ],
+
     curry: [
       { name: "Extra Truffle Garlic Butter", price: 60 },
       { name: "Crispy Chili Oil Crunch", price: 35 },
@@ -7253,7 +7550,7 @@
       }
     }
     var taxable = Math.max(0, subtotal - discount);
-    var gst = Math.round(taxable * GST_RATE);
+    var gst = Math.round(taxable * 0.05); // Exact 5% GST (2.5% CGST + 2.5% SGST)
 
     var tip = 0;
     if (orderType === 'dine-in') {
@@ -8168,6 +8465,11 @@ function requestOtpCode() {
       document.getElementById('otpTargetPhone').textContent = '+91 ' + phoneVal;
       document.getElementById('phoneStep1').style.display = 'none';
       document.getElementById('phoneStep2').style.display = 'block';
+      for (var i = 0; i < 6; i++) {
+        var b = document.getElementById('otp_' + i);
+        if (b) b.value = '';
+      }
+      setTimeout(function(){ var f = document.getElementById('otp_0'); if(f) f.focus(); }, 150);
       // Auto focus first OTP digit
       setTimeout(function() {
         var first = document.getElementById('otp_0');
@@ -8868,16 +9170,14 @@ function requestOtpCode(type) {
               '<input type="text" class="otp-digit" maxlength="1" id="e_otp_5" onkeyup="handleEmailOtpInput(5, event)">' +
             '</div>' +
             '<button type="button" class="auth-submit-btn" onclick="submitEmailOtpCode()" style="margin-top:16px;">Verify Email &amp; Login ➔</button>' +
-            '<div class="otp-test-badge" onclick="autofillEmailDemoOtp()" style="margin-top:12px; cursor:pointer; font-size:12px; color:#e6b84c;">' +
-              '<span>⚡ Test Code: <b>' + lastDispatchedOtp + '</b> (Click to Auto-fill)</span>' +
-            '</div>' +
+            '' +
           '</div>';
           setTimeout(function(){ var f = document.getElementById('e_otp_0'); if(f) f.focus(); }, 150);
         }
       }
 
       // Display live notification banner with instant autofill
-      showLiveOtpBanner(isEmail ? 'Email' : 'SMS', inputVal, lastDispatchedOtp);
+      // OTP dispatched via SMS/Email directly
       startOtpTimer();
     } else {
       showToast(data.error || 'Failed to dispatch verification code', '⚠️');
@@ -8885,7 +9185,7 @@ function requestOtpCode(type) {
   })
   .catch(function(err) {
     lastDispatchedOtp = '123456';
-    showLiveOtpBanner(isEmail ? 'Email' : 'SMS', inputVal, '123456');
+    // OTP dispatched via SMS/Email directly
     var p1 = document.getElementById('phoneStep1');
     var p2 = document.getElementById('phoneStep2');
     if (p1) p1.style.display = 'none';
@@ -9048,7 +9348,7 @@ function processPaymentAndDispatch(method) {
     return;
   }
 
-  var btn = event ? event.target : null;
+  var btn = (typeof event !== 'undefined' && event) ? event.target : null;
   if (btn) {
     btn.disabled = true;
     btn.textContent = 'Verifying & Processing… ⏳';

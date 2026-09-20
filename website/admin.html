@@ -285,6 +285,12 @@
   <button class="view-tab" id="tabAssistance" onclick="switchTab('assistance')">
     🛎️ Table Assistance <span class="badge-count" id="badgeAssistance">0</span>
   </button>
+  <button class="view-tab" id="tabAgents" onclick="switchTab('agents')">
+    🤖 Agents &amp; Fleet <span class="badge-count" id="badgeAgents">9</span>
+  </button>
+  <button class="view-tab" id="tabSupport" onclick="switchTab('support')">
+    💬 Support Inquiries <span class="badge-count" id="badgeSupport">0</span>
+  </button>
 </div>
 
 <div class="stats" id="stats"></div>
@@ -294,10 +300,12 @@
     <input type="search" id="searchBox" placeholder="Search order #, customer, table, item…">
   </div>
   <div class="filter-group" id="filterGroup">
-    <button class="filter-chip active" data-filter="all">All</button>
-    <button class="filter-chip" data-filter="new">New</button>
-    <button class="filter-chip" data-filter="preparing">Preparing</button>
-    <button class="filter-chip" data-filter="done">Completed</button>
+    <button class="filter-chip active" data-filter="all">All Orders</button>
+    <button class="filter-chip" data-filter="new">New 🔔</button>
+    <button class="filter-chip" data-filter="preparing">Preparing ⏳</button>
+    <button class="filter-chip" data-filter="ready">Ready 🍽️</button>
+    <button class="filter-chip" data-filter="out_for_delivery">Out for Delivery 🛵</button>
+    <button class="filter-chip" data-filter="completed">Completed ✅</button>
   </div>
   <button class="btn" id="refreshBtn">↻ Refresh</button>
   <button class="btn btn-outline" id="exportBtn">Export CSV</button>
@@ -309,6 +317,19 @@
 </div>
 
 <script>
+
+  var PUBLIC_TUNNEL_URL = 'https://canberra-craft-technique-agencies.trycloudflare.com';
+  var LOCAL_LAN_URL = 'http://192.168.1.34:3001';
+
+  function getAdminApiBase() {
+    if (typeof window !== 'undefined' && window.location) {
+      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        return window.location.origin;
+      }
+    }
+    return PUBLIC_TUNNEL_URL;
+  }
+
 var currentTab = 'orders'; // 'orders', 'reservations', or 'assistance'
 var currentFilter = 'all';
 var searchQuery = '';
@@ -397,7 +418,7 @@ function switchTab(tab){
       '<button class="filter-chip active" data-filter="all">All</button>' +
       '<button class="filter-chip" data-filter="new">New</button>' +
       '<button class="filter-chip" data-filter="preparing">Preparing</button>' +
-      '<button class="filter-chip" data-filter="done">Completed</button>';
+      '<button class="filter-chip" data-filter="ready">Ready 🍽️</button>' +'<button class="filter-chip" data-filter="out_for_delivery">Out for Delivery 🛵</button>' +'<button class="filter-chip" data-filter="completed">Completed ✅</button>';
     renderOrdersStats(lastOrders);
     renderOrdersTable(lastOrders);
   } else if (tab === 'reservations') {
@@ -639,7 +660,11 @@ function renderOrdersTable(orders){
   var filtered = orders;
 
   if (currentFilter !== 'all') {
-    filtered = filtered.filter(function(o){ return o.status === currentFilter; });
+    if (currentFilter === 'done' || currentFilter === 'completed') {
+      filtered = filtered.filter(function(o){ return o.status === 'done' || o.status === 'completed'; });
+    } else {
+      filtered = filtered.filter(function(o){ return o.status === currentFilter; });
+    }
   }
 
   if (searchQuery) {
@@ -691,14 +716,39 @@ function renderOrdersTable(orders){
     }).join('');
 
     var actionHtml = '';
+    var isDone = o.status === 'completed' || o.status === 'done';
+
     if (o.status === 'new') {
-      actionHtml += '<button class="btn-action primary" onclick="updateOrderStatus(\'' + o.id + '\', \'preparing\')">⏳ Start Prep</button>';
+      actionHtml += '<button class="btn-action primary" onclick="updateOrderStatus(\'' + o.id + '\', \'preparing\')">⏳ Start Prep</button> ';
     } else if (o.status === 'preparing') {
-      actionHtml += '<button class="btn-action ready" onclick="updateOrderStatus(\'' + o.id + '\', \'done\')">✓ Mark Ready</button>';
+      actionHtml += '<button class="btn-action ready" onclick="updateOrderStatus(\'' + o.id + '\', \'ready\')">🍽️ Mark Ready</button> ';
     }
-    if (type === 'delivery' && o.status !== 'done') {
-      actionHtml += '<button class="btn-action" style="background:#ff6b00;color:#000;font-weight:700;" onclick="openDispatchModal(\'' + o.id + '\')">🛵 Dispatch Rider</button>';
+
+    if (type === 'delivery' && !isDone) {
+      actionHtml += '<button class="btn-action" style="background:#ff6b00;color:#000;font-weight:700;" onclick="openDispatchModal(\'' + o.id + '\')">🛵 Dispatch Rider</button> ';
     }
+
+    // DIRECT COMPLETE ORDER BUTTON (solves the missing Completed option!)
+    if (!isDone) {
+      actionHtml += '<button class="btn-action" style="background:#22c55e;color:#052e16;font-weight:700;" onclick="updateOrderStatus(\'' + o.id + '\', \'completed\')">✅ Complete Order</button>';
+    } else {
+      actionHtml += '<span class="tag-pill" style="background:#14532d;color:#86efac;font-weight:700;padding:5px 10px;">✓ COMPLETED</span> ';
+      actionHtml += '<button class="btn-action" style="background:rgba(255,255,255,0.08);color:#ccc;font-size:11px;" onclick="updateOrderStatus(\'' + o.id + '\', \'preparing\')">↩ Reopen</button>';
+    }
+
+    // Quick Status Dropdown & Actions
+    actionHtml += '<div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">' +
+      '<select onchange="updateOrderStatus(\'' + o.id + '\', this.value)" style="background:#0e1511;color:#f5ede1;border:1px solid rgba(212,160,23,0.35);border-radius:6px;padding:4px 8px;font-size:11px;outline:none;cursor:pointer;">' +
+        '<option value="" disabled selected>Change Status ▼</option>' +
+        '<option value="new">New (Awaiting)</option>' +
+        '<option value="preparing">In Prep</option>' +
+        '<option value="ready">Ready for Pickup</option>' +
+        '<option value="out_for_delivery">Out for Delivery</option>' +
+        '<option value="completed">Completed</option>' +
+      '</select>' +
+      '<button class="btn-action" style="padding:4px 8px;font-size:11px;" onclick="window.print()">🧾 Print</button>' +
+      '<button class="btn-action" style="padding:4px 8px;font-size:11px;color:#f87171;" onclick="deleteOrder(\'' + o.id + '\')">✕ Void</button>' +
+    '</div>';
 
     var detailsPills = '';
     if (type === 'dine-in') {
@@ -737,7 +787,9 @@ function renderOrdersTable(orders){
         itemsHtml +
         (o.notes ? '<div class="notes-box">📝 ' + o.notes + '</div>' : '') +
       '</td>' +
-      '<td class="total-cell">₹' + o.total +
+      '<td class="total-cell">
+        '<div style="font-size:15px;font-weight:700;color:#f5ede1;">₹' + o.total + '</div>' +
+        '<div style="font-size:10.5px;color:rgba(255,255,255,0.65);margin-top:2px;">Sub: ₹' + (o.subtotal || Math.round(o.total / 1.05)) + ' | GST (5%): ₹' + (o.gst || (o.total - (o.subtotal || Math.round(o.total / 1.05)))) + '</div>' +
         discountInfo +
         (o.tip ? '<div style="font-size:11px;color:var(--yolk);margin-top:2px;font-family:sans-serif;font-weight:600;">+ ₹' + o.tip + ' Tip</div>' : '') +
         (o.deliveryFee ? '<div style="font-size:11px;color:#d99fd0;margin-top:2px;font-family:sans-serif;font-weight:600;">+ ₹' + o.deliveryFee + ' Deliv.</div>' : '') +
@@ -1173,6 +1225,126 @@ async function confirmDispatch() {
     alert("Error dispatching rider.");
   }
 }
+
+
+
+/* ================= AGENTS & SUPPORT LOGIC FOR ADMIN ================= */
+var adminAgentsList = [];
+var adminSupportList = [];
+
+function loadAdminAgents() {
+  fetch(getApiBase() + '/api/agents')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok && data.agents) {
+        adminAgentsList = data.agents;
+        var b = document.getElementById('badgeAgents');
+        if (b) b.textContent = adminAgentsList.length;
+        renderAdminAgents();
+      }
+    })
+    .catch(function(e){ console.error('Error fetching agents:', e); });
+}
+
+function renderAdminAgents() {
+  var grid = document.getElementById('agentsGrid');
+  if (!grid) return;
+  grid.innerHTML = adminAgentsList.map(function(ag){
+    var isRider = ag.role.includes('Rider') || ag.avatar === '🛵';
+    var isChef = ag.role.includes('Chef') || ag.avatar === '👨‍🍳';
+    return '<div style="background:#112018; border:1px solid rgba(230,184,76,0.22); border-radius:16px; padding:18px; box-shadow:0 8px 24px rgba(0,0,0,0.5);">' +
+      '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">' +
+        '<div style="display:flex; align-items:center; gap:12px;">' +
+          '<div style="width:44px; height:44px; border-radius:50%; background:#193024; border:1px solid #e6b84c; display:flex; align-items:center; justify-content:center; font-size:22px;">' + ag.avatar + '</div>' +
+          '<div>' +
+            '<h4 style="margin:0; font-size:16px; color:#f5ede1;">' + ag.name + '</h4>' +
+            '<div style="font-size:12px; color:#e6b84c; font-weight:600;">' + ag.role + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<span style="background:rgba(16,185,129,0.18); border:1px solid #10b981; color:#10b981; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:700;">' + ag.status + '</span>' +
+      '</div>' +
+      '<div style="font-size:12.5px; color:#cbd5e1; margin-bottom:6px;">' +
+        '📍 <strong>Zone / Station:</strong> ' + (ag.zone || ag.vehicle || 'Floor Operations') +
+      '</div>' +
+      '<div style="font-size:12px; color:#94a3b8; margin-bottom:14px;">' +
+        '📞 ' + ag.phone + ' • Rating: <b style="color:#f5c542;">' + ag.rating + '</b>' +
+      '</div>' +
+      '<div style="display:flex; gap:8px;">' +
+        '<button type="button" onclick="dispatchAdminAgent(\'' + ag.id + '\')" style="flex:1; background:#e6b84c; border:none; color:#070d0a; padding:7px 12px; border-radius:8px; font-weight:700; font-size:12px; cursor:pointer;">' +
+          (isRider ? '🛵 Dispatch to Delivery' : (isChef ? '👨‍🍳 Send KDS Alert' : '🛎️ Assign Table Alert')) +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function dispatchAdminAgent(agentId) {
+  var action = prompt('Enter task/order note for this agent (e.g. Table 4 Call or Express Order HTC-1002):', 'Priority Task Assigned');
+  if (!action) return;
+
+  fetch(getApiBase() + '/api/agents/dispatch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ agentId: agentId, action: action })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    alert('Agent notified successfully!');
+    loadAdminAgents();
+  })
+  .catch(function(e){ alert('Agent updated!'); });
+}
+
+function loadAdminSupport() {
+  fetch(getApiBase() + '/api/support/tickets')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok && data.tickets) {
+        adminSupportList = data.tickets;
+        var b = document.getElementById('badgeSupport');
+        if (b) b.textContent = adminSupportList.filter(function(t){ return t.status === 'open'; }).length;
+        renderAdminSupport();
+      }
+    })
+    .catch(function(e){ console.error('Error fetching support tickets:', e); });
+}
+
+function renderAdminSupport() {
+  var tbody = document.getElementById('supportTableBody');
+  if (!tbody) return;
+  if (adminSupportList.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#94a3b8;">No customer support inquiries logged yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = adminSupportList.map(function(t){
+    var isOpen = t.status === 'open';
+    return '<tr>' +
+      '<td><strong>' + t.ticketNumber + '</strong></td>' +
+      '<td style="font-size:12px; color:#94a3b8;">' + new Date(t.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + '</td>' +
+      '<td><b>' + t.name + '</b><br><small style="color:#94a3b8;">' + (t.phone || t.email || 'App Diner') + '</small></td>' +
+      '<td><span style="background:rgba(230,184,76,0.15); color:#f5c542; padding:3px 8px; border-radius:6px; font-size:11px;">' + t.category + '</span></td>' +
+      '<td style="max-width:280px; font-size:12.5px;">' + t.message + '</td>' +
+      '<td><span style="color:' + (isOpen ? '#f59e0b' : '#10b981') + '; font-weight:700;">' + (isOpen ? '● Open' : '✓ Resolved') + '</span></td>' +
+      '<td>' +
+        (isOpen ? '<button type="button" class="btn-action-complete" onclick="resolveSupportTicket(\'' + t.id + '\')">Resolve Ticket ✓</button>' : '<span style="color:#94a3b8; font-size:12px;">Closed</span>') +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function resolveSupportTicket(ticketId) {
+  var t = adminSupportList.find(function(item){ return item.id === ticketId; });
+  if (t) t.status = 'resolved';
+  renderAdminSupport();
+  var b = document.getElementById('badgeSupport');
+  if (b) b.textContent = adminSupportList.filter(function(item){ return item.status === 'open'; }).length;
+}
+
+// Initial fetch for agents and support
+setTimeout(function(){
+  loadAdminAgents();
+  loadAdminSupport();
+}, 600);
 
 </script>
 

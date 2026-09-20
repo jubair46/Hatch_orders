@@ -62,5 +62,29 @@
         "isDefault": true
       }
     ]
+  },
+  {
+    "id": "usr-c91ad406",
+    "name": "Shaik Jubair",
+    "phone": "+91 8688906147",
+    "email": "",
+    "createdAt": "2026-09-20T11:15:32.364Z",
+    "addresses": [
+      {
+        "id": "addr-1789902932364",
+        "label": "Home",
+        "icon": "🏠",
+        "door": "Flat 101, Prestige Court",
+        "street": "100 Feet Road, Indiranagar",
+        "landmark": "Near Indiranagar Metro",
+        "zone": "Indiranagar (100ft Rd)",
+        "fullAddress": "Flat 101, Prestige Court, 100 Feet Road, Indiranagar, Bengaluru 560038",
+        "instructions": [
+          "Ring doorbell",
+          "Leave at door"
+        ],
+        "isDefault": true
+      }
+    ]
   }
 ]
