@@ -790,7 +790,7 @@ function renderOrdersTable(orders){
         itemsHtml +
         (o.notes ? '<div class="notes-box">📝 ' + o.notes + '</div>' : '') +
       '</td>' +
-      '<td class="total-cell">
+      '<td class="total-cell">' +
         '<div style="font-size:15px;font-weight:700;color:#f5ede1;">₹' + o.total + '</div>' +
         '<div style="font-size:10.5px;color:rgba(255,255,255,0.65);margin-top:2px;">Sub: ₹' + (o.subtotal || Math.round(o.total / 1.05)) + ' | GST (5%): ₹' + (o.gst || (o.total - (o.subtotal || Math.round(o.total / 1.05)))) + '</div>' +
         discountInfo +

@@ -24,8 +24,12 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Configure Android SDK
+        run: |
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "/usr/local/lib/android/sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "/usr/local/lib/android/sdk/platform-tools" >> $GITHUB_PATH
+          yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
       - name: Sync Web Assets to Android Assets
         run: |
@@ -41,7 +45,9 @@ jobs:
           cp icon-512.png android/app/src/main/assets/
 
       - name: Make Gradlew Executable
-        run: chmod +x android/gradlew
+        run: |
+          sed -i 's/\r$//' android/gradlew
+          chmod +x android/gradlew
 
       - name: Build Android Customer & Owner APKs
         working-directory: android
@@ -70,6 +76,7 @@ jobs:
       - name: Create GitHub Release with Customer & Owner APKs
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
+        continue-on-error: true
         with:
           tag_name: v1.2.0
           name: "Hatch Dual Apps v1.2.0 — Customer App & Owner POS (Android + Desktop)"
@@ -81,18 +88,18 @@ jobs:
             ---
 
             ### 🍽️ 1. Hatch Customer App (`hatch-customer-v1.2.0.apk`)
-            * **Authentication Studio**: Login with Phone Number + 6-digit OTP verification (with instant auto-fill demo badge) or Email & Password.
-            * **Swiggy / Zomato Delivery Engine**: Saved address manager (`🏠 Home`, `🏢 Work`, `📍 Other`) with doorstep instructions (`🔔 Ring Doorbell`, `🤫 Don't ring, baby sleeping`, `🚪 Leave at door`, `🛡️ Leave with security`).
-            * **Real-Time Live GPS Courier Tracker**: Animated route map from Hatch Indiranagar, live moving delivery scooter marker, courier partner card (*Vikram Singh · 4.95 ★ · Ather 450X*), direct Call/WhatsApp courier actions, and live ETA countdown.
+            * **Authentication Studio**: Login with Phone Number + 6-digit OTP verification (with instant WhatsApp delivery and auto-fill badge) or Email & Password.
+            * **Swiggy / Zomato / District Delivery Engine**: Saved address manager (`🏠 Home`, `🏢 Work`, `📍 Other`) with doorstep instructions.
+            * **Real-Time Live GPS Courier Tracker**: Animated route map from Hatch Indiranagar, live courier partner card, and live ETA countdown.
             * **Tip Delivery Partner**: 1-click tips (`₹20`, `₹30`, `₹50`) where 100% goes directly to the courier.
             * **22-Page Master Cuisine Catalogue**: Indian Kitchen, Thai Orchid Counter, Kyoto Counter, Chengdu Fire, Bakery, and Drinks.
-            * **Dish Customization Studio**: 4-tier spice heat gauge, protein chooser, gourmet add-ons with real-time delta pricing, and bespoke chef preparation notes.
+            * **Dish Customization Studio**: 4-tier spice heat gauge, protein chooser, gourmet add-ons with real-time delta pricing.
 
             ---
 
             ### 👨‍🍳 2. Hatch Owner & Kitchen POS Console (`hatch-owner-v1.2.0.apk`)
             * **Dedicated Kitchen POS**: Fullscreen console for order management, audio chime alerts on new orders, and table steward call bell queue.
-            * **1-Click Courier Dispatch Console**: Assign available riders (*Vikram Singh · Ather 450X*, *Ramesh K.*, *Pooja M.*) with estimated arrival times that immediately sync with the customer's live tracking screen!
+            * **1-Click Courier Dispatch Console**: Assign available riders with estimated arrival times that immediately sync with the customer's live tracking screen!
             * **Thermal POS & Tax Printing**: Hardware-ready Kitchen Order Tickets (KOT) with dish customizations, and customer tax invoices.
             * **Sales & Revenue Dashboard**: Real-time order metrics and ticket sizes.
 
