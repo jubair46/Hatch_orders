@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ag-steward-1",
+    "name": "Karthik M.",
+    "role": "Head Steward",
+    "zone": "Indoor Dining Hall (Tables 1-8)",
+    "status": "Active on Floor",
+    "phone": "+91 98450 11223",
+    "rating": "4.9 ★",
+    "avatar": "🤵"
+  },
+  {
+    "id": "ag-steward-2",
+    "name": "Priya S.",
+    "role": "Senior Steward",
+    "zone": "Courtyard Terrace (Tables 9-16)",
+    "status": "Active on Floor",
+    "phone": "+91 98450 22334",
+    "rating": "4.95 ★",
+    "avatar": "👩‍💼"
+  },
+  {
+    "id": "ag-steward-3",
+    "name": "Rahul V.",
+    "role": "Steward & Sommelier",
+    "zone": "Private Mezzanine (Tables 17-24)",
+    "status": "Active on Floor",
+    "phone": "+91 98450 33445",
+    "rating": "4.88 ★",
+    "avatar": "🤵"
+  },
+  {
+    "id": "ag-chef-1",
+    "name": "Chef Kenji Sato",
+    "role": "Master Chef",
+    "zone": "Tokyo Ramen Bar (Counter 1)",
+    "status": "Live Cooking",
+    "phone": "+91 80 4920 1101",
+    "rating": "5.0 ★",
+    "avatar": "👨‍🍳"
+  },
+  {
+    "id": "ag-chef-2",
+    "name": "Chef Ali Mansour",
+    "role": "Master Chef",
+    "zone": "Beirut Mezze & Shawarma (Counter 2)",
+    "status": "Live Grilling",
+    "phone": "+91 80 4920 1102",
+    "rating": "4.95 ★",
+    "avatar": "👨‍🍳"
+  },
+  {
+    "id": "ag-chef-3",
+    "name": "Ustad Noman Qureshi",
+    "role": "Dum Master",
+    "zone": "Awadh Dum Biryani (Counter 3)",
+    "status": "Simmering Handi",
+    "phone": "+91 80 4920 1103",
+    "rating": "5.0 ★",
+    "avatar": "👨‍🍳"
+  },
+  {
+    "id": "ag-rider-1",
+    "name": "Vikram Singh",
+    "role": "Express Delivery Rider",
+    "vehicle": "Ather 450X · KA 03 EQ 2024",
+    "status": "On Delivery",
+    "phone": "+91 98860 77123",
+    "rating": "4.95 ★",
+    "avatar": "🛵"
+  },
+  {
+    "id": "ag-rider-2",
+    "name": "Ramesh Kumar",
+    "role": "Express Delivery Rider",
+    "vehicle": "Ola S1 Pro · KA 03 EN 9122",
+    "status": "Ready at Hub",
+    "phone": "+91 98860 12345",
+    "rating": "4.92 ★",
+    "avatar": "🛵"
+  },
+  {
+    "id": "ag-concierge",
+    "name": "Hatch AI Concierge",
+    "role": "Dining & Sommelier Agent",
+    "zone": "Digital Assistant (App & Web)",
+    "status": "Online 24/7",
+    "phone": "Instant Live Chat",
+    "rating": "5.0 ★",
+    "avatar": "🤖"
+  }
+]

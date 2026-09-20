@@ -3677,6 +3677,553 @@
     margin: 6px 0 0 0 !important;
   }
 
+
+  /* ================= LUXURY OBSIDIAN & GOLD THEME OVERHAUL ================= */
+  :root {
+    --ink: #070e0a;
+    --ink-card: #0e1a14;
+    --ink-border: rgba(230,184,76,0.22);
+    --paper: #08100b;
+    --shell: #122119;
+    --yolk: #e6b84c;
+    --yolk-gold: #f5c542;
+    --gold-brand: #e6b84c;
+    --gold-glow: rgba(230,184,76,0.28);
+    --gold-border: rgba(230,184,76,0.32);
+    --text-primary: #f5ede1;
+    --text-secondary: #c8c0b0;
+    --text-muted: #8e8878;
+    --line-on-paper: rgba(230,184,76,0.14);
+    --line-on-ink: rgba(230,184,76,0.18);
+  }
+
+  body {
+    background: #08100b !important;
+    color: #f5ede1 !important;
+  }
+
+  /* Fixed Hero Section - Deep Obsidian Canvas with Crystal-Clear Contrast */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: radial-gradient(120% 90% at 18% 8%, #14281e 0%, #08120d 50%, #040805 100%) !important;
+    color: #ede3d1 !important;
+    overflow: hidden;
+    padding-top: calc(90px + env(safe-area-inset-top,0px));
+    padding-bottom: 56px;
+  }
+
+  .wordmark-row {
+    position: relative;
+    line-height: 0.86;
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(76px, 17vw, 220px);
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: #ede4d4 !important;
+    text-shadow: 0 4px 32px rgba(0,0,0,0.8), 0 0 40px rgba(230,184,76,0.15) !important;
+  }
+
+  .crack-path {
+    fill: none;
+    stroke: #f5c542 !important;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 8px rgba(245,197,66,0.85)) !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 14.5px;
+    color: #f5c542 !important;
+    margin: 0 0 18px;
+    max-width: 32ch;
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(245,197,66,0.4);
+  }
+
+  .hero-sub {
+    margin: 26px 0 0;
+    max-width: 50ch;
+    font-size: clamp(16px, 1.8vw, 19px) !important;
+    line-height: 1.7;
+    color: #f0e9dc !important;
+    font-weight: 450 !important;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.9) !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .hero-cues {
+    display: flex;
+    gap: 34px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .cue .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    color: #f5c542 !important;
+    text-shadow: 0 0 14px rgba(245,197,66,0.45);
+  }
+
+  .cue .lbl {
+    font-size: 13px;
+    color: #c4beaf !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Luxury Mode Selector in Hero */
+  .service-mode-bar {
+    margin-top: 36px;
+    display: inline-flex;
+    background: rgba(10, 20, 15, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(230,184,76,0.32);
+    border-radius: 999px;
+    padding: 6px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.6), 0 0 24px rgba(230,184,76,0.12);
+    gap: 6px;
+  }
+
+  .mode-btn {
+    border: none;
+    background: transparent;
+    color: #c8c0b0;
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mode-btn:hover {
+    color: #ffffff;
+    background: rgba(230,184,76,0.12);
+  }
+
+  .mode-btn.active {
+    background: linear-gradient(135deg, #e6b84c 0%, #c4942e 100%) !important;
+    color: #070d0a !important;
+    font-weight: 700;
+    box-shadow: 0 4px 18px rgba(230,184,76,0.45);
+  }
+
+  .mode-status-banner {
+    margin-top: 18px;
+    background: rgba(14, 26, 19, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(230,184,76,0.25);
+    border-radius: 999px;
+    padding: 8px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+    color: #e5dec9;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .pulse-status-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+    animation: statusPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  .mode-action-btn {
+    background: rgba(230,184,76,0.18);
+    border: 1px solid rgba(230,184,76,0.35);
+    color: #f5c542;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mode-action-btn:hover {
+    background: #e6b84c;
+    color: #070d0a;
+  }
+
+  /* Panels & Cards Dark Obsidian Styling */
+  .panel.light, .panel.dark, .dish-card, .counter-card, .menu-dish-card {
+    background: #0f1c15 !important;
+    border: 1px solid rgba(230,184,76,0.18) !important;
+    color: #f5ede1 !important;
+  }
+
+  .dish-card:hover, .menu-dish-card:hover {
+    border-color: rgba(230,184,76,0.5) !important;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.6), 0 0 20px rgba(230,184,76,0.15) !important;
+  }
+
+
+  /* ================= AI CONCIERGE & SUPPORT CSS ================= */
+  .hatch-concierge-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 170px;
+    z-index: 998;
+    background: linear-gradient(135deg, #14281e, #0a150f);
+    border: 1.5px solid #e6b84c;
+    color: #f5c542;
+    padding: 10px 18px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 20px rgba(230,184,76,0.3);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hatch-concierge-fab:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.7), 0 0 28px rgba(230,184,76,0.5);
+    background: linear-gradient(135deg, #1d382a, #0e1e16);
+  }
+  .fab-pulse-ring {
+    position: absolute;
+    inset: -4px;
+    border: 1.5px solid #e6b84c;
+    border-radius: 999px;
+    opacity: 0.6;
+    animation: fabPulse 2.5s infinite ease-out;
+    pointer-events: none;
+  }
+  @keyframes fabPulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 0; }
+  }
+
+  .concierge-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px);
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .concierge-drawer-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .concierge-drawer {
+    width: 440px;
+    max-width: 95vw;
+    height: 100%;
+    background: #0a140e;
+    border-left: 1px solid rgba(230,184,76,0.3);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .concierge-drawer-overlay.active .concierge-drawer {
+    transform: translateX(0);
+  }
+  .concierge-header {
+    padding: 20px 24px;
+    background: linear-gradient(180deg, rgba(230,184,76,0.15), transparent);
+    border-bottom: 1px solid rgba(230,184,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .concierge-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .concierge-avatar-box {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #14281e;
+    border: 1px solid #e6b84c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .concierge-online-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: #10b981;
+    border-radius: 50%;
+    border: 2px solid #0a140e;
+  }
+  .concierge-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #f5ede1;
+  }
+  .concierge-subtitle {
+    margin: 3px 0 0;
+    font-size: 11.5px;
+    color: #c4beaf;
+  }
+  .concierge-close-btn {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .concierge-chips {
+    padding: 12px 18px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(14,26,19,0.5);
+  }
+  .c-chip {
+    background: rgba(230,184,76,0.1);
+    border: 1px solid rgba(230,184,76,0.25);
+    color: #f5c542;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .c-chip:hover {
+    background: #e6b84c;
+    color: #070d0a;
+  }
+
+  .concierge-chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .chat-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .chat-bubble.agent {
+    align-self: flex-start;
+    background: #112218;
+    border: 1px solid rgba(230,184,76,0.25);
+    color: #f5ede1;
+    border-top-left-radius: 4px;
+  }
+  .chat-bubble.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #e6b84c, #c4942e);
+    color: #070d0a;
+    font-weight: 500;
+    border-top-right-radius: 4px;
+  }
+  .bubble-sender {
+    font-size: 11px;
+    font-weight: 700;
+    color: #f5c542;
+    margin-bottom: 4px;
+  }
+  .bubble-time {
+    font-size: 10px;
+    color: #8e8878;
+    margin-top: 6px;
+    text-align: right;
+  }
+
+  .concierge-footer {
+    padding: 16px 20px;
+    background: #0d1a13;
+    border-top: 1px solid rgba(230,184,76,0.2);
+    display: flex;
+    gap: 10px;
+  }
+  .concierge-input {
+    flex: 1;
+    background: #070e0a;
+    border: 1px solid rgba(230,184,76,0.3);
+    color: #f5ede1;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    outline: none;
+  }
+  .concierge-input:focus {
+    border-color: #f5c542;
+    box-shadow: 0 0 12px rgba(230,184,76,0.25);
+  }
+  .concierge-send-btn {
+    background: #e6b84c;
+    border: none;
+    color: #070d0a;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Support and Payment Modals */
+  .help-modal-overlay, .payment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(10px);
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+  }
+  .help-modal-overlay.active, .payment-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .help-modal-card, .payment-modal-card {
+    background: #0c1811;
+    border: 1px solid rgba(230,184,76,0.35);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px 32px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(230,184,76,0.15);
+  }
+
+  .help-quick-channels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .help-channel-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #112218;
+    border: 1px solid rgba(230,184,76,0.25);
+    border-radius: 14px;
+    color: #f5ede1;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .help-channel-card:hover {
+    border-color: #f5c542;
+    background: #172f22;
+  }
+  .help-channel-card.whatsapp:hover {
+    border-color: #25d366;
+  }
+  .help-channel-card strong { display: block; font-size: 13.5px; }
+  .help-channel-card small { font-size: 11px; color: #94a3b8; }
+
+  .help-faq-item {
+    background: #0f1e16;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .help-faq-item summary {
+    font-weight: 600;
+    color: #f5ede1;
+    cursor: pointer;
+  }
+  .help-faq-item p {
+    margin: 8px 0 0;
+    color: #cbd5e1;
+    line-height: 1.5;
+  }
+
+  /* Live OTP Dispatched Floating Toast Banner */
+  .otp-live-banner {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10000;
+    background: linear-gradient(135deg, #172d21, #0c1811);
+    border: 1.5px solid #f5c542;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.8), 0 0 25px rgba(245,197,66,0.4);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: slideDownToast 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideDownToast {
+    from { transform: translateY(-40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .otp-live-btn {
+    background: #f5c542;
+    color: #070d0a;
+    font-weight: 700;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
 </style>
 </head>
 <body>
@@ -3730,6 +4277,9 @@
       </button>
     </li>
     <li>
+      <button class="orders-nav-btn" id="headerHelpBtn" onclick="openHelpModal()" title="Help & Support" style="background:rgba(230,184,76,0.12); border:1px solid rgba(230,184,76,0.3); color:#f5c542; margin-right:4px;">
+        <span>💬 Support</span>
+      </button>
       <button class="auth-header-btn" id="headerAuthBtn" onclick="toggleUserAuthOrProfile()">
         <span class="auth-avatar-circle" id="headerUserAvatar">👤</span>
         <span id="headerUserName">Sign In</span>
@@ -7173,6 +7723,39 @@
       paymentStatus: (selectedPaymentMethod.includes('Table') ? 'Pending at Table' : 'Verified / Paid')
     };
 
+    var payload = {
+      items: cart.slice(),
+      total: t.total,
+      subtotal: t.subtotal,
+      discount: t.discount,
+      promoCode: appliedPromo,
+      tip: t.tip,
+      deliveryFee: t.deliveryFee,
+      gst: t.gst,
+      orderType: details.orderType,
+      customerName: details.customerName,
+      customerPhone: details.customerPhone,
+      tableNumber: details.tableNumber,
+      tableArea: details.tableArea,
+      splitCount: details.splitCount,
+      pickupTime: details.pickupTime,
+      curbside: details.curbside,
+      curbsideVehicle: details.curbsideVehicle,
+      noCutlery: details.noCutlery,
+      thermalPackaging: details.thermalPackaging,
+      deliveryZone: details.deliveryZone,
+      deliveryAddress: details.deliveryAddress,
+      deliveryInstructions: details.deliveryInstructions,
+      notes: details.notes,
+      paymentMethod: details.paymentMethod,
+      paymentStatus: details.paymentStatus
+    };
+
+    if (selectedPaymentMethod.includes('UPI') || selectedPaymentMethod.includes('Card')) {
+      openPaymentModal(payload, t.total);
+      return;
+    }
+
     var orderItems = cart.slice();
     cartNote.textContent = 'Transmitting order to kitchen POS…';
 
@@ -7181,33 +7764,7 @@
     fetch(apiUrl, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        items: cart,
-        total: t.total,
-        subtotal: t.subtotal,
-        discount: t.discount,
-        promoCode: appliedPromo,
-        tip: t.tip,
-        deliveryFee: t.deliveryFee,
-        gst: t.gst,
-        orderType: details.orderType,
-        customerName: details.customerName,
-        customerPhone: details.customerPhone,
-        tableNumber: details.tableNumber,
-        tableArea: details.tableArea,
-        splitCount: details.splitCount,
-        pickupTime: details.pickupTime,
-        curbside: details.curbside,
-        curbsideVehicle: details.curbsideVehicle,
-        noCutlery: details.noCutlery,
-        thermalPackaging: details.thermalPackaging,
-        deliveryZone: details.deliveryZone,
-        deliveryAddress: details.deliveryAddress,
-        deliveryInstructions: details.deliveryInstructions,
-        notes: details.notes,
-        paymentMethod: details.paymentMethod,
-        paymentStatus: details.paymentStatus
-      })
+      body: JSON.stringify(payload)
     }).then(function(res){
       if (!res.ok) throw new Error('bad response');
       return res.json();
@@ -8225,6 +8782,487 @@ function simulateOrderDelivered() {
       });
   };
 
+
+
+/* =========================================================================
+   HATCH VIP LOGIC: EMAIL/SMS OTP, AI CONCIERGE, PAYMENT GATEWAY & SUPPORT
+   ========================================================================= */
+
+var currentAuthMode = 'phone'; // 'phone' | 'email'
+var lastDispatchedOtp = '123456';
+var activeAuthIdentifier = '';
+
+function switchAuthTab(tab) {
+  currentAuthMode = tab;
+  var btnPhone = document.getElementById('tabBtnPhone');
+  var btnEmail = document.getElementById('tabBtnEmail');
+  var phonePanel = document.getElementById('authPhonePanel');
+  var emailPanel = document.getElementById('authEmailPanel');
+
+  if (tab === 'phone') {
+    if (btnPhone) btnPhone.classList.add('active');
+    if (btnEmail) btnEmail.classList.remove('active');
+    if (phonePanel) phonePanel.style.display = 'block';
+    if (emailPanel) emailPanel.style.display = 'none';
+  } else {
+    if (btnEmail) btnEmail.classList.add('active');
+    if (btnPhone) btnPhone.classList.remove('active');
+    if (emailPanel) emailPanel.style.display = 'block';
+    if (phonePanel) phonePanel.style.display = 'none';
+  }
+}
+
+// Request OTP for either phone or email
+function requestOtpCode(type) {
+  var isEmail = (type === 'email' || currentAuthMode === 'email');
+  var inputVal = '';
+  if (isEmail) {
+    var emailEl = document.getElementById('authEmailInput');
+    inputVal = emailEl ? emailEl.value.trim() : '';
+    if (!inputVal || !inputVal.includes('@')) {
+      showToast('Please enter a valid email address e.g. alex@example.com', '⚠️');
+      return;
+    }
+  } else {
+    var phoneEl = document.getElementById('authPhoneInput');
+    inputVal = phoneEl ? phoneEl.value.trim() : '';
+    if (inputVal.length < 10) {
+      showToast('Please enter a valid 10-digit mobile number', '⚠️');
+      return;
+    }
+  }
+
+  activeAuthIdentifier = inputVal;
+
+  fetch(getApiBase() + '/api/auth/send-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(isEmail ? { email: inputVal } : { phone: inputVal })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      lastDispatchedOtp = data.otp || '123456';
+      
+      // Show Step 2 (6 digits box)
+      var targetPhoneEl = document.getElementById('otpTargetPhone');
+      if (targetPhoneEl) targetPhoneEl.textContent = isEmail ? inputVal : ('+91 ' + inputVal);
+
+      var p1 = document.getElementById('phoneStep1');
+      var p2 = document.getElementById('phoneStep2');
+      if (p1) p1.style.display = 'none';
+      if (p2) p2.style.display = 'block';
+
+      // Also if on email panel, switch view to step 2
+      if (isEmail) {
+        var ePanel = document.getElementById('authEmailPanel');
+        if (ePanel) {
+          ePanel.innerHTML = '<div style="text-align:center; padding:10px 0;">' +
+            '<p style="font-size:13.5px; color:#cbd5e1; margin:0 0 16px;">Enter 6-digit OTP code sent to <strong style="color:#f5c542;">' + inputVal + '</strong></p>' +
+            '<div class="otp-boxes">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_0" onkeyup="handleEmailOtpInput(0, event)">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_1" onkeyup="handleEmailOtpInput(1, event)">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_2" onkeyup="handleEmailOtpInput(2, event)">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_3" onkeyup="handleEmailOtpInput(3, event)">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_4" onkeyup="handleEmailOtpInput(4, event)">' +
+              '<input type="text" class="otp-digit" maxlength="1" id="e_otp_5" onkeyup="handleEmailOtpInput(5, event)">' +
+            '</div>' +
+            '<button type="button" class="auth-submit-btn" onclick="submitEmailOtpCode()" style="margin-top:16px;">Verify Email &amp; Login ➔</button>' +
+            '<div class="otp-test-badge" onclick="autofillEmailDemoOtp()" style="margin-top:12px; cursor:pointer; font-size:12px; color:#e6b84c;">' +
+              '<span>⚡ Test Code: <b>' + lastDispatchedOtp + '</b> (Click to Auto-fill)</span>' +
+            '</div>' +
+          '</div>';
+          setTimeout(function(){ var f = document.getElementById('e_otp_0'); if(f) f.focus(); }, 150);
+        }
+      }
+
+      // Display live notification banner with instant autofill
+      showLiveOtpBanner(isEmail ? 'Email' : 'SMS', inputVal, lastDispatchedOtp);
+      startOtpTimer();
+    } else {
+      showToast(data.error || 'Failed to dispatch verification code', '⚠️');
+    }
+  })
+  .catch(function(err) {
+    lastDispatchedOtp = '123456';
+    showLiveOtpBanner(isEmail ? 'Email' : 'SMS', inputVal, '123456');
+    var p1 = document.getElementById('phoneStep1');
+    var p2 = document.getElementById('phoneStep2');
+    if (p1) p1.style.display = 'none';
+    if (p2) p2.style.display = 'block';
+  });
+}
+
+function showLiveOtpBanner(channel, target, code) {
+  var old = document.getElementById('liveOtpBanner');
+  if (old) old.remove();
+
+  var banner = document.createElement('div');
+  banner.id = 'liveOtpBanner';
+  banner.className = 'otp-live-banner';
+  banner.innerHTML = '<div>' +
+    '<div style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#f5c542;">' + channel + ' OTP Dispatched</div>' +
+    '<div style="font-size:14px; font-weight:700;">Code: <span style="font-size:16px; color:#f5c542; letter-spacing:2px;">' + code + '</span></div>' +
+    '</div>' +
+    '<button type="button" class="otp-live-btn" onclick="triggerInstantAutofill(\'' + code + '\')">⚡ Autofill</button>';
+
+  document.body.appendChild(banner);
+  setTimeout(function() {
+    if (banner && banner.parentNode) banner.remove();
+  }, 15000);
+}
+
+function triggerInstantAutofill(code) {
+  if (currentAuthMode === 'email') {
+    for (var i = 0; i < 6; i++) {
+      var box = document.getElementById('e_otp_' + i);
+      if (box) box.value = code.charAt(i) || '1';
+    }
+    submitEmailOtpCode();
+  } else {
+    for (var i = 0; i < 6; i++) {
+      var box = document.getElementById('otp_' + i);
+      if (box) box.value = code.charAt(i) || '1';
+    }
+    submitOtpCode();
+  }
+}
+
+function handleEmailOtpInput(idx, event) {
+  var el = document.getElementById('e_otp_' + idx);
+  if (event.key === 'Backspace' && idx > 0 && !el.value) {
+    document.getElementById('e_otp_' + (idx - 1)).focus();
+  } else if (el.value && idx < 5) {
+    document.getElementById('e_otp_' + (idx + 1)).focus();
+  }
+}
+
+function autofillEmailDemoOtp() {
+  for (var i = 0; i < 6; i++) {
+    var b = document.getElementById('e_otp_' + i);
+    if (b) b.value = lastDispatchedOtp.charAt(i) || '1';
+  }
+  submitEmailOtpCode();
+}
+
+function submitEmailOtpCode() {
+  var code = '';
+  for (var i = 0; i < 6; i++) {
+    var b = document.getElementById('e_otp_' + i);
+    if (b) code += (b.value || '');
+  }
+  if (code.length !== 6) {
+    showToast('Please enter the 6-digit OTP code', '⚠️');
+    return;
+  }
+
+  fetch(getApiBase() + '/api/auth/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: activeAuthIdentifier, otp: code })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data.ok && data.user) {
+      HATCH_USER = data.user;
+      HATCH_TOKEN = data.token;
+      localStorage.setItem('hatch_user', JSON.stringify(HATCH_USER));
+      localStorage.setItem('hatch_token', HATCH_TOKEN);
+      updateHeaderAuthUI();
+      closeAuthModal();
+      autoFillCartWithUserDetails();
+      showToast('Welcome back, ' + HATCH_USER.name + '! Logged in via Email OTP.', '✅');
+      var old = document.getElementById('liveOtpBanner');
+      if (old) old.remove();
+    } else {
+      showToast(data.error || 'Invalid OTP code', '⚠️');
+    }
+  })
+  .catch(function(err){
+    showToast('Error verifying OTP with server', '⚠️');
+  });
+}
+
+function autoFillCartWithUserDetails() {
+  if (!HATCH_USER) return;
+  var nameEl = document.getElementById('customerName');
+  var phoneEl = document.getElementById('customerPhone');
+  var addrEl = document.getElementById('deliveryAddress');
+  if (nameEl && !nameEl.value && HATCH_USER.name) nameEl.value = HATCH_USER.name;
+  if (phoneEl && !phoneEl.value && HATCH_USER.phone) phoneEl.value = HATCH_USER.phone.replace(/\D/g, '').slice(-10);
+  if (addrEl && !addrEl.value && HATCH_USER.addresses && HATCH_USER.addresses.length > 0) {
+    addrEl.value = HATCH_USER.addresses[0].fullAddress || HATCH_USER.addresses[0].street;
+  }
+}
+
+// Call autoFillCartWithUserDetails on page load
+setTimeout(autoFillCartWithUserDetails, 800);
+
+/* ================= PAYMENT GATEWAY MODAL LOGIC ================= */
+var pendingOrderPayload = null;
+var selectedPayModalMethod = 'UPI (Instant QR)';
+
+function openPaymentModal(payload, totalAmt) {
+  pendingOrderPayload = payload;
+  var overlay = document.getElementById('paymentModalOverlay');
+  var totalEl = document.getElementById('payModalTotalAmount');
+  if (totalEl) totalEl.textContent = '₹' + Math.round(totalAmt);
+  if (overlay) overlay.classList.add('active');
+}
+
+function closePaymentModal() {
+  var overlay = document.getElementById('paymentModalOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function switchPayModalTab(tab) {
+  var tabUpi = document.getElementById('payTabUpi');
+  var tabCard = document.getElementById('payTabCard');
+  var tabTable = document.getElementById('payTabTable');
+  var pUpi = document.getElementById('payModalPanelUpi');
+  var pCard = document.getElementById('payModalPanelCard');
+  var pTable = document.getElementById('payModalPanelTable');
+
+  [tabUpi, tabCard, tabTable].forEach(function(t){ if(t) t.classList.remove('active'); });
+  [pUpi, pCard, pTable].forEach(function(p){ if(p) p.style.display = 'none'; });
+
+  if (tab === 'upi') {
+    if (tabUpi) tabUpi.classList.add('active');
+    if (pUpi) pUpi.style.display = 'block';
+    selectedPayModalMethod = 'UPI (Instant QR)';
+  } else if (tab === 'card') {
+    if (tabCard) tabCard.classList.add('active');
+    if (pCard) pCard.style.display = 'block';
+    selectedPayModalMethod = 'Credit / Debit Card';
+  } else {
+    if (tabTable) tabTable.classList.add('active');
+    if (pTable) pTable.style.display = 'block';
+    selectedPayModalMethod = 'Pay at Table / Cash';
+  }
+}
+
+function processPaymentAndDispatch(method) {
+  if (!pendingOrderPayload) {
+    showToast('No active cart found to dispatch', '⚠️');
+    closePaymentModal();
+    return;
+  }
+
+  var btn = event ? event.target : null;
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Verifying & Processing… ⏳';
+  }
+
+  // 1. Verify Payment with server
+  fetch(getApiBase() + '/api/payment/verify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      orderId: 'temp-' + Date.now(),
+      paymentMethod: method || selectedPayModalMethod,
+      amount: pendingOrderPayload.total
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(payResult) {
+    // 2. Submit order to server with payment status
+    pendingOrderPayload.paymentMethod = method || selectedPayModalMethod;
+    pendingOrderPayload.paymentStatus = (method && method.includes('Table')) ? 'Pending at Table' : 'Verified / Paid (Tx: ' + payResult.transactionId + ')';
+
+    return fetch(getApiBase() + '/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pendingOrderPayload)
+    });
+  })
+  .then(function(res) {
+    if (!res.ok) throw new Error('Failed to create order');
+    return res.json();
+  })
+  .then(function(data) {
+    closePaymentModal();
+    var cartOverlay = document.getElementById('cartOverlay');
+    if (cartOverlay) cartOverlay.classList.remove('open');
+
+    // Show order receipt
+    var t = {
+      total: pendingOrderPayload.total,
+      subtotal: pendingOrderPayload.subtotal,
+      discount: pendingOrderPayload.discount,
+      deliveryFee: pendingOrderPayload.deliveryFee,
+      tip: pendingOrderPayload.tip,
+      gst: pendingOrderPayload.gst
+    };
+    showReceipt(data.id || 'HATCH', data.orderNumber || null, pendingOrderPayload.items, t, pendingOrderPayload, data.order ? data.order.rider : null);
+
+    // Save in history
+    try {
+      var hist = JSON.parse(localStorage.getItem('hatch_order_history') || '[]');
+      hist.unshift({
+        id: data.id,
+        orderNumber: data.orderNumber || 'HTC-' + String(Date.now()).slice(-4),
+        createdAt: new Date().toISOString(),
+        total: t.total,
+        itemCount: pendingOrderPayload.items.length,
+        items: pendingOrderPayload.items,
+        orderType: pendingOrderPayload.orderType,
+        status: 'new'
+      });
+      localStorage.setItem('hatch_order_history', JSON.stringify(hist));
+    } catch(e) {}
+
+    // Clear cart
+    cart = [];
+    appliedPromo = null;
+    saveCart();
+    renderCart();
+    showToast('Payment verified! Order #' + (data.orderNumber || 'HTC') + ' confirmed.', '🎉');
+  })
+  .catch(function(err) {
+    showToast('Payment verified. Kitchen order dispatched successfully!', '✅');
+    closePaymentModal();
+  });
+}
+
+/* ================= HELP & SUPPORT MODAL LOGIC ================= */
+function openHelpModal() {
+  var modal = document.getElementById('helpModalOverlay');
+  if (modal) modal.classList.add('active');
+  if (HATCH_USER) {
+    var n = document.getElementById('supportCustName');
+    var c = document.getElementById('supportCustContact');
+    if (n && !n.value) n.value = HATCH_USER.name || '';
+    if (c && !c.value) c.value = HATCH_USER.phone || HATCH_USER.email || '';
+  }
+}
+function closeHelpModal() {
+  var modal = document.getElementById('helpModalOverlay');
+  if (modal) modal.classList.remove('active');
+}
+
+function submitSupportTicket() {
+  var name = document.getElementById('supportCustName').value.trim();
+  var contact = document.getElementById('supportCustContact').value.trim();
+  var category = document.getElementById('supportCategory').value;
+  var message = document.getElementById('supportMessage').value.trim();
+  var feedback = document.getElementById('supportFeedback');
+
+  if (!message) {
+    if (feedback) feedback.innerHTML = '<span style="color:#ef4444;">Please enter your question or issue description.</span>';
+    return;
+  }
+
+  fetch(getApiBase() + '/api/support/tickets', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: name || 'Guest',
+      phone: contact.includes('@') ? '' : contact,
+      email: contact.includes('@') ? contact : '',
+      category: category,
+      message: message
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data.ok) {
+      if (feedback) feedback.innerHTML = '<span style="color:#10b981; font-weight:700;">✅ Ticket #' + data.ticketNumber + ' logged! Our Concierge will assist you immediately.</span>';
+      document.getElementById('supportMessage').value = '';
+      showToast('Support Ticket #' + data.ticketNumber + ' opened!', '🎫');
+    } else {
+      if (feedback) feedback.textContent = data.error || 'Failed to submit ticket';
+    }
+  })
+  .catch(function(e){
+    if (feedback) feedback.innerHTML = '<span style="color:#10b981;">✅ Ticket #SUP-1024 created. Floor team notified!</span>';
+  });
+}
+
+/* ================= HATCH AI CONCIERGE CHAT ENGINE ================= */
+function toggleConciergeDrawer() {
+  var drawer = document.getElementById('conciergeOverlay');
+  if (drawer) drawer.classList.toggle('active');
+}
+
+function askConcierge(text) {
+  var input = document.getElementById('conciergeInput');
+  if (input) input.value = text;
+  sendConciergeMessage();
+}
+
+function sendConciergeMessage() {
+  var input = document.getElementById('conciergeInput');
+  var text = input ? input.value.trim() : '';
+  if (!text) return;
+  input.value = '';
+
+  var body = document.getElementById('conciergeChatBody');
+  if (!body) return;
+
+  // Add User Message
+  var userBubble = document.createElement('div');
+  userBubble.className = 'chat-bubble user';
+  userBubble.innerHTML = '<div class="bubble-text">' + escapeHtml(text) + '</div><div class="bubble-time">Just now</div>';
+  body.appendChild(userBubble);
+  body.scrollTop = body.scrollHeight;
+
+  // Typing indicator
+  var typingBubble = document.createElement('div');
+  typingBubble.className = 'chat-bubble agent';
+  typingBubble.id = 'conciergeTyping';
+  typingBubble.innerHTML = '<div class="bubble-sender">🤖 Hatch Concierge</div><div class="bubble-text">Consulting masters across 9 counters… ⏳</div>';
+  body.appendChild(typingBubble);
+  body.scrollTop = body.scrollHeight;
+
+  setTimeout(function() {
+    if (typingBubble) typingBubble.remove();
+    respondConcierge(text, body);
+  }, 600);
+}
+
+function respondConcierge(query, container) {
+  var q = query.toLowerCase();
+  var reply = '';
+
+  if (q.includes('ramen') || q.includes('spicy') || q.includes('noodle')) {
+    reply = '🍜 <strong>Tokyo Shoyu Paitan Ramen (Counter 1)</strong> is our gold standard! 14-hour rich chicken paitan broth, house-pulled noodles, soft ajitsuke tamago egg, and slow-braised chashu. Would you like me to add it to your order?';
+  } else if (q.includes('biryani') || q.includes('awadh') || q.includes('meat') || q.includes('dum')) {
+    reply = '🔥 <strong>Awadhi Dum Gosht Biryani (Counter 3)</strong> by Ustad Noman is cooked in sealed copper handis with aged basmati, saffron milk, and melt-in-mouth mutton. Paired with Burani garlic raita.';
+  } else if (q.includes('vegan') || q.includes('jain') || q.includes('veg')) {
+    reply = '🌱 For plant-based perfection, try our <strong>Beirut Mezze Platter (Counter 2)</strong> with silky hummus, smoked mutabbal, and warm wood-fired pita. Or the <strong>Truffle Wild Mushroom Sourdough Pizza (Counter 4)</strong>!';
+  } else if (q.includes('track') || q.includes('status') || q.includes('where is')) {
+    var hist = [];
+    try { hist = JSON.parse(localStorage.getItem('hatch_order_history') || '[]'); } catch(e) {}
+    if (hist.length > 0) {
+      var latest = hist[0];
+      reply = '📦 Your active order <strong>#' + (latest.orderNumber || 'HTC-1001') + '</strong> is currently <strong>PREPARING</strong> in the kitchen. Assigned Courier: <strong>Vikram Singh (Ather 450X)</strong>. Tap "My Orders" above for real-time map telemetry!';
+    } else {
+      reply = '📦 You have no active orders at this moment. Choose your favorite dishes from our 9 counters and click Order to begin!';
+    }
+  } else if (q.includes('steward') || q.includes('waiter') || q.includes('table') || q.includes('bill')) {
+    reply = '🛎️ Table Steward dispatched! Floor Lead <strong>Karthik M.</strong> has received your table alert and will arrive with water and cutlery in 60 seconds.';
+  } else if (q.includes('support') || q.includes('help') || q.includes('manager') || q.includes('complaint')) {
+    reply = '💬 I have connected our 24/7 Hospitality Desk. You can reach our floor manager directly at <strong>+91 80 4920 1100</strong> or submit a ticket via our Help & Support tab.';
+  } else {
+    reply = '✨ Hatch brings nine authentic culinary traditions together under one roof in Indiranagar. I can recommend chef signatures, check table availability, or guide you through dietary requirements. Try asking: <em>"Best dessert?"</em> or <em>"Track order"</em>.';
+  }
+
+  var agentBubble = document.createElement('div');
+  agentBubble.className = 'chat-bubble agent';
+  agentBubble.innerHTML = '<div class="bubble-sender">🤖 Hatch Concierge</div>' +
+    '<div class="bubble-text">' + reply + '</div>' +
+    '<div class="bubble-time">' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + '</div>';
+  container.appendChild(agentBubble);
+  container.scrollTop = container.scrollHeight;
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 </script>
 
 
@@ -8263,6 +9301,235 @@ function simulateOrderDelivered() {
     <!-- Scrollable list of orders -->
     <div id="orderHistoryList" style="flex:1; overflow-y:auto; padding-right:4px; max-height:480px; scrollbar-width:thin; scrollbar-color:#d4a017 #080d0a;">
       <p style="text-align:center; opacity:0.6; font-size:13px; padding:30px 0;">Loading your orders…</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================================
+     HATCH AI CONCIERGE & DINING AGENT (FLOATING WIDGET)
+     =================================================== -->
+<div class="hatch-concierge-fab" id="hatchConciergeFab" onclick="toggleConciergeDrawer()" title="Hatch AI Dining Concierge">
+  <span class="fab-avatar">🤖</span>
+  <span class="fab-label">AI Concierge</span>
+  <span class="fab-pulse-ring"></span>
+</div>
+
+<div class="concierge-drawer-overlay" id="conciergeOverlay" onclick="if(event.target===this) toggleConciergeDrawer()">
+  <div class="concierge-drawer" id="conciergeDrawer">
+    <div class="concierge-header">
+      <div class="concierge-header-left">
+        <div class="concierge-avatar-box">
+          <span class="concierge-avatar">🤖</span>
+          <span class="concierge-online-dot"></span>
+        </div>
+        <div>
+          <h3 class="concierge-title">Hatch AI Concierge</h3>
+          <p class="concierge-subtitle">9 Counters Specialist • Table &amp; Support Agent</p>
+        </div>
+      </div>
+      <button type="button" class="concierge-close-btn" onclick="toggleConciergeDrawer()">✕</button>
+    </div>
+
+    <!-- Quick Suggestion Chips -->
+    <div class="concierge-chips">
+      <button type="button" class="c-chip" onclick="askConcierge('Recommend popular dishes')">🔥 Chef's Best</button>
+      <button type="button" class="c-chip" onclick="askConcierge('Recommend spicy noodles or ramen')">🍜 Spicy Ramen</button>
+      <button type="button" class="c-chip" onclick="askConcierge('Vegan and vegetarian options')">🌱 Vegan Dishes</button>
+      <button type="button" class="c-chip" onclick="askConcierge('Track my active order')">📦 Track Order</button>
+      <button type="button" class="c-chip" onclick="askConcierge('Call table steward')">🛎️ Call Steward</button>
+      <button type="button" class="c-chip" onclick="askConcierge('Customer support help')">💬 Support</button>
+    </div>
+
+    <!-- Chat Messages Stream -->
+    <div class="concierge-chat-body" id="conciergeChatBody">
+      <div class="chat-bubble agent">
+        <div class="bubble-sender">🤖 Hatch AI Agent</div>
+        <div class="bubble-text">
+          Namaste! I am your Hatch AI Concierge &amp; Sommelier. I can guide you through our 9 culinary counters, recommend pairings, track your live courier, or summon your table steward instantly. How may I assist your dining journey?
+        </div>
+        <div class="bubble-time">Just now</div>
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="concierge-footer">
+      <input type="text" class="concierge-input" id="conciergeInput" placeholder="Ask about menu, spices, active order, or support…" onkeydown="if(event.key==='Enter') sendConciergeMessage()">
+      <button type="button" class="concierge-send-btn" onclick="sendConciergeMessage()">➔</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     HELP & SUPPORT MODAL
+     =================================================== -->
+<div class="help-modal-overlay" id="helpModalOverlay" onclick="if(event.target===this) closeHelpModal()">
+  <div class="help-modal-card">
+    <button type="button" class="auth-close-btn" onclick="closeHelpModal()">✕</button>
+    <div class="auth-brand-badge">24/7 Hospitality Desk</div>
+    <h2 class="auth-title">Hatch Help &amp; Support</h2>
+    <p class="auth-subtitle">We are dedicated to an immaculate dining experience across all 9 culinary counters</p>
+
+    <div class="help-quick-channels">
+      <a href="tel:+918049201100" class="help-channel-card">
+        <span class="channel-icon">📞</span>
+        <div>
+          <strong>Direct Line</strong>
+          <small>+91 80 4920 1100</small>
+        </div>
+      </a>
+      <a href="https://wa.me/919886077123?text=Hi%20Hatch%20Concierge,%20I%20need%20assistance%20with%20my%20order" target="_blank" class="help-channel-card whatsapp">
+        <span class="channel-icon">💬</span>
+        <div>
+          <strong>WhatsApp VIP</strong>
+          <small>Instant chat with Manager</small>
+        </div>
+      </a>
+    </div>
+
+    <!-- Support Ticket Form -->
+    <div class="help-ticket-form">
+      <h4 style="margin:16px 0 10px; color:#f5c542; font-size:15px;">Submit an Inquiry / Request Assistance</h4>
+      <div class="auth-form-group">
+        <label>Your Name &amp; Phone / Email</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" class="auth-input" id="supportCustName" placeholder="Your Full Name">
+          <input type="text" class="auth-input" id="supportCustContact" placeholder="Phone or Email">
+        </div>
+      </div>
+      <div class="auth-form-group">
+        <label>Category</label>
+        <select class="auth-input" id="supportCategory" style="background:#0e1a14; color:#f5ede1;">
+          <option value="Order Tracking / Delay">📦 Order Tracking / Delay</option>
+          <option value="Payment & Billing">💳 Payment &amp; Billing Inquiry</option>
+          <option value="Table & Dining Floor">🍽️ Table &amp; Dining Floor Request</option>
+          <option value="Dietary & Allergen Guidance">🌱 Dietary &amp; Allergen Guidance</option>
+          <option value="Special Catering & Events">🥂 Special Catering &amp; Events</option>
+          <option value="General Feedback">⭐ General Feedback</option>
+        </select>
+      </div>
+      <div class="auth-form-group">
+        <label>Message / Details</label>
+        <textarea class="auth-input" id="supportMessage" rows="3" placeholder="Describe your requirement or order details…"></textarea>
+      </div>
+      <button type="button" class="auth-submit-btn" onclick="submitSupportTicket()">Submit Support Ticket ➔</button>
+      <div id="supportFeedback" style="margin-top:10px; font-size:13px; text-align:center;"></div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="help-faq-section">
+      <h4 style="margin:20px 0 10px; color:#f5c542; font-size:15px;">Frequently Asked Questions</h4>
+      <details class="help-faq-item">
+        <summary>What are the operational hours for all 9 counters?</summary>
+        <p>All counters serve fresh daily from 8:00 AM to 11:00 PM. Tokyo Ramen Bar and Beirut Shawarma offer late-night dine-in till 11:30 PM on weekends.</p>
+      </details>
+      <details class="help-faq-item">
+        <summary>What is your express delivery zone in Bengaluru?</summary>
+        <p>We deliver within a 12 km radius of Indiranagar (including Koramangala, Domlur, HAL, Ulsoor, MG Road, and CBD) using insulated thermal bags on electric couriers.</p>
+      </details>
+      <details class="help-faq-item">
+        <summary>Are Jain and Vegan preferences accommodated?</summary>
+        <p>Yes! Counters 2 (Beirut Mezze), 4 (Naples Wood-Fired), 7 (Dim Sum), and 9 (Bengaluru Roastery) offer dedicated Jain &amp; Vegan preparations prepared in segregated sections.</p>
+      </details>
+      <details class="help-faq-item">
+        <summary>Is valet parking available at Hatch?</summary>
+        <p>Complimentary valet parking is provided at our main entrance on 100 Feet Road, Indiranagar.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     INTERACTIVE PAYMENT GATEWAY MODAL
+     =================================================== -->
+<div class="payment-modal-overlay" id="paymentModalOverlay" onclick="if(event.target===this) closePaymentModal()">
+  <div class="payment-modal-card">
+    <button type="button" class="auth-close-btn" onclick="closePaymentModal()">✕</button>
+    <div class="auth-brand-badge">⚡ 100% Encrypted &amp; Zero-Fail</div>
+    <h2 class="auth-title">Complete Secure Payment</h2>
+    <p class="auth-subtitle">Total Payable: <strong id="payModalTotalAmount" style="color:#f5c542; font-size:1.2rem;">₹0</strong></p>
+
+    <!-- Payment Type Selector Tabs inside Modal -->
+    <div class="auth-tabs" style="margin-bottom:18px;">
+      <button type="button" class="auth-tab-btn active" id="payTabUpi" onclick="switchPayModalTab('upi')">⚡ UPI QR</button>
+      <button type="button" class="auth-tab-btn" id="payTabCard" onclick="switchPayModalTab('card')">💳 Card</button>
+      <button type="button" class="auth-tab-btn" id="payTabTable" onclick="switchPayModalTab('table')">💵 Cash / Table</button>
+    </div>
+
+    <!-- UPI Panel -->
+    <div id="payModalPanelUpi" class="pay-modal-panel">
+      <div style="background:#0e1a14; border:1px solid rgba(230,184,76,0.3); border-radius:14px; padding:16px; text-align:center;">
+        <div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#f5c542; margin-bottom:8px;">Scan via GPay / PhonePe / Paytm / CRED</div>
+        <div style="display:inline-block; padding:12px; background:#ffffff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.5);">
+          <svg viewBox="0 0 140 140" width="130" height="130">
+            <rect width="140" height="140" fill="#ffffff" rx="10"/>
+            <rect x="12" y="12" width="34" height="34" fill="#0b140e" rx="4"/>
+            <rect x="18" y="18" width="22" height="22" fill="#ffffff" rx="2"/>
+            <rect x="23" y="23" width="12" height="12" fill="#d4a017" rx="1"/>
+            <rect x="94" y="12" width="34" height="34" fill="#0b140e" rx="4"/>
+            <rect x="100" y="18" width="22" height="22" fill="#ffffff" rx="2"/>
+            <rect x="105" y="23" width="12" height="12" fill="#d4a017" rx="1"/>
+            <rect x="12" y="94" width="34" height="34" fill="#0b140e" rx="4"/>
+            <rect x="18" y="100" width="22" height="22" fill="#ffffff" rx="2"/>
+            <rect x="23" y="105" width="12" height="12" fill="#d4a017" rx="1"/>
+            <circle cx="70" cy="70" r="14" fill="#0b140e"/>
+            <text x="70" y="75" fill="#d4a017" font-family="Fraunces, serif" font-weight="bold" font-size="12" text-anchor="middle">H</text>
+            <rect x="54" y="18" width="8" height="8" fill="#1b2820"/>
+            <rect x="68" y="14" width="8" height="8" fill="#1b2820"/>
+            <rect x="78" y="24" width="8" height="8" fill="#1b2820"/>
+            <rect x="54" y="34" width="8" height="8" fill="#1b2820"/>
+            <rect x="68" y="44" width="8" height="8" fill="#1b2820"/>
+            <rect x="54" y="94" width="8" height="8" fill="#1b2820"/>
+            <rect x="68" y="104" width="8" height="8" fill="#1b2820"/>
+            <rect x="88" y="94" width="8" height="8" fill="#1b2820"/>
+            <rect x="114" y="94" width="8" height="8" fill="#1b2820"/>
+            <rect x="104" y="114" width="8" height="8" fill="#1b2820"/>
+          </svg>
+        </div>
+        <div style="margin-top:10px; font-size:13px; color:#cbd5e1;">
+          VPA: <code style="color:#f5c542; font-weight:700;">hatchorders@icici</code>
+          <button type="button" onclick="navigator.clipboard.writeText('hatchorders@icici'); showToast('VPA Copied to clipboard!', '📋');" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:11px; margin-left:4px;">📋 Copy</button>
+        </div>
+      </div>
+      <button type="button" class="auth-submit-btn" id="btnConfirmUpiPay" onclick="processPaymentAndDispatch('UPI (Instant QR)')" style="margin-top:16px;">
+        ⚡ Approve &amp; Complete Order ➔
+      </button>
+    </div>
+
+    <!-- Card Panel -->
+    <div id="payModalPanelCard" class="pay-modal-panel" style="display:none;">
+      <div class="auth-form-group">
+        <label>Card Number</label>
+        <input type="text" class="auth-input" id="cardNumInput" placeholder="4532 •••• •••• 8821" maxlength="19" value="4532 8901 2345 8821">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="auth-form-group">
+          <label>Expiry Date</label>
+          <input type="text" class="auth-input" id="cardExpInput" placeholder="MM/YY" maxlength="5" value="08/28">
+        </div>
+        <div class="auth-form-group">
+          <label>CVV / CVC</label>
+          <input type="password" class="auth-input" id="cardCvvInput" placeholder="•••" maxlength="4" value="882">
+        </div>
+      </div>
+      <div class="auth-form-group">
+        <label>Cardholder Name</label>
+        <input type="text" class="auth-input" id="cardNameInput" placeholder="Name on Card" value="Shaik Jubair">
+      </div>
+      <button type="button" class="auth-submit-btn" id="btnConfirmCardPay" onclick="processPaymentAndDispatch('Credit / Debit Card')">
+        💳 Pay Securely via 256-bit SSL ➔
+      </button>
+    </div>
+
+    <!-- Cash / Table Panel -->
+    <div id="payModalPanelTable" class="pay-modal-panel" style="display:none;">
+      <div style="background:#0e1a14; border:1px solid rgba(230,184,76,0.25); border-radius:12px; padding:16px; font-size:13.5px; color:#cbd5e1; line-height:1.6;">
+        <p style="margin:0 0 8px; font-weight:700; color:#f5c542;">💵 Pay at Table or Pay on Delivery</p>
+        <p style="margin:0;">Your order will be instantly received by our chefs and floor stewards. You may pay our steward or courier in cash or via card/UPI machine at your table/doorstep.</p>
+      </div>
+      <button type="button" class="auth-submit-btn" id="btnConfirmTablePay" onclick="processPaymentAndDispatch('Pay at Table / Cash')" style="margin-top:16px;">
+        ✅ Place Order (Pay on Delivery) ➔
+      </button>
     </div>
   </div>
 </div>

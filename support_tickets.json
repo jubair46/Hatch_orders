@@ -1,0 +1,17 @@
+[
+  {
+    "id": "5cb67ec4-b9a2-4a1d-bec3-458d53d2146a",
+    "ticketNumber": "SUP-1001",
+    "createdAt": "2026-09-20T11:03:56.964Z",
+    "name": "Guest",
+    "phone": "",
+    "email": "",
+    "category": "Dietary",
+    "message": "Need allergy info for ramen",
+    "orderId": "",
+    "status": "open",
+    "priority": "high",
+    "assignedAgent": "Hatch AI Concierge",
+    "response": "Thank you for reaching out to Hatch Support. Our Concierge has logged your inquiry (# SUP-1001). A senior floor steward or concierge agent will assist you immediately."
+  }
+]

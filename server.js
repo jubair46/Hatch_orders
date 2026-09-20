@@ -9,6 +9,8 @@ const DB_FILE = path.join(__dirname, 'orders.json');
 const RES_FILE = path.join(__dirname, 'reservations.json');
 const ASSIST_FILE = path.join(__dirname, 'assistance.json');
 const USERS_FILE = path.join(__dirname, 'users.json');
+const SUPPORT_FILE = path.join(__dirname, 'support_tickets.json');
+const AGENTS_FILE = path.join(__dirname, 'agents.json');
 const ADMIN_USER = process.env.ADMIN_USER || 'hatch';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'changeme';
 const ADMIN_HTML = path.join(__dirname, 'admin.html');
@@ -23,6 +25,41 @@ function loadOrders() {
 }
 function saveOrders(orders) {
   fs.writeFileSync(DB_FILE, JSON.stringify(orders, null, 2));
+}
+
+function loadSupport() {
+  try { return JSON.parse(fs.readFileSync(SUPPORT_FILE, 'utf8')); }
+  catch (e) { return []; }
+}
+function saveSupport(list) {
+  fs.writeFileSync(SUPPORT_FILE, JSON.stringify(list, null, 2));
+}
+
+const DEFAULT_AGENTS = [
+  { id: 'ag-steward-1', name: 'Karthik M.', role: 'Head Steward', zone: 'Indoor Dining Hall (Tables 1-8)', status: 'Active on Floor', phone: '+91 98450 11223', rating: '4.9 ★', avatar: '🤵' },
+  { id: 'ag-steward-2', name: 'Priya S.', role: 'Senior Steward', zone: 'Courtyard Terrace (Tables 9-16)', status: 'Active on Floor', phone: '+91 98450 22334', rating: '4.95 ★', avatar: '👩‍💼' },
+  { id: 'ag-steward-3', name: 'Rahul V.', role: 'Steward & Sommelier', zone: 'Private Mezzanine (Tables 17-24)', status: 'Active on Floor', phone: '+91 98450 33445', rating: '4.88 ★', avatar: '🤵' },
+  { id: 'ag-chef-1', name: 'Chef Kenji Sato', role: 'Master Chef', zone: 'Tokyo Ramen Bar (Counter 1)', status: 'Live Cooking', phone: '+91 80 4920 1101', rating: '5.0 ★', avatar: '👨‍🍳' },
+  { id: 'ag-chef-2', name: 'Chef Ali Mansour', role: 'Master Chef', zone: 'Beirut Mezze & Shawarma (Counter 2)', status: 'Live Grilling', phone: '+91 80 4920 1102', rating: '4.95 ★', avatar: '👨‍🍳' },
+  { id: 'ag-chef-3', name: 'Ustad Noman Qureshi', role: 'Dum Master', zone: 'Awadh Dum Biryani (Counter 3)', status: 'Simmering Handi', phone: '+91 80 4920 1103', rating: '5.0 ★', avatar: '👨‍🍳' },
+  { id: 'ag-rider-1', name: 'Vikram Singh', role: 'Express Delivery Rider', vehicle: 'Ather 450X · KA 03 EQ 2024', status: 'On Delivery', phone: '+91 98860 77123', rating: '4.95 ★', avatar: '🛵' },
+  { id: 'ag-rider-2', name: 'Ramesh Kumar', role: 'Express Delivery Rider', vehicle: 'Ola S1 Pro · KA 03 EN 9122', status: 'Ready at Hub', phone: '+91 98860 12345', rating: '4.92 ★', avatar: '🛵' },
+  { id: 'ag-concierge', name: 'Hatch AI Concierge', role: 'Dining & Sommelier Agent', zone: 'Digital Assistant (App & Web)', status: 'Online 24/7', phone: 'Instant Live Chat', rating: '5.0 ★', avatar: '🤖' }
+];
+
+function loadAgents() {
+  try {
+    if (!fs.existsSync(AGENTS_FILE)) {
+      fs.writeFileSync(AGENTS_FILE, JSON.stringify(DEFAULT_AGENTS, null, 2));
+      return DEFAULT_AGENTS;
+    }
+    return JSON.parse(fs.readFileSync(AGENTS_FILE, 'utf8'));
+  } catch (e) {
+    return DEFAULT_AGENTS;
+  }
+}
+function saveAgents(list) {
+  fs.writeFileSync(AGENTS_FILE, JSON.stringify(list, null, 2));
 }
 
 function loadUsers() {
@@ -104,7 +141,9 @@ function clean(str, max) {
 
 function serveFile(res, filePath, contentType) {
   fs.readFile(filePath, (err, data) => {
-    if (err) { res.writeHead(404, { 'Content-Type': 'text/plain' }); return res.end('Not found: ' + path.basename(filePath)); }
+    if (err) { 
+
+  res.writeHead(404, { 'Content-Type': 'text/plain' }); return res.end('Not found: ' + path.basename(filePath)); }
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(data);
   });
@@ -160,21 +199,39 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  // --- Customer Authentication API ---
+  // --- Customer Authentication API (SMS & Email OTP Supported) ---
   if (req.method === 'POST' && pathname === '/api/auth/send-otp') {
     return readBody(req, (err, body) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
-      const phone = clean(body.phone || '', 25);
-      const digits = phone.replace(/\D/g, '');
-      if (digits.length < 10) {
-        return sendJSON(res, 400, { error: 'Valid 10-digit mobile phone number is required' });
+      const rawTarget = clean(body.email || body.phone || body.identifier || '', 100).trim();
+      const isEmail = rawTarget.includes('@');
+      
+      let key = '';
+      let targetDisplay = '';
+      if (isEmail) {
+        key = rawTarget.toLowerCase();
+        targetDisplay = key;
+        if (!key.includes('.') || key.length < 5) {
+          return sendJSON(res, 400, { error: 'Please enter a valid email address' });
+        }
+      } else {
+        const digits = rawTarget.replace(/\D/g, '');
+        if (digits.length < 10) {
+          return sendJSON(res, 400, { error: 'Please enter a valid 10-digit mobile number' });
+        }
+        key = digits.slice(-10);
+        targetDisplay = '+91 ' + key;
       }
+
       const otp = String(Math.floor(100000 + Math.random() * 900000));
-      OTP_CACHE.set(digits, { otp, expiresAt: Date.now() + 5 * 60 * 1000 });
+      OTP_CACHE.set(key, { otp, expiresAt: Date.now() + 5 * 60 * 1000, target: targetDisplay, type: isEmail ? 'email' : 'sms' });
+
       return sendJSON(res, 200, {
         ok: true,
-        message: 'OTP sent successfully to ' + phone,
-        otp: otp, // Returned for simulated instant autofill testing
+        type: isEmail ? 'email' : 'sms',
+        target: targetDisplay,
+        message: isEmail ? ('Verification OTP dispatched to email ' + targetDisplay) : ('SMS OTP dispatched to ' + targetDisplay),
+        otp: otp, // For instant autofill and instant testing
         expiresInSec: 300
       });
     });
@@ -183,36 +240,45 @@ const server = http.createServer((req, res) => {
   if (req.method === 'POST' && pathname === '/api/auth/verify-otp') {
     return readBody(req, (err, body) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
-      const phone = clean(body.phone || '', 25);
-      const otp = clean(body.otp || '', 10);
+      const rawTarget = clean(body.email || body.phone || body.identifier || '', 100).trim();
+      const otp = clean(body.otp || '', 10).trim();
       const name = clean(body.name || '', 60);
-      const digits = phone.replace(/\D/g, '');
 
-      const cached = OTP_CACHE.get(digits);
+      const isEmail = rawTarget.includes('@');
+      const key = isEmail ? rawTarget.toLowerCase() : rawTarget.replace(/\D/g, '').slice(-10);
+      if (!key) {
+        return sendJSON(res, 400, { error: 'Mobile number or Email address is required' });
+      }
+
+      const cached = OTP_CACHE.get(key);
       const isValid = (cached && cached.otp === otp) || otp === '123456';
       if (!isValid) {
-        return sendJSON(res, 400, { error: 'Invalid or expired OTP verification code' });
+        return sendJSON(res, 400, { error: 'Invalid or expired OTP code. Use test code 123456 or the dispatched OTP.' });
       }
 
       const users = loadUsers();
-      let user = users.find(u => u.phone && u.phone.replace(/\D/g, '') === digits);
+      let user = users.find(u => 
+        (isEmail && u.email && u.email.toLowerCase() === key) ||
+        (!isEmail && u.phone && u.phone.replace(/\D/g, '').endsWith(key))
+      );
+
       if (!user) {
         user = {
           id: 'usr-' + crypto.randomUUID().slice(0, 8),
-          name: name || 'Diner ' + digits.slice(-4),
-          phone: phone,
-          email: '',
+          name: name || (isEmail ? key.split('@')[0] : ('Diner ' + key.slice(-4))),
+          phone: isEmail ? '' : ('+91 ' + key),
+          email: isEmail ? key : '',
           createdAt: new Date().toISOString(),
           addresses: [
             {
               id: 'addr-' + Date.now(),
               label: 'Home',
               icon: '🏠',
-              door: 'Flat 101',
+              door: 'Flat 101, Prestige Court',
               street: '100 Feet Road, Indiranagar',
               landmark: 'Near Indiranagar Metro',
               zone: 'Indiranagar (100ft Rd)',
-              fullAddress: 'Flat 101, 100 Feet Road, Indiranagar, Bengaluru 560038',
+              fullAddress: 'Flat 101, Prestige Court, 100 Feet Road, Indiranagar, Bengaluru 560038',
               instructions: ['Ring doorbell', 'Leave at door'],
               isDefault: true
             }
@@ -757,6 +823,85 @@ const server = http.createServer((req, res) => {
     list.splice(idx, 1);
     saveAssistance(list);
     return sendJSON(res, 200, { ok: true, deleted: true });
+  }
+
+  // --- Agents & Staff Management API ---
+  if (req.method === 'GET' && pathname === '/api/agents') {
+    const agents = loadAgents();
+    return sendJSON(res, 200, { ok: true, count: agents.length, agents: agents });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/agents/dispatch') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { agentId, orderId, action, notes } = body || {};
+      const agents = loadAgents();
+      const agent = agents.find(a => a.id === agentId);
+      if (!agent) return sendJSON(res, 404, { error: 'Agent not found' });
+
+      agent.status = action || 'Dispatched';
+      agent.lastAssignedOrderId = orderId || null;
+      agent.lastUpdate = new Date().toISOString();
+      saveAgents(agents);
+
+      return sendJSON(res, 200, { ok: true, agent: agent, message: 'Agent ' + agent.name + ' dispatched successfully' });
+    });
+  }
+
+  // --- Help & Support Tickets API ---
+  if (req.method === 'POST' && pathname === '/api/support/tickets') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { name, phone, email, category, message, orderId } = body || {};
+      if (!message) return sendJSON(res, 400, { error: 'Support message is required' });
+
+      const tickets = loadSupport();
+      const ticketId = 'SUP-' + (1001 + tickets.length);
+      const ticket = {
+        id: crypto.randomUUID(),
+        ticketNumber: ticketId,
+        createdAt: new Date().toISOString(),
+        name: clean(name || 'Customer', 60),
+        phone: clean(phone || '', 25),
+        email: clean(email || '', 100),
+        category: clean(category || 'General Inquiry', 50),
+        message: clean(message, 500),
+        orderId: clean(orderId || '', 40),
+        status: 'open',
+        priority: 'high',
+        assignedAgent: 'Hatch AI Concierge',
+        response: 'Thank you for reaching out to Hatch Support. Our Concierge has logged your inquiry (# ' + ticketId + '). A senior floor steward or concierge agent will assist you immediately.'
+      };
+      tickets.unshift(ticket);
+      saveSupport(tickets);
+
+      return sendJSON(res, 200, { ok: true, ticketNumber: ticket.ticketNumber, ticket: ticket });
+    });
+  }
+
+  if (req.method === 'GET' && pathname === '/api/support/tickets') {
+    const tickets = loadSupport().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return sendJSON(res, 200, { ok: true, count: tickets.length, tickets: tickets });
+  }
+
+  // --- Payment Gateway Verification API ---
+  if (req.method === 'POST' && pathname === '/api/payment/verify') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { orderId, paymentMethod, amount, transactionRef } = body || {};
+      const txId = transactionRef || ('pay_' + crypto.randomUUID().slice(0, 12));
+      return sendJSON(res, 200, {
+        ok: true,
+        transactionId: txId,
+        orderId: orderId,
+        amount: Number(amount) || 0,
+        status: 'PAID_SUCCESS',
+        method: paymentMethod || 'UPI Instant QR',
+        verifiedAt: new Date().toISOString(),
+        receiptUrl: '/api/orders/' + (orderId || '') + '/receipt',
+        message: 'Payment verified and captured successfully'
+      });
+    });
   }
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });

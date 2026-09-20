@@ -16,7 +16,10 @@
         "landmark": "Near Sony Center",
         "zone": "Indiranagar (100ft Rd)",
         "fullAddress": "Flat 402, Emerald Towers, 12th Main Rd, Indiranagar, Bengaluru 560038",
-        "instructions": ["Ring doorbell", "Leave at door"],
+        "instructions": [
+          "Ring doorbell",
+          "Leave at door"
+        ],
         "isDefault": true
       },
       {
@@ -28,8 +31,35 @@
         "landmark": "Opposite KGA Golf Course",
         "zone": "Domlur & HAL",
         "fullAddress": "Tower B, Level 6, Embassy GolfLinks, Off Intermediate Ring Rd, Domlur, Bengaluru 560071",
-        "instructions": ["Leave with security guard", "Call upon arrival"],
+        "instructions": [
+          "Leave with security guard",
+          "Call upon arrival"
+        ],
         "isDefault": false
+      }
+    ]
+  },
+  {
+    "id": "usr-f68291d3",
+    "name": "Shaik Jubair",
+    "phone": "+91 8688964855",
+    "email": "",
+    "createdAt": "2026-09-20T11:02:34.603Z",
+    "addresses": [
+      {
+        "id": "addr-1789902154603",
+        "label": "Home",
+        "icon": "🏠",
+        "door": "Flat 101, Prestige Court",
+        "street": "100 Feet Road, Indiranagar",
+        "landmark": "Near Indiranagar Metro",
+        "zone": "Indiranagar (100ft Rd)",
+        "fullAddress": "Flat 101, Prestige Court, 100 Feet Road, Indiranagar, Bengaluru 560038",
+        "instructions": [
+          "Ring doorbell",
+          "Leave at door"
+        ],
+        "isDefault": true
       }
     ]
   }
