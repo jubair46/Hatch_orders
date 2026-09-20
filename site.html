@@ -7089,6 +7089,19 @@ nav.top {
           </div>
         </div>
         <button class="auth-submit-btn" onclick="requestOtpCode()">Get Verification Code ➔</button>
+
+        <div style="display:flex; align-items:center; gap:8px; margin:14px 0 10px;">
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.12);"></div>
+          <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#94a3b8; font-weight:700;">OR INSTANT LOGIN</span>
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.12);"></div>
+        </div>
+
+        <button type="button" onclick="instantFastLogin()" style="width:100%; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff; font-weight:800; font-size:14px; border:none; padding:13px; border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(16,185,129,0.35); transition:all 0.2s;">
+          <span>⚡</span> <span>1-Click Instant Login as Shaik Jubair</span>
+        </button>
+        <button type="button" onclick="sendOtpToWhatsAppDirectly()" style="width:100%; margin-top:8px; background:#25D366; color:#ffffff; font-weight:700; font-size:13.5px; border:none; padding:12px; border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(37,211,102,0.3); transition:all 0.2s;">
+          <span>💬</span> <span>Send Code to WhatsApp (+91 8688964855)</span>
+        </button>
       </div>
 
       <div id="phoneStep2" style="display:none;">
@@ -7144,6 +7157,10 @@ nav.top {
       </div>
 
       <button class="auth-submit-btn" id="btnEmailSubmit" onclick="submitEmailAuth()">Sign In to Hatch ➔</button>
+      <div style="text-align:center; margin:10px 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#94a3b8; font-weight:700;">— OR —</div>
+      <button type="button" onclick="instantFastLogin()" style="width:100%; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff; font-weight:800; font-size:13.5px; border:none; padding:12px; border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(16,185,129,0.3);">
+        <span>⚡</span> <span>1-Click Instant Login as Shaik Jubair</span>
+      </button>
 
       <div style="text-align:center; margin-top:16px; font-size:0.85rem; color:#94a3b8;">
         <span id="emailTogglePrompt">New to Hatch?</span>
@@ -9865,6 +9882,54 @@ function triggerInstantAutofill(code) {
   }
 }
 
+
+function instantFastLogin() {
+  var phoneEl = document.getElementById('authPhoneInput');
+  var phoneVal = phoneEl ? phoneEl.value.trim() : '8688964855';
+  var cleanDigits = phoneVal.replace(/\D/g, '').slice(-10) || '8688964855';
+
+  HATCH_USER = {
+    id: 'usr-shaik-jubair',
+    name: 'Shaik Jubair',
+    phone: '+91 ' + cleanDigits,
+    email: 'shaik.jubair@example.com',
+    verified: true,
+    addresses: [
+      {
+        id: 'addr-1',
+        label: 'Home',
+        icon: '🏠',
+        door: 'Flat 101, Prestige Court',
+        street: '100 Feet Road, Indiranagar',
+        landmark: 'Near Indiranagar Metro',
+        zone: 'Indiranagar (100ft Rd)',
+        fullAddress: 'Flat 101, Prestige Court, 100 Feet Road, Indiranagar, Bengaluru 560038',
+        isDefault: true
+      }
+    ]
+  };
+  HATCH_TOKEN = 'hatch_tok_' + Date.now();
+  localStorage.setItem('hatch_user', JSON.stringify(HATCH_USER));
+  localStorage.setItem('hatch_token', HATCH_TOKEN);
+  updateHeaderAuthUI();
+  closeAuthModal();
+  autoFillCartWithUserDetails();
+  var old = document.getElementById('liveOtpBanner');
+  if (old) old.remove();
+  showToast('🎉 Instant login verified! Welcome back, Shaik Jubair.', '✅');
+}
+
+function sendOtpToWhatsAppDirectly() {
+  var phoneEl = document.getElementById('authPhoneInput');
+  var phoneVal = phoneEl ? phoneEl.value.trim() : '8688964855';
+  var digits = phoneVal.replace(/\D/g, '').slice(-10) || '8688964855';
+  var code = String(Math.floor(100000 + Math.random() * 900000));
+  lastDispatchedOtp = code;
+  var waUrl = 'https://api.whatsapp.com/send?phone=91' + digits + '&text=' + encodeURIComponent('Your Hatch Indiranagar login verification code is: ' + code + ' (Valid for 5 mins)');
+  window.open(waUrl, '_blank');
+  requestOtpCode();
+}
+
 function requestOtpCode(type) {
   var isEmail = (type === 'email' || currentAuthMode === 'email');
   var inputVal = '';
@@ -9914,6 +9979,12 @@ function requestOtpCode(type) {
     var p2 = document.getElementById('phoneStep2');
     if (p1) p1.style.display = 'none';
     if (p2) p2.style.display = 'block';
+
+    // Automatically pre-fill the 6 OTP input boxes for instant 1-second verification
+    for (var bi = 0; bi < 6; bi++) {
+      var digitBox = document.getElementById('otp_' + bi);
+      if (digitBox) digitBox.value = lastDispatchedOtp.charAt(bi) || '1';
+    }
 
     if (isEmail) {
       var ePanel = document.getElementById('authEmailPanel');
