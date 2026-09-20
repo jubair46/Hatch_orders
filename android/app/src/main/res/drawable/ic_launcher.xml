@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#14201a"
+        android:pathData="M0,0h108v108h-108z" />
+    <!-- Golden Egg -->
+    <path
+        android:fillColor="#d4a017"
+        android:pathData="M54,22 C40,22 30,44 30,60 C30,76 41,85 54,85 C67,85 78,76 78,60 C78,44 68,22 54,22 Z" />
+    <!-- Egg highlight -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M48,28 C40,35 35,49 36,60 C36,66 39,71 43,76 C40,71 38,65 38,58 C38,47 43,35 48,28 Z" />
+</vector>

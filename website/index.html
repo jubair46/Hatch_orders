@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hatch — a kitchen with six passports, Bengaluru</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.ico">
+<title>Hatch — 9 Culinary Counters, Indiranagar Bengaluru</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#14201a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hatch">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1266,6 +1272,28 @@
     transform: scale(1.08);
   }
 
+  .pwa-install-nav-btn {
+    background: var(--yolk);
+    color: var(--ink);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 4px 14px rgba(212,160,23,0.35);
+  }
+  .pwa-install-nav-btn:hover {
+    transform: scale(1.05);
+  }
+  @media (max-width: 600px) {
+    .pwa-install-nav-btn .pwa-label { display: none; }
+  }
+
   /* ---------- MENU CONTROLS & SEARCH BAR ---------- */
   .menu-controls-bar {
     margin: 32px auto 44px;
@@ -2166,6 +2194,11 @@
     <li><a href="#menu">Menu</a></li>
     <li><a href="#book-table" id="navBookTableBtn" style="color:var(--yolk); font-weight:600;">Book Table</a></li>
     <li><a href="#visit">Visit</a></li>
+    <li>
+      <button class="pwa-install-nav-btn" id="pwaInstallBtn" onclick="triggerPwaInstall()" style="display:none;" title="Install Hatch Mobile App">
+        📲 <span class="pwa-label">Install App</span>
+      </button>
+    </li>
     <li>
       <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle theme">
         <span id="themeIcon">🌙</span>
@@ -4567,6 +4600,37 @@
       }
     });
   }
+
+  /* ================= PWA SERVICE WORKER & INSTALL ================= */
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function() {});
+    });
+  }
+
+  var deferredInstallPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    var installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) installBtn.style.display = 'inline-flex';
+  });
+
+  window.triggerPwaInstall = function() {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome === 'accepted') {
+          var installBtn = document.getElementById('pwaInstallBtn');
+          if (installBtn) installBtn.style.display = 'none';
+          showToast('🎉 Hatch app added to your home screen!');
+        }
+        deferredInstallPrompt = null;
+      });
+    } else {
+      showToast('To install Hatch, tap your browser menu (⋮) and choose "Add to Home screen" or "Install app".');
+    }
+  };
 
   renderCart();
   filterMenu();

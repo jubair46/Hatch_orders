@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Hatch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/hatch_ink</item>
+        <item name="colorPrimaryVariant">@color/hatch_dark</item>
+        <item name="colorOnPrimary">@color/hatch_gold</item>
+        <item name="android:statusBarColor">@color/hatch_dark</item>
+        <item name="android:navigationBarColor">@color/hatch_dark</item>
+        <item name="android:windowBackground">@color/hatch_dark</item>
+    </style>
+</resources>

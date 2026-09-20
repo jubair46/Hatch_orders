@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14201a"/>
+      <stop offset="100%" stop-color="#080e0a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5cc5a"/>
+      <stop offset="50%" stop-color="#d4a017"/>
+      <stop offset="100%" stop-color="#9a7109"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#d4a017" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <!-- Background with subtle border -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="504" height="504" x="4" y="4" rx="108" fill="none" stroke="rgba(212,160,23,0.25)" stroke-width="3"/>
+  
+  <!-- Outer golden decorative aura -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="rgba(212,160,23,0.15)" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <!-- Golden Egg / Hatch Icon -->
+  <g filter="url(#glow)">
+    <path d="M 256,110 C 190,110 145,210 145,285 C 145,360 195,402 256,402 C 317,402 367,360 367,285 C 367,210 322,110 256,110 Z" fill="url(#gold)"/>
+  </g>
+
+  <!-- Inner accent highlight -->
+  <path d="M 230,140 C 190,175 168,240 170,290 C 172,320 185,345 205,365 C 190,345 182,315 182,285 C 182,230 205,170 230,140 Z" fill="#fff" opacity="0.25"/>
+
+  <!-- Golden 'H' monogram -->
+  <text x="256" y="305" font-family="Georgia, serif" font-size="110" font-weight="bold" font-style="italic" fill="#14201a" text-anchor="middle">H</text>
+
+  <!-- Star accents -->
+  <circle cx="256" cy="75" r="5" fill="#f5cc5a"/>
+  <circle cx="105" cy="256" r="4" fill="rgba(212,160,23,0.5)"/>
+  <circle cx="407" cy="256" r="4" fill="rgba(212,160,23,0.5)"/>
+</svg>

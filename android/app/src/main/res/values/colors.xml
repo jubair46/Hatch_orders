@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hatch_ink">#14201a</color>
+    <color name="hatch_dark">#0d1712</color>
+    <color name="hatch_gold">#d4a017</color>
+    <color name="hatch_paper">#f6efe1</color>
+</resources>

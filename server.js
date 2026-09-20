@@ -125,9 +125,23 @@ const server = http.createServer((req, res) => {
     if (pathname === '/health') {
       return sendJSON(res, 200, { ok: true, timestamp: new Date().toISOString() });
     }
+    if (pathname === '/manifest.json') {
+      return serveFile(res, path.join(__dirname, 'manifest.json'), 'application/manifest+json');
+    }
+    if (pathname === '/sw.js') {
+      return serveFile(res, path.join(__dirname, 'sw.js'), 'application/javascript');
+    }
+    if (pathname === '/icon.svg') {
+      return serveFile(res, path.join(__dirname, 'icon.svg'), 'image/svg+xml');
+    }
+    if (pathname === '/icon-192.png') {
+      return serveFile(res, path.join(__dirname, 'icon-192.png'), 'image/png');
+    }
+    if (pathname === '/icon-512.png') {
+      return serveFile(res, path.join(__dirname, 'icon-512.png'), 'image/png');
+    }
     if (pathname === '/favicon.ico') {
-      res.writeHead(204);
-      return res.end();
+      return serveFile(res, path.join(__dirname, 'icon.svg'), 'image/svg+xml');
     }
   }
 

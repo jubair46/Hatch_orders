@@ -24,6 +24,20 @@ Then visit:
 
 ---
 
+## 📱 Android Mobile App & APK Download
+
+### 1. Download Native Android APK
+Every push to this repository automatically compiles a native Android APK in the cloud via GitHub Actions:
+- **Direct APK Download**: Go to [**GitHub Releases**](https://github.com/jubair46/Hatch_orders/releases) or the [**Actions Artifacts**](https://github.com/jubair46/Hatch_orders/actions) tab and download **`hatch-orders-v1.0.0.apk`**.
+- **Installation**: Tap the downloaded `.apk` file on your Android phone and select **Install** to enjoy the full native app experience.
+
+### 2. Instant Browser Install (PWA)
+1. Open the website on your Android phone (in Chrome, Brave, or Samsung Internet).
+2. Tap the **📲 Install App** button in the header bar or select **"Add to Home screen"** from your browser's menu (⋮).
+3. The app will install directly onto your home screen with a custom icon and fullscreen interface.
+
+---
+
 ## 🍽️ Nine Culinary Counters
 
 1. 🥙 **The Levant** (Beirut-style counter, Slow-Roasted Tomato Shakshuka, Lamb Kofta, Whipped Labneh)

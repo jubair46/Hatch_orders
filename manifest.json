@@ -1,0 +1,44 @@
+{
+  "name": "Hatch — Bengaluru Food Hall & Dining",
+  "short_name": "Hatch",
+  "description": "Nine culinary counters, one roof. Order Dine-In with live table floor plans & steward call bell, Takeaway with curbside pickup, or Hyperlocal Delivery in Bengaluru.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0d1712",
+  "theme_color": "#14201a",
+  "orientation": "portrait",
+  "categories": ["food", "shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dine-In Menu",
+      "url": "/#menu",
+      "description": "Explore 9 culinary counters"
+    },
+    {
+      "name": "Book Table",
+      "url": "/#reservations",
+      "description": "Reserve a table in Indiranagar"
+    }
+  ]
+}
