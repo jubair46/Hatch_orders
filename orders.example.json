@@ -1,0 +1,31 @@
+[
+  {
+    "id": "e9b2a7d4-4f38-4281-9b1b-19d854890c51",
+    "createdAt": "2026-09-20T12:00:00.000Z",
+    "items": [
+      {
+        "id": "levant-shakshuka",
+        "name": "Slow-Roasted Tomato Shakshuka",
+        "size": "Full",
+        "price": 420,
+        "qty": 2
+      },
+      {
+        "id": "kyoto-matcha",
+        "name": "Ceremonial Uji Matcha Latte",
+        "size": "Regular",
+        "price": 280,
+        "qty": 1
+      }
+    ],
+    "subtotal": 1120,
+    "gst": 56,
+    "total": 1176,
+    "status": "new",
+    "orderType": "dine-in",
+    "customerName": "Aarav Sharma",
+    "customerPhone": "+91 98765 43210",
+    "tableNumber": "12",
+    "deliveryAddress": ""
+  }
+]

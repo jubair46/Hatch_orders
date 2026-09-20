@@ -31,13 +31,23 @@ function checkAuth(req) {
 
 function sendJSON(res, status, obj) {
   const body = JSON.stringify(obj);
-  res.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) });
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(body),
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+  });
   res.end(body);
 }
 
 function requireAuthOr401(req, res) {
   if (checkAuth(req)) return true;
-  res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Hatch Admin"', 'Content-Type': 'text/plain' });
+  res.writeHead(401, {
+    'WWW-Authenticate': 'Basic realm="Hatch Admin"',
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin': '*'
+  });
   res.end('Authentication required');
   return false;
 }

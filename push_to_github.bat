@@ -1,62 +1,55 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 cd /d "%~dp0"
 
 echo ==============================================
-echo  Push Hatch_orders to GitHub
+echo   Hatch Orders - Push to GitHub
 echo ==============================================
 echo.
 
-git push origin main
-if %errorlevel% equ 0 goto success
+git status --porcelain > "%TEMP%\git_status.tmp"
+set "HAS_CHANGES="
+for /f "delims=" %%i in ("%TEMP%\git_status.tmp") do set "HAS_CHANGES=1"
+if exist "%TEMP%\git_status.tmp" del "%TEMP%\git_status.tmp"
 
-echo.
-echo --------------------------------------------------------
-echo GitHub authentication is needed to push your code.
-echo.
-echo Choose an option:
-echo   [1] Sign in via Browser (Opens GitHub sign-in page)
-echo   [2] Paste a GitHub Personal Access Token (PAT)
-echo   [3] Exit
-echo --------------------------------------------------------
-set /p choice="Enter choice (1, 2, or 3): "
-
-if "%choice%"=="1" (
-    echo.
-    echo Launching GitHub sign-in in your browser...
-    git credential-manager github login
-    echo.
-    echo Retrying git push...
+if not defined HAS_CHANGES (
+    echo No uncommitted local changes detected.
+    echo Checking for unpushed commits...
     git push origin main
-    if %errorlevel% equ 0 goto success
+    goto finish
 )
 
-if "%choice%"=="2" (
-    echo.
-    echo To create a token:
-    echo   1. Visit: https://github.com/settings/tokens
-    echo   2. Click "Generate new token (classic)"
-    echo   3. Select the "repo" checkbox and click "Generate token"
-    echo.
-    set /p token="Paste your GitHub Token: "
-    if not "%token%"=="" (
-        git push https://%token%@github.com/jubair46/Hatch_orders.git main
-        if %errorlevel% equ 0 goto success
-    )
+echo Changes detected:
+git status -s
+echo.
+set "commit_msg="
+set /p "commit_msg=Enter commit message (press Enter for default): "
+
+if "!commit_msg!"=="" (
+    set "commit_msg=Update Hatch cafe code and configuration"
 )
 
 echo.
-echo Push was not completed.
-goto end
+echo [1/3] Staging files...
+git add .
 
-:success
-echo.
-echo ==============================================
-echo  Successfully pushed to GitHub!
-echo  Repo: https://github.com/jubair46/Hatch_orders
-echo ==============================================
+echo [2/3] Committing changes...
+git commit -m "!commit_msg!"
 
-:end
+echo [3/3] Pushing to GitHub (main)...
+git push origin main
+
+:finish
+if %errorlevel% equ 0 (
+    echo.
+    echo ==============================================
+    echo  Successfully pushed to GitHub!
+    echo  Repo: https://github.com/jubair46/Hatch_orders
+    echo ==============================================
+) else (
+    echo.
+    echo Push encountered an issue. Check your connection or GitHub permissions.
+)
+
 echo.
 pause
-

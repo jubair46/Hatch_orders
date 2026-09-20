@@ -32,13 +32,23 @@ function checkAuth(req) {
 
 function sendJSON(res, status, obj) {
   const body = JSON.stringify(obj);
-  res.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) });
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(body),
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+  });
   res.end(body);
 }
 
 function requireAuthOr401(req, res) {
   if (checkAuth(req)) return true;
-  res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Hatch Admin"', 'Content-Type': 'text/plain' });
+  res.writeHead(401, {
+    'WWW-Authenticate': 'Basic realm="Hatch Admin"',
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin': '*'
+  });
   res.end('Authentication required');
   return false;
 }
@@ -74,8 +84,24 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://' + req.headers.host);
   const pathname = url.pathname;
 
-  if (req.method === 'GET' && pathname === '/') {
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Max-Age': '86400'
+    });
+    return res.end();
+  }
+
+  if (req.method === 'GET' && (pathname === '/' || pathname === '/site.html' || pathname === '/index.html')) {
     return serveFile(res, SITE_HTML, 'text/html');
+  }
+
+  if (req.method === 'GET' && (pathname === '/admin' || pathname === '/admin.html')) {
+    if (!requireAuthOr401(req, res)) return;
+    return serveFile(res, ADMIN_HTML, 'text/html');
   }
 
   if (req.method === 'GET' && pathname === '/health') {
@@ -130,10 +156,6 @@ const server = http.createServer((req, res) => {
     });
   }
 
-  if (req.method === 'GET' && pathname === '/admin') {
-    if (!requireAuthOr401(req, res)) return;
-    return serveFile(res, ADMIN_HTML, 'text/html');
-  }
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Not found');

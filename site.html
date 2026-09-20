@@ -2052,7 +2052,10 @@
     };
     var orderItems = cart.slice();
     cartNote.textContent = 'Sending…';
-    fetch('/api/orders', {
+    var apiUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+      ? 'http://localhost:3001/api/orders'
+      : '/api/orders';
+    fetch(apiUrl, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

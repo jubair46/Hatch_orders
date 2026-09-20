@@ -200,7 +200,10 @@ function renderTable(orders){
   content.querySelectorAll('.status-select').forEach(function(sel){
     sel.addEventListener('change', async function(){
       sel.className = 'status-select s-' + sel.value;
-      await fetch('/api/orders/' + sel.getAttribute('data-id'), {
+      var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+        ? 'http://localhost:3001/api/orders/'
+        : '/api/orders/';
+      await fetch(apiBase + sel.getAttribute('data-id'), {
         method:'PATCH',
         headers:{'Content-Type':'application/json'},
         credentials:'include',
@@ -247,12 +250,25 @@ function exportCSV(){
 }
 
 async function loadOrders(){
-  var res = await fetch('/api/orders', {credentials:'include'});
-  var orders = await res.json();
-  lastOrders = orders;
-  renderStats(orders);
-  renderTable(orders);
-  document.getElementById('updatedAt').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  try {
+    var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+      ? 'http://localhost:3001/api/orders'
+      : '/api/orders';
+    var res = await fetch(apiBase, {credentials:'include'});
+    if (!res.ok) {
+      if (res.status === 401) {
+        document.getElementById('content').innerHTML = '<p class="empty">Authentication required. Please log in.</p>';
+      }
+      return;
+    }
+    var orders = await res.json();
+    lastOrders = orders;
+    renderStats(orders);
+    renderTable(orders);
+    document.getElementById('updatedAt').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  } catch (err) {
+    document.getElementById('content').innerHTML = '<p class="empty">Unable to connect to Hatch backend.</p>';
+  }
 }
 
 document.getElementById('refreshBtn').addEventListener('click', loadOrders);
