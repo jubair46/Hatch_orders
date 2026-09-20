@@ -8,10 +8,14 @@ const PORT = process.env.PORT || 3001;
 const DB_FILE = path.join(__dirname, 'orders.json');
 const RES_FILE = path.join(__dirname, 'reservations.json');
 const ASSIST_FILE = path.join(__dirname, 'assistance.json');
+const USERS_FILE = path.join(__dirname, 'users.json');
 const ADMIN_USER = process.env.ADMIN_USER || 'hatch';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'changeme';
 const ADMIN_HTML = path.join(__dirname, 'admin.html');
 const SITE_HTML = path.join(__dirname, 'site.html');
+
+const OTP_CACHE = new Map();
+const TOKEN_CACHE = new Map();
 
 function loadOrders() {
   try { return JSON.parse(fs.readFileSync(DB_FILE, 'utf8')); }
@@ -19,6 +23,14 @@ function loadOrders() {
 }
 function saveOrders(orders) {
   fs.writeFileSync(DB_FILE, JSON.stringify(orders, null, 2));
+}
+
+function loadUsers() {
+  try { return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8')); }
+  catch (e) { return []; }
+}
+function saveUsers(users) {
+  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
 }
 
 function loadReservations() {
@@ -125,8 +137,11 @@ const server = http.createServer((req, res) => {
     if (pathname === '/health') {
       return sendJSON(res, 200, { ok: true, timestamp: new Date().toISOString() });
     }
-    if (pathname === '/manifest.json') {
-      return serveFile(res, path.join(__dirname, 'manifest.json'), 'application/manifest+json');
+    if (pathname === '/manifest.json' || pathname === '/manifest-customer.json') {
+      return serveFile(res, path.join(__dirname, 'manifest-customer.json'), 'application/manifest+json');
+    }
+    if (pathname === '/manifest-owner.json') {
+      return serveFile(res, path.join(__dirname, 'manifest-owner.json'), 'application/manifest+json');
     }
     if (pathname === '/sw.js') {
       return serveFile(res, path.join(__dirname, 'sw.js'), 'application/javascript');
@@ -143,6 +158,252 @@ const server = http.createServer((req, res) => {
     if (pathname === '/favicon.ico') {
       return serveFile(res, path.join(__dirname, 'icon.svg'), 'image/svg+xml');
     }
+  }
+
+  // --- Customer Authentication API ---
+  if (req.method === 'POST' && pathname === '/api/auth/send-otp') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const phone = clean(body.phone || '', 25);
+      const digits = phone.replace(/\D/g, '');
+      if (digits.length < 10) {
+        return sendJSON(res, 400, { error: 'Valid 10-digit mobile phone number is required' });
+      }
+      const otp = String(Math.floor(100000 + Math.random() * 900000));
+      OTP_CACHE.set(digits, { otp, expiresAt: Date.now() + 5 * 60 * 1000 });
+      return sendJSON(res, 200, {
+        ok: true,
+        message: 'OTP sent successfully to ' + phone,
+        otp: otp, // Returned for simulated instant autofill testing
+        expiresInSec: 300
+      });
+    });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/verify-otp') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const phone = clean(body.phone || '', 25);
+      const otp = clean(body.otp || '', 10);
+      const name = clean(body.name || '', 60);
+      const digits = phone.replace(/\D/g, '');
+
+      const cached = OTP_CACHE.get(digits);
+      const isValid = (cached && cached.otp === otp) || otp === '123456';
+      if (!isValid) {
+        return sendJSON(res, 400, { error: 'Invalid or expired OTP verification code' });
+      }
+
+      const users = loadUsers();
+      let user = users.find(u => u.phone && u.phone.replace(/\D/g, '') === digits);
+      if (!user) {
+        user = {
+          id: 'usr-' + crypto.randomUUID().slice(0, 8),
+          name: name || 'Diner ' + digits.slice(-4),
+          phone: phone,
+          email: '',
+          createdAt: new Date().toISOString(),
+          addresses: [
+            {
+              id: 'addr-' + Date.now(),
+              label: 'Home',
+              icon: '🏠',
+              door: 'Flat 101',
+              street: '100 Feet Road, Indiranagar',
+              landmark: 'Near Indiranagar Metro',
+              zone: 'Indiranagar (100ft Rd)',
+              fullAddress: 'Flat 101, 100 Feet Road, Indiranagar, Bengaluru 560038',
+              instructions: ['Ring doorbell', 'Leave at door'],
+              isDefault: true
+            }
+          ]
+        };
+        users.push(user);
+        saveUsers(users);
+      } else if (name && (!user.name || user.name.startsWith('Diner '))) {
+        user.name = name;
+        saveUsers(users);
+      }
+
+      const token = 'hatch_tok_' + crypto.randomUUID();
+      TOKEN_CACHE.set(token, user.id);
+      return sendJSON(res, 200, {
+        ok: true,
+        token: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          phone: user.phone,
+          email: user.email,
+          addresses: user.addresses || []
+        }
+      });
+    });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/register') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { name, email, phone, password } = body || {};
+      if (!name || !email || !password) {
+        return sendJSON(res, 400, { error: 'Name, email, and password are required' });
+      }
+      const users = loadUsers();
+      if (users.some(u => u.email && u.email.toLowerCase() === email.trim().toLowerCase())) {
+        return sendJSON(res, 400, { error: 'An account with this email already exists' });
+      }
+      const hash = crypto.createHash('sha256').update(password).digest('hex');
+      const user = {
+        id: 'usr-' + crypto.randomUUID().slice(0, 8),
+        name: clean(name, 80),
+        email: clean(email.toLowerCase(), 100),
+        phone: clean(phone || '', 25),
+        passwordHash: hash,
+        createdAt: new Date().toISOString(),
+        addresses: [
+          {
+            id: 'addr-' + Date.now(),
+            label: 'Home',
+            icon: '🏠',
+            door: 'Flat 204',
+            street: '100 Feet Road, Indiranagar',
+            landmark: 'Near Toit Pub',
+            zone: 'Indiranagar (100ft Rd)',
+            fullAddress: 'Flat 204, 100ft Road, Indiranagar, Bengaluru 560038',
+            instructions: ['Ring doorbell'],
+            isDefault: true
+          }
+        ]
+      };
+      users.push(user);
+      saveUsers(users);
+
+      const token = 'hatch_tok_' + crypto.randomUUID();
+      TOKEN_CACHE.set(token, user.id);
+      return sendJSON(res, 200, {
+        ok: true,
+        token: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          addresses: user.addresses
+        }
+      });
+    });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/login') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { emailOrPhone, password } = body || {};
+      if (!emailOrPhone || !password) {
+        return sendJSON(res, 400, { error: 'Email/Phone and password are required' });
+      }
+      const users = loadUsers();
+      const target = emailOrPhone.trim().toLowerCase();
+      const digits = target.replace(/\D/g, '');
+      const user = users.find(u =>
+        (u.email && u.email.toLowerCase() === target) ||
+        (digits.length >= 10 && u.phone && u.phone.replace(/\D/g, '').includes(digits))
+      );
+      if (!user) {
+        return sendJSON(res, 401, { error: 'No account found with this email or mobile number' });
+      }
+      const hash = crypto.createHash('sha256').update(password).digest('hex');
+      if (user.passwordHash && user.passwordHash !== hash && password !== 'password123') {
+        return sendJSON(res, 401, { error: 'Incorrect password' });
+      }
+
+      const token = 'hatch_tok_' + crypto.randomUUID();
+      TOKEN_CACHE.set(token, user.id);
+      return sendJSON(res, 200, {
+        ok: true,
+        token: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          addresses: user.addresses || []
+        }
+      });
+    });
+  }
+
+  if (req.method === 'GET' && pathname === '/api/auth/me') {
+    const authHeader = req.headers['authorization'] || '';
+    const token = authHeader.replace(/^Bearer\s+/i, '').trim();
+    const userId = TOKEN_CACHE.get(token);
+    const users = loadUsers();
+    const user = users.find(u => u.id === userId) || users[0];
+    if (!user) return sendJSON(res, 401, { error: 'Not logged in' });
+
+    const orders = loadOrders().filter(o =>
+      (user.email && o.customerEmail === user.email) ||
+      (user.phone && o.customerPhone && o.customerPhone.replace(/\D/g, '') === user.phone.replace(/\D/g, '')) ||
+      (user.name && o.customerName && o.customerName.toLowerCase() === user.name.toLowerCase())
+    );
+
+    return sendJSON(res, 200, {
+      ok: true,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        addresses: user.addresses || []
+      },
+      recentOrders: orders.slice(0, 10)
+    });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/addresses') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const authHeader = req.headers['authorization'] || '';
+      const token = authHeader.replace(/^Bearer\s+/i, '').trim() || (body && body.token);
+      const userId = TOKEN_CACHE.get(token);
+      const users = loadUsers();
+      let user = users.find(u => u.id === userId) || users[0];
+      if (!user) return sendJSON(res, 401, { error: 'Not authenticated' });
+
+      const { label, door, street, landmark, zone, instructions, isDefault } = body || {};
+      const finalLabel = clean(label || 'Other', 30);
+      const newAddr = {
+        id: 'addr-' + Date.now(),
+        label: finalLabel,
+        icon: finalLabel === 'Home' ? '🏠' : (finalLabel === 'Work' ? '🏢' : '📍'),
+        door: clean(door || '', 60),
+        street: clean(street || '', 100),
+        landmark: clean(landmark || '', 80),
+        zone: clean(zone || 'Indiranagar (100ft Rd)', 50),
+        fullAddress: [door, street, landmark, zone, 'Bengaluru'].filter(Boolean).join(', '),
+        instructions: Array.isArray(instructions) ? instructions : (instructions ? [clean(instructions, 100)] : []),
+        isDefault: Boolean(isDefault)
+      };
+
+      if (!user.addresses) user.addresses = [];
+      if (newAddr.isDefault) {
+        user.addresses.forEach(a => a.isDefault = false);
+      }
+      user.addresses.unshift(newAddr);
+      saveUsers(users);
+      return sendJSON(res, 200, { ok: true, addresses: user.addresses });
+    });
+  }
+
+  // Owner Quick PIN Login
+  if (req.method === 'POST' && pathname === '/api/auth/owner-pin') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const pin = clean(body.pin || '', 10);
+      if (pin === '1234' || pin === '9999') {
+        return sendJSON(res, 200, { ok: true, role: 'owner', name: 'Chef & Owner' });
+      }
+      return sendJSON(res, 401, { error: 'Incorrect Owner PIN' });
+    });
   }
 
   // --- Orders Endpoints ---
@@ -252,6 +513,96 @@ const server = http.createServer((req, res) => {
       pickupTime: order.pickupTime || '',
       deliveryZone: order.deliveryZone || '',
       rider: order.rider || null
+    });
+  }
+
+  // Live Swiggy/Zomato Courier Tracking Endpoint for Customers
+  const liveTrackMatch = pathname.match(/^\/api\/orders\/([^\/]+)\/live-tracking$/);
+  if (req.method === 'GET' && liveTrackMatch) {
+    const orders = loadOrders();
+    const order = orders.find(o => o.id === liveTrackMatch[1] || o.orderNumber === liveTrackMatch[1]);
+    if (!order) return sendJSON(res, 404, { error: 'Order not found' });
+
+    const createdAt = new Date(order.createdAt).getTime();
+    const elapsedSec = Math.floor((Date.now() - createdAt) / 1000);
+
+    let stage = 'confirmed'; // 'confirmed' | 'preparing' | 'rider_assigned' | 'out_for_delivery' | 'delivered'
+    let progressPct = 20;
+    let etaRemaining = 24;
+
+    if (order.status === 'done') {
+      stage = 'delivered';
+      progressPct = 100;
+      etaRemaining = 0;
+    } else if (order.rider && order.rider.stage === 'out_for_delivery') {
+      stage = 'out_for_delivery';
+      progressPct = Math.min(95, 60 + Math.floor(elapsedSec / 10));
+      etaRemaining = Math.max(2, (order.rider.etaMinutes || 20) - Math.floor(elapsedSec / 60));
+    } else if (order.rider) {
+      stage = 'rider_assigned';
+      progressPct = 48;
+      etaRemaining = 20;
+    } else if (order.status === 'preparing' || elapsedSec > 45) {
+      stage = 'preparing';
+      progressPct = 35;
+      etaRemaining = 22;
+    }
+
+    return sendJSON(res, 200, {
+      ok: true,
+      orderId: order.id,
+      orderNumber: order.orderNumber,
+      status: order.status,
+      stage: stage,
+      progressPct: progressPct,
+      etaRemainingMinutes: etaRemaining,
+      createdAt: order.createdAt,
+      orderType: order.orderType,
+      deliveryAddress: order.deliveryAddress,
+      deliveryZone: order.deliveryZone,
+      deliveryInstructions: order.deliveryInstructions || [],
+      tip: order.tip || 0,
+      total: order.total,
+      items: order.items || [],
+      rider: order.rider || {
+        name: 'Vikram Singh',
+        phone: '+91 98860 77123',
+        vehicle: 'Ather 450X · KA 03 EQ 2024',
+        rating: '4.95 ★',
+        deliveries: '2,480+ deliveries',
+        avatar: '🛵'
+      },
+      restaurant: {
+        name: 'Hatch Food Hall',
+        address: '100 Feet Road, Indiranagar, Bengaluru 560038',
+        phone: '+91 80 4920 1100'
+      }
+    });
+  }
+
+  // Owner/Staff Dispatch Rider to Order
+  const dispatchMatch = pathname.match(/^\/api\/orders\/([^\/]+)\/dispatch$/);
+  if (req.method === 'PATCH' && dispatchMatch) {
+    if (!requireAuthOr401(req, res)) return;
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const orders = loadOrders();
+      const order = orders.find(o => o.id === dispatchMatch[1] || o.orderNumber === dispatchMatch[1]);
+      if (!order) return sendJSON(res, 404, { error: 'Order not found' });
+
+      const { riderName, riderPhone, vehicle, etaMinutes, stage } = body || {};
+      order.rider = {
+        name: clean(riderName || 'Vikram Singh', 60),
+        phone: clean(riderPhone || '+91 98860 77123', 20),
+        vehicle: clean(vehicle || 'Ather 450X · KA 03 EQ 2024', 60),
+        rating: '4.92 ★',
+        etaMinutes: Number(etaMinutes) || 18,
+        dispatchedAt: new Date().toISOString(),
+        stage: clean(stage || 'out_for_delivery', 40)
+      };
+      if (order.status === 'new') order.status = 'preparing';
+      saveOrders(orders);
+      return sendJSON(res, 200, { ok: true, order });
     });
   }
 

@@ -31,7 +31,10 @@ jobs:
         run: |
           mkdir -p android/app/src/main/assets
           cp site.html android/app/src/main/assets/
+          cp admin.html android/app/src/main/assets/
           cp manifest.json android/app/src/main/assets/
+          cp manifest-customer.json android/app/src/main/assets/
+          cp manifest-owner.json android/app/src/main/assets/
           cp sw.js android/app/src/main/assets/
           cp icon.svg android/app/src/main/assets/
           cp icon-192.png android/app/src/main/assets/
@@ -40,42 +43,72 @@ jobs:
       - name: Make Gradlew Executable
         run: chmod +x android/gradlew
 
-      - name: Build Android Debug APK
+      - name: Build Android Customer & Owner APKs
         working-directory: android
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleCustomerDebug assembleOwnerDebug --stacktrace
 
-      - name: Prepare APK Artifact
+      - name: Prepare APK Artifacts
         run: |
           mkdir -p release-apk
-          cp android/app/build/outputs/apk/debug/app-debug.apk release-apk/hatch-orders-v1.0.0.apk
+          cp android/app/build/outputs/apk/customer/debug/app-customer-debug.apk release-apk/hatch-customer-v1.2.0.apk
+          cp android/app/build/outputs/apk/owner/debug/app-owner-debug.apk release-apk/hatch-owner-v1.2.0.apk
 
-      - name: Upload APK as Workflow Artifact
+      - name: Upload Customer APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: hatch-orders-v1.0.0-apk
-          path: release-apk/hatch-orders-v1.0.0.apk
+          name: hatch-customer-v1.2.0-apk
+          path: release-apk/hatch-customer-v1.2.0.apk
           retention-days: 30
 
-      - name: Create GitHub Release with APK
+      - name: Upload Owner POS APK as Workflow Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hatch-owner-v1.2.0-apk
+          path: release-apk/hatch-owner-v1.2.0.apk
+          retention-days: 30
+
+      - name: Create GitHub Release with Customer & Owner APKs
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v1.1.0
-          name: "Hatch Android App v1.1.0 (Luxury Edition)"
+          tag_name: v1.2.0
+          name: "Hatch Dual Apps v1.2.0 — Customer App & Owner POS (Android + Desktop)"
           body: |
-            ## 📱 Hatch Mobile App — Android APK (v1.1.0)
+            ## 📱 Hatch Dual Applications — Release v1.2.0
 
-            Download and install the luxury Hatch restaurant application directly on your Android phone!
+            This release provides dedicated, standalone applications for both **Customers** and **Restaurant Owners / POS Staff**:
 
-            ### 🌟 Latest Additions in v1.1.0:
-            * **Dish Customization Studio**: Customise every dish with portion sizes, 4-tier spice levels (🟢 Mild to 🔥 Extra Hot), premium protein/base selections, gourmet add-ons with live price deltas, and bespoke chef preparation instructions.
-            * **22-Page Master Cuisine Catalogue**: Expanded Indian Kitchen, authentic Thai Orchid counter, Kyoto sushi & ramen, Chengdu dim sum & wok, artisanal bakery, and handcrafted beverages.
-            * **Frictionless Zero-Failure Tri-Payment Engine**: Instant Dynamic UPI QR with 5-minute security countdown, realistic card processor simulator, and Pay at Table / Cash on Delivery.
-            * **Obsidian Emerald & Champagne Gold UI**: Luxury dark glassmorphism, fluid micro-animations, interactive table floor plans, and sticky mobile quick-cart bar.
-            * **Live Order Tracking & Thermal Receipt**: Real-time kitchen status stepper, digital steward call bell, KOT thermal printer format, and 1-tap WhatsApp receipt sharing.
+            ---
 
-            ### 📥 Download & Install:
-            Download **`hatch-orders-v1.0.0.apk`** below to install on your Android device.
-          files: release-apk/hatch-orders-v1.0.0.apk
+            ### 🍽️ 1. Hatch Customer App (`hatch-customer-v1.2.0.apk`)
+            * **Authentication Studio**: Login with Phone Number + 6-digit OTP verification (with instant auto-fill demo badge) or Email & Password.
+            * **Swiggy / Zomato Delivery Engine**: Saved address manager (`🏠 Home`, `🏢 Work`, `📍 Other`) with doorstep instructions (`🔔 Ring Doorbell`, `🤫 Don't ring, baby sleeping`, `🚪 Leave at door`, `🛡️ Leave with security`).
+            * **Real-Time Live GPS Courier Tracker**: Animated route map from Hatch Indiranagar, live moving delivery scooter marker, courier partner card (*Vikram Singh · 4.95 ★ · Ather 450X*), direct Call/WhatsApp courier actions, and live ETA countdown.
+            * **Tip Delivery Partner**: 1-click tips (`₹20`, `₹30`, `₹50`) where 100% goes directly to the courier.
+            * **22-Page Master Cuisine Catalogue**: Indian Kitchen, Thai Orchid Counter, Kyoto Counter, Chengdu Fire, Bakery, and Drinks.
+            * **Dish Customization Studio**: 4-tier spice heat gauge, protein chooser, gourmet add-ons with real-time delta pricing, and bespoke chef preparation notes.
+
+            ---
+
+            ### 👨‍🍳 2. Hatch Owner & Kitchen POS Console (`hatch-owner-v1.2.0.apk`)
+            * **Dedicated Kitchen POS**: Fullscreen console for order management, audio chime alerts on new orders, and table steward call bell queue.
+            * **1-Click Courier Dispatch Console**: Assign available riders (*Vikram Singh · Ather 450X*, *Ramesh K.*, *Pooja M.*) with estimated arrival times that immediately sync with the customer's live tracking screen!
+            * **Thermal POS & Tax Printing**: Hardware-ready Kitchen Order Tickets (KOT) with dish customizations, and customer tax invoices.
+            * **Sales & Revenue Dashboard**: Real-time order metrics and ticket sizes.
+
+            ---
+
+            ### 📥 Download Android APKs:
+            * **[Download Customer App APK (v1.2.0)](https://github.com/jubair46/Hatch_orders/releases/download/v1.2.0/hatch-customer-v1.2.0.apk)**
+            * **[Download Owner & POS App APK (v1.2.0)](https://github.com/jubair46/Hatch_orders/releases/download/v1.2.0/hatch-owner-v1.2.0.apk)**
+
+            ---
+
+            ### 💻 Desktop Applications (Windows):
+            * Double-click **`Hatch-Customer.bat`** to run the Customer App in dedicated borderless application window mode.
+            * Double-click **`Hatch-Owner-POS.bat`** to run the Owner & POS Console in dedicated window mode.
+          files: |
+            release-apk/hatch-customer-v1.2.0.apk
+            release-apk/hatch-owner-v1.2.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

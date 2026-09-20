@@ -4,7 +4,9 @@
   "description": "Hatch — Bengaluru cafe website + ordering system",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "desktop:customer": "electron electron-main.js --app=customer",
+    "desktop:owner": "electron electron-main.js --app=owner"
   },
   "keywords": [
     "restaurant",

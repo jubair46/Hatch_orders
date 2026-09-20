@@ -17,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private SwipeRefreshLayout swipeRefresh;
 
-    // By default loads the embedded high-performance offline assets.
-    // Can also point to your live URL if hosted on Vercel/Render/Fly.io
-    private static final String APP_URL = "file:///android_asset/site.html";
+    // Loads the embedded high-performance offline assets based on product flavor (Customer vs Owner)
+    private static final String APP_URL = (BuildConfig.START_URL != null && !BuildConfig.START_URL.isEmpty())
+            ? BuildConfig.START_URL
+            : "file:///android_asset/site.html";
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "usr-demo-001",
+    "name": "Shaik Jubair",
+    "email": "jubair@example.com",
+    "phone": "+91 98765 43210",
+    "passwordHash": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+    "createdAt": "2026-09-20T10:00:00.000Z",
+    "addresses": [
+      {
+        "id": "addr-1",
+        "label": "Home",
+        "icon": "🏠",
+        "door": "Flat 402, Emerald Towers",
+        "street": "12th Main Road, HAL 2nd Stage",
+        "landmark": "Near Sony Center",
+        "zone": "Indiranagar (100ft Rd)",
+        "fullAddress": "Flat 402, Emerald Towers, 12th Main Rd, Indiranagar, Bengaluru 560038",
+        "instructions": ["Ring doorbell", "Leave at door"],
+        "isDefault": true
+      },
+      {
+        "id": "addr-2",
+        "label": "Work",
+        "icon": "🏢",
+        "door": "Tower B, Level 6",
+        "street": "Embassy GolfLinks Business Park",
+        "landmark": "Opposite KGA Golf Course",
+        "zone": "Domlur & HAL",
+        "fullAddress": "Tower B, Level 6, Embassy GolfLinks, Off Intermediate Ring Rd, Domlur, Bengaluru 560071",
+        "instructions": ["Leave with security guard", "Call upon arrival"],
+        "isDefault": false
+      }
+    ]
+  }
+]

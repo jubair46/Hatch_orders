@@ -193,6 +193,73 @@
   .wa-link:hover{ text-decoration:underline; }
 
   .empty{ opacity:0.55; padding:64px 20px; text-align:center; font-size:14px; }
+
+/* ===================================================
+   HATCH OWNER & POS CONSOLE: DISPATCH & MODAL STYLING
+   =================================================== */
+
+.dispatch-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 9, 7, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.dispatch-modal-overlay.active {
+  display: flex;
+}
+
+.dispatch-card {
+  background: #111a14;
+  border: 1px solid rgba(230, 184, 76, 0.3);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px;
+  color: #fff;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 30px rgba(255,107,0,0.2);
+  position: relative;
+}
+
+.dispatch-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  margin-top: 6px;
+  box-sizing: border-box;
+}
+.dispatch-input:focus {
+  border-color: #ff6b00;
+  box-shadow: 0 0 10px rgba(255,107,0,0.3);
+}
+
+.rider-select-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.rider-select-card:hover, .rider-select-card.selected {
+  background: rgba(255,107,0,0.15);
+  border-color: #ff6b00;
+}
+
 </style>
 </head>
 <body>
@@ -629,6 +696,9 @@ function renderOrdersTable(orders){
     } else if (o.status === 'preparing') {
       actionHtml += '<button class="btn-action ready" onclick="updateOrderStatus(\'' + o.id + '\', \'done\')">✓ Mark Ready</button>';
     }
+    if (type === 'delivery' && o.status !== 'done') {
+      actionHtml += '<button class="btn-action" style="background:#ff6b00;color:#000;font-weight:700;" onclick="openDispatchModal(\'' + o.id + '\')">🛵 Dispatch Rider</button>';
+    }
 
     var detailsPills = '';
     if (type === 'dine-in') {
@@ -1050,6 +1120,109 @@ bindFilterChips();
 // Load immediately and poll every 6 seconds
 loadAllData();
 setInterval(loadAllData, 6000);
+
+
+var selectedDispatchOrderId = null;
+var selectedRiderInfo = { name: "Vikram Singh", phone: "+91 98860 77123", vehicle: "Ather 450X · KA 03 EQ 2024" };
+
+function openDispatchModal(orderId) {
+  selectedDispatchOrderId = orderId;
+  var overlay = document.getElementById("dispatchModalOverlay");
+  if (overlay) overlay.classList.add("active");
+}
+function closeDispatchModal() {
+  var overlay = document.getElementById("dispatchModalOverlay");
+  if (overlay) overlay.classList.remove("active");
+}
+
+function selectRiderInModal(cardEl, name, phone, vehicle) {
+  var cards = document.querySelectorAll(".rider-select-card");
+  cards.forEach(function(c){ c.classList.remove("selected"); });
+  cardEl.classList.add("selected");
+  selectedRiderInfo = { name: name, phone: phone, vehicle: vehicle };
+}
+
+async function confirmDispatch() {
+  if (!selectedDispatchOrderId) return;
+  var eta = parseInt(document.getElementById("dispatchEtaInput").value, 10) || 18;
+  var apiBase = (window.location.protocol === "file:" || (window.location.port && window.location.port !== "3001"))
+    ? "http://localhost:3001/api/orders/"
+    : "/api/orders/";
+  try {
+    var res = await fetch(apiBase + selectedDispatchOrderId + "/dispatch", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        riderName: selectedRiderInfo.name,
+        riderPhone: selectedRiderInfo.phone,
+        vehicle: selectedRiderInfo.vehicle,
+        etaMinutes: eta,
+        stage: "out_for_delivery"
+      })
+    });
+    var data = await res.json();
+    if (data.ok) {
+      alert("Rider " + selectedRiderInfo.name + " dispatched successfully! Customer tracking map is now live.");
+      closeDispatchModal();
+      await loadAllData();
+    } else {
+      alert(data.error || "Failed to dispatch rider.");
+    }
+  } catch(e) {
+    alert("Error dispatching rider.");
+  }
+}
+
 </script>
+
+<!-- ===================================================
+     OWNER / STAFF RIDER DISPATCH MODAL
+     =================================================== -->
+<div class="dispatch-modal-overlay" id="dispatchModalOverlay">
+  <div class="dispatch-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3 style="margin:0; font-size:1.3rem; font-weight:800; color:#fff;">🛵 Dispatch Delivery Rider</h3>
+      <button onclick="closeDispatchModal()" style="background:transparent; border:none; color:#cbd5e1; font-size:20px; cursor:pointer;">✕</button>
+    </div>
+
+    <p style="font-size:0.85rem; color:#94a3b8; margin:0 0 16px;">Assign an active Hatch delivery partner. The customer will immediately receive live GPS route tracking and courier contact details.</p>
+
+    <div style="margin-bottom:14px;">
+      <label style="font-size:0.75rem; font-weight:700; color:#cbd5e1; text-transform:uppercase;">Select Courier Partner</label>
+      <div style="margin-top:8px;">
+        <div class="rider-select-card selected" onclick="selectRiderInModal(this, 'Vikram Singh', '+91 98860 77123', 'Ather 450X · KA 03 EQ 2024')">
+          <div style="font-size:1.6rem;">🛵</div>
+          <div style="flex:1;">
+            <div style="font-weight:800; color:#fff;">Vikram Singh <span style="color:#e6b84c; font-size:0.75rem;">★ 4.95</span></div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Ather 450X · KA 03 EQ 2024 (Nearby 100ft Rd)</div>
+          </div>
+        </div>
+        <div class="rider-select-card" onclick="selectRiderInModal(this, 'Ramesh K.', '+91 98860 12345', 'Bajaj Chetak · KA 01 MJ 4492')">
+          <div style="font-size:1.6rem;">🛵</div>
+          <div style="flex:1;">
+            <div style="font-weight:800; color:#fff;">Ramesh K. <span style="color:#e6b84c; font-size:0.75rem;">★ 4.90</span></div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Bajaj Chetak · KA 01 MJ 4492 (Indiranagar Hub)</div>
+          </div>
+        </div>
+        <div class="rider-select-card" onclick="selectRiderInModal(this, 'Pooja M.', '+91 98860 55412', 'Ola S1 Pro · KA 03 HX 7102')">
+          <div style="font-size:1.6rem;">🛵</div>
+          <div style="flex:1;">
+            <div style="font-weight:800; color:#fff;">Pooja M. <span style="color:#e6b84c; font-size:0.75rem;">★ 4.98</span></div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Ola S1 Pro · KA 03 HX 7102 (CMH Road)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <label style="font-size:0.75rem; font-weight:700; color:#cbd5e1; text-transform:uppercase;">Estimated Arrival Time (Minutes)</label>
+      <input type="number" class="dispatch-input" id="dispatchEtaInput" value="18" min="5" max="90">
+    </div>
+
+    <button onclick="confirmDispatch()" style="width:100%; background:linear-gradient(135deg, #ff6b00, #d97706); border:none; color:#fff; font-weight:800; font-size:1rem; padding:14px; border-radius:12px; cursor:pointer; box-shadow:0 6px 20px rgba(255,107,0,0.4);">Confirm Dispatch &amp; Notify Customer ➔</button>
+  </div>
+</div>
+
 </body>
 </html>

@@ -16,6 +16,28 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig true
+    }
+
+    flavorDimensions "role"
+    productFlavors {
+        customer {
+            dimension "role"
+            applicationId "com.hatch.customer"
+            versionName "1.2.0-customer"
+            manifestPlaceholders = [appName: "Hatch Customer"]
+            buildConfigField "String", "START_URL", "\"file:///android_asset/site.html\""
+        }
+        owner {
+            dimension "role"
+            applicationId "com.hatch.owner"
+            versionName "1.2.0-owner"
+            manifestPlaceholders = [appName: "Hatch Owner & POS"]
+            buildConfigField "String", "START_URL", "\"file:///android_asset/admin.html\""
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

@@ -1,0 +1,32 @@
+{
+  "name": "Hatch Partner & POS Console",
+  "short_name": "Hatch Owner",
+  "description": "Real-time kitchen order ticket management, live rider dispatch, table steward assistance calls, and sales analytics.",
+  "start_url": "/admin",
+  "id": "/owner-pos",
+  "display": "standalone",
+  "background_color": "#09100d",
+  "theme_color": "#d4a017",
+  "orientation": "any",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

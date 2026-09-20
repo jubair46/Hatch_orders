@@ -5,36 +5,39 @@
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Quick Start: Dual Applications (Desktop & Web)
 
-### Windows (1-Click)
-Double-click [**`start.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/start.bat) — it auto-detects Node.js, starts the server on port 3001, and launches your browser.
+### 1. Windows Desktop Apps (1-Click Standalone Windows)
+Double-click either launcher to run in a dedicated, borderless desktop application window:
+- [**`Hatch-Customer.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/Hatch-Customer.bat): Launches the **Hatch Customer App** (Food Delivery, Dining, Customization Studio, Live Tracking).
+- [**`Hatch-Owner-POS.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/Hatch-Owner-POS.bat): Launches the **Hatch Owner & Kitchen POS Console** (Live Orders, Rider Dispatch, Table Assistance, KOT & Bill Printing).
 
-### Command Line
+### 2. Browser & Web Server
 ```bash
 node server.js
 ```
-
 Then visit:
-- **Customer Dining Site**: [http://localhost:3001](http://localhost:3001)
-- **Staff Kitchen & POS Console**: [http://localhost:3001/admin](http://localhost:3001/admin)
+- **Customer App**: [http://localhost:3001](http://localhost:3001)
+- **Owner & POS Console**: [http://localhost:3001/admin](http://localhost:3001/admin)
   - **Username**: `hatch`
-  - **Password**: `changeme` *(or set via `ADMIN_PASS` environment variable)*
+  - **Password**: `changeme` *(or Quick PIN: `1234`)*
 - **Health Check**: [http://localhost:3001/health](http://localhost:3001/health)
 
 ---
 
-## 📱 Android Mobile App & APK Download
+## 📱 Native Android Mobile Apps (Dual APK Downloads)
 
-### 1. Download Native Android APK
-Every push to this repository automatically compiles a native Android APK in the cloud via GitHub Actions:
-- **Direct APK Download**: Go to [**GitHub Releases (v1.1.0)**](https://github.com/jubair46/Hatch_orders/releases) or the [**Actions Artifacts**](https://github.com/jubair46/Hatch_orders/actions) tab and download **`hatch-orders-v1.0.0.apk`**.
-- **Installation**: Tap the downloaded `.apk` file on your Android phone and select **Install** to enjoy the full native app experience.
+Every push to this repository automatically compiles **two separate native Android APKs** via GitHub Actions:
 
-### 2. Instant Browser Install (PWA)
-1. Open the website on your Android phone (in Chrome, Brave, or Samsung Internet).
-2. Tap the **📲 Install App** button in the header bar or select **"Add to Home screen"** from your browser's menu (⋮).
-3. The app will install directly onto your home screen with a custom icon and fullscreen interface.
+### 1. Download Native Android APKs (v1.2.0)
+- **[Download Customer App APK (v1.2.0)](https://github.com/jubair46/Hatch_orders/releases)**: Dedicated app for diners and customers with Mobile OTP login, Swiggy/Zomato live courier route map, dish customization studio, and contactless payments.
+- **[Download Owner & POS App APK (v1.2.0)](https://github.com/jubair46/Hatch_orders/releases)**: Dedicated app for kitchen staff and restaurant owners with live audio chimes, rider dispatch console, table steward call alerts, and KOT thermal printing.
+- **Direct GitHub Actions Artifacts**: Visit the [**Actions tab**](https://github.com/jubair46/Hatch_orders/actions) to download `hatch-customer-v1.2.0-apk` and `hatch-owner-v1.2.0-apk`.
+
+### 2. Instant Browser Install (PWA Desktop & Mobile)
+1. Open [http://localhost:3001](http://localhost:3001) on Chrome or Edge (Desktop or Android).
+2. Click the **Install App** icon in the address bar or tap **"Add to Home screen"**.
+3. Install **Hatch Customer App** and **Hatch Owner Console** as standalone desktop/mobile applications.
 
 ---
 

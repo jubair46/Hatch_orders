@@ -2590,6 +2590,803 @@
     transform: scale(1.05);
   }
 
+
+/* ===================================================
+   HATCH V2: LUXURY EMBER OBSIDIAN & GOLD COLOR GRADING
+   SWIGGY / ZOMATO LEVEL DELIVERY & AUTHENTICATION STUDIO
+   =================================================== */
+
+:root {
+  --amber-brand: #ff6b00;
+  --amber-bright: #ff8c00;
+  --amber-glow: rgba(255, 107, 0, 0.35);
+  --gold-brand: #e6b84c;
+  --gold-glow: rgba(230, 184, 76, 0.35);
+  --obsidian-900: #070b09;
+  --obsidian-800: #0e1511;
+  --obsidian-700: #142019;
+  --obsidian-card: rgba(16, 25, 20, 0.92);
+  --obsidian-glass: rgba(12, 20, 16, 0.85);
+  --obsidian-border: rgba(230, 184, 76, 0.22);
+  --emerald-veg: #10b981;
+  --crimson-meat: #ef4444;
+}
+
+/* Header Delivery & Auth Badges */
+.delivery-address-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid rgba(255, 107, 0, 0.35);
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #fff;
+  font-size: 0.82rem;
+}
+.delivery-address-chip:hover {
+  background: rgba(255, 107, 0, 0.24);
+  border-color: var(--amber-brand);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px var(--amber-glow);
+}
+.delivery-address-chip .addr-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-align: left;
+}
+.delivery-address-chip .addr-title {
+  font-weight: 700;
+  color: var(--gold-brand);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+}
+.delivery-address-chip .addr-sub {
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(230,184,76,0.18), rgba(255,107,0,0.18));
+  border: 1px solid var(--gold-brand);
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.auth-header-btn:hover {
+  background: linear-gradient(135deg, var(--gold-brand), var(--amber-brand));
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--gold-glow);
+}
+.auth-avatar-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+/* Auth Studio Modal Overlay */
+.auth-modal-overlay,
+.profile-drawer-overlay,
+.address-modal-overlay,
+.livetrack-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 9, 7, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.auth-modal-overlay.active,
+.profile-drawer-overlay.active,
+.address-modal-overlay.active,
+.livetrack-modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.auth-modal-card {
+  background: var(--obsidian-card);
+  border: 1px solid var(--obsidian-border);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px 28px;
+  color: #fff;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(255,107,0,0.18);
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.auth-modal-overlay.active .auth-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.auth-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #cbd5e1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.auth-close-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.auth-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(230,184,76,0.12);
+  border: 1px solid rgba(230,184,76,0.3);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-brand);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+.auth-subtitle {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 0 0 24px;
+}
+
+.auth-tabs {
+  display: flex;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+.auth-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-tab-btn.active {
+  background: linear-gradient(135deg, var(--amber-brand), var(--gold-brand));
+  color: #000;
+  box-shadow: 0 4px 12px var(--amber-glow);
+}
+
+.auth-form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+.auth-form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.auth-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.auth-input:focus {
+  border-color: var(--amber-brand);
+  background: rgba(255,107,0,0.05);
+  box-shadow: 0 0 0 3px rgba(255,107,0,0.2);
+}
+
+/* 6-box OTP digits */
+.otp-boxes {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
+}
+.otp-digit {
+  width: 46px;
+  height: 52px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s;
+}
+.otp-digit:focus {
+  border-color: var(--gold-brand);
+  background: rgba(230,184,76,0.1);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--amber-brand), #d97706);
+  border: none;
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 6px 20px var(--amber-glow);
+  margin-top: 8px;
+}
+.auth-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,107,0,0.5);
+  background: linear-gradient(135deg, #ff7a1a, #ea580c);
+}
+
+.otp-test-badge {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px dashed rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+.otp-test-badge:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #34d399;
+}
+
+/* User Profile Drawer */
+.profile-drawer-card {
+  background: var(--obsidian-card);
+  border: 1px solid var(--obsidian-border);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 28px;
+  color: #fff;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.profile-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+}
+.profile-avatar-large {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-brand), var(--amber-brand));
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  box-shadow: 0 4px 15px var(--gold-glow);
+}
+.profile-name-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+.profile-contact-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.saved-addr-list, .order-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+.saved-addr-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.saved-addr-item:hover {
+  background: rgba(255,107,0,0.08);
+  border-color: var(--amber-brand);
+}
+.saved-addr-item.active-default {
+  border-color: var(--gold-brand);
+  background: rgba(230,184,76,0.08);
+}
+.addr-icon-box {
+  font-size: 1.4rem;
+  padding: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+.addr-details-box {
+  flex: 1;
+  text-align: left;
+}
+.addr-label-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.addr-body-text {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin: 4px 0 0;
+  line-height: 1.35;
+}
+
+/* Address Editor Modal */
+.address-modal-card {
+  background: var(--obsidian-card);
+  border: 1px solid var(--obsidian-border);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 28px;
+  color: #fff;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+  position: relative;
+}
+.type-pills {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.type-pill-btn {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: #cbd5e1;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.type-pill-btn.active {
+  background: var(--gold-brand);
+  color: #000;
+  border-color: var(--gold-brand);
+  box-shadow: 0 4px 12px var(--gold-glow);
+}
+
+.delivery-instructions-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.instruction-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.instruction-pill.selected {
+  background: rgba(255,107,0,0.25);
+  border-color: var(--amber-brand);
+  color: #ff9800;
+  font-weight: 600;
+}
+
+/* ===================================================
+   SWIGGY / ZOMATO REAL-TIME LIVE COURIER TRACKER MODAL
+   =================================================== */
+.livetrack-modal-card {
+  background: var(--obsidian-card);
+  border: 1px solid var(--obsidian-border);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 520px;
+  padding: 0;
+  color: #fff;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.9), 0 0 40px rgba(255,107,0,0.2);
+  position: relative;
+}
+
+.livetrack-header-bar {
+  padding: 20px 24px;
+  background: linear-gradient(180deg, rgba(255,107,0,0.15), transparent);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.livetrack-order-tag {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.livetrack-status-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid #10b981;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Visual Live Map Box */
+.live-map-container {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  background: #08110b;
+  overflow: hidden;
+}
+.live-map-svg {
+  width: 100%;
+  height: 100%;
+}
+.map-pulse-restaurant {
+  animation: pulsePin 2s infinite;
+}
+.map-scooter-icon {
+  filter: drop-shadow(0 4px 8px rgba(255,107,0,0.6));
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes pulsePin {
+  0% { r: 6; opacity: 1; }
+  50% { r: 14; opacity: 0.4; }
+  100% { r: 6; opacity: 1; }
+}
+
+/* ETA Banner */
+.livetrack-eta-banner {
+  padding: 16px 24px;
+  background: rgba(255, 107, 0, 0.12);
+  border-bottom: 1px solid rgba(255, 107, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.eta-title {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+.eta-time {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gold-brand);
+}
+
+/* Delivery Partner Card */
+.rider-card-box {
+  margin: 18px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.rider-avatar-pic {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+.rider-info-text {
+  flex: 1;
+  text-align: left;
+}
+.rider-name-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0;
+  color: #ffffff;
+}
+.rider-vehicle-desc {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 3px 0 0;
+}
+.rider-rating-tag {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+.rider-actions {
+  display: flex;
+  gap: 8px;
+}
+.rider-call-btn {
+  background: #10b981;
+  border: none;
+  color: #000;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.rider-call-btn:hover {
+  transform: scale(1.08);
+}
+
+/* 5-Stage Live Stepper */
+.livetrack-stepper {
+  padding: 12px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.stepper-stage-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+  text-align: left;
+}
+.stepper-stage-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 28px;
+  bottom: -12px;
+  width: 2px;
+  background: rgba(255,255,255,0.12);
+}
+.stepper-stage-item.completed:not(:last-child)::after {
+  background: #10b981;
+}
+.stepper-stage-item.active:not(:last-child)::after {
+  background: linear-gradient(180deg, #10b981, rgba(255,255,255,0.12));
+}
+
+.step-node-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 2;
+}
+.stepper-stage-item.completed .step-node-icon {
+  background: #10b981;
+  color: #000;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+.stepper-stage-item.active .step-node-icon {
+  background: var(--amber-brand);
+  color: #fff;
+  box-shadow: 0 0 15px var(--amber-glow);
+  animation: pulseNode 1.5s infinite;
+}
+@keyframes pulseNode {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.step-node-text h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.step-node-text p {
+  margin: 3px 0 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Tip Partner Box in Cart */
+.cart-tip-partner-box {
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.25);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 14px 0;
+  text-align: left;
+}
+.tip-partner-header {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.tip-partner-sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin: 0 0 10px;
+}
+.tip-chips-row {
+  display: flex;
+  gap: 8px;
+}
+.tip-chip-btn {
+  flex: 1;
+  padding: 8px 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tip-chip-btn.selected {
+  background: var(--amber-brand);
+  border-color: var(--amber-brand);
+  color: #000;
+  box-shadow: 0 4px 12px var(--amber-glow);
+}
+
+/* Mobile Bottom Navigation Bar */
+.bottom-nav-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(8, 14, 10, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(230, 184, 76, 0.2);
+  padding: 8px 12px 14px;
+  z-index: 8000;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-tab-item .tab-icon {
+  font-size: 1.25rem;
+}
+.nav-tab-item.active,
+.nav-tab-item:hover {
+  color: var(--gold-brand);
+}
+
+@media (max-width: 768px) {
+  .bottom-nav-bar {
+    display: flex;
+  }
+  .mobile-bottom-cart-bar {
+    bottom: 68px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2625,6 +3422,21 @@
     <li>
       <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle theme">
         <span id="themeIcon">🌙</span>
+      </button>
+    </li>
+    <li>
+      <div class="delivery-address-chip" id="headerDeliveryChip" onclick="openAddressModal()" title="Change delivery address">
+        <span class="addr-icon">📍</span>
+        <div class="addr-meta">
+          <span class="addr-title" id="headerAddressLabel">Deliver to: Home</span>
+          <span class="addr-sub" id="headerAddressSub">Indiranagar, Bengaluru ▾</span>
+        </div>
+      </div>
+    </li>
+    <li>
+      <button class="auth-header-btn" id="headerAuthBtn" onclick="toggleUserAuthOrProfile()">
+        <span class="auth-avatar-circle" id="headerUserAvatar">👤</span>
+        <span id="headerUserName">Sign In</span>
       </button>
     </li>
     <li>
@@ -4353,6 +5165,325 @@
   </div>
 </div>
 
+
+<!-- ===================================================
+     HATCH CUSTOMER AUTHENTICATION STUDIO MODAL
+     =================================================== -->
+<div class="auth-modal-overlay" id="authModalOverlay">
+  <div class="auth-modal-card">
+    <button class="auth-close-btn" onclick="closeAuthModal()">✕</button>
+    
+    <div class="auth-brand-badge">Hatch Bengaluru</div>
+    <h2 class="auth-title">Welcome to Hatch</h2>
+    <p class="auth-subtitle">Sign in for live courier delivery tracking, fast ordering & saved addresses</p>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" id="tabBtnPhone" onclick="switchAuthTab('phone')">📱 Mobile OTP</button>
+      <button class="auth-tab-btn" id="tabBtnEmail" onclick="switchAuthTab('email')">✉️ Email & Pass</button>
+    </div>
+
+    <!-- Phone OTP Form -->
+    <div id="authPhonePanel">
+      <div id="phoneStep1">
+        <div class="auth-form-group">
+          <label>10-Digit Mobile Phone</label>
+          <div style="display:flex; gap:8px;">
+            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:12px 14px; font-weight:700; color:#cbd5e1;">+91</span>
+            <input type="tel" class="auth-input" id="authPhoneInput" placeholder="98765 43210" maxlength="10" value="9876543210">
+          </div>
+        </div>
+        <button class="auth-submit-btn" onclick="requestOtpCode()">Get Verification Code ➔</button>
+      </div>
+
+      <div id="phoneStep2" style="display:none;">
+        <div class="auth-form-group" style="text-align:center;">
+          <label>Enter 6-Digit Code sent to <b id="otpTargetPhone">+91 ...</b></label>
+          <div class="otp-boxes">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_0" onkeyup="handleOtpInput(0, event)">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_1" onkeyup="handleOtpInput(1, event)">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_2" onkeyup="handleOtpInput(2, event)">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_3" onkeyup="handleOtpInput(3, event)">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_4" onkeyup="handleOtpInput(4, event)">
+            <input type="text" class="otp-digit" maxlength="1" id="otp_5" onkeyup="handleOtpInput(5, event)">
+          </div>
+          <div style="font-size:0.8rem; color:#94a3b8; margin-top:8px;" id="otpTimerText">Resend OTP in 30s</div>
+        </div>
+
+        <button class="auth-submit-btn" onclick="submitOtpCode()">Verify & Login ➔</button>
+
+        <div class="otp-test-badge" onclick="autofillDemoOtp()">
+          <span>⚡ <b>Instant Test Code:</b> <span id="demoOtpCode">123456</span></span>
+          <span style="text-decoration:underline;">Click to Auto-fill</span>
+        </div>
+        
+        <div style="text-align:center; margin-top:14px;">
+          <button style="background:transparent; border:none; color:#cbd5e1; font-size:0.82rem; cursor:pointer; text-decoration:underline;" onclick="resetPhoneStep()">← Change mobile number</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email & Password Form -->
+    <div id="authEmailPanel" style="display:none;">
+      <div class="auth-form-group" id="groupNameRegister" style="display:none;">
+        <label>Your Full Name</label>
+        <input type="text" class="auth-input" id="authNameInput" placeholder="Shaik Jubair">
+      </div>
+      <div class="auth-form-group">
+        <label>Email Address</label>
+        <input type="email" class="auth-input" id="authEmailInput" placeholder="jubair@example.com">
+      </div>
+      <div class="auth-form-group">
+        <label>Password</label>
+        <input type="password" class="auth-input" id="authPassInput" placeholder="••••••••">
+      </div>
+
+      <button class="auth-submit-btn" id="btnEmailSubmit" onclick="submitEmailAuth()">Sign In to Hatch ➔</button>
+
+      <div style="text-align:center; margin-top:16px; font-size:0.85rem; color:#94a3b8;">
+        <span id="emailTogglePrompt">New to Hatch?</span>
+        <button style="background:transparent; border:none; color:var(--gold-brand); font-weight:700; cursor:pointer; margin-left:4px; text-decoration:underline;" id="btnToggleEmailMode" onclick="toggleEmailMode()">Create an account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     HATCH CUSTOMER PROFILE & ADDRESSES DRAWER
+     =================================================== -->
+<div class="profile-drawer-overlay" id="profileDrawerOverlay">
+  <div class="profile-drawer-card">
+    <button class="auth-close-btn" onclick="closeProfileDrawer()">✕</button>
+
+    <div class="profile-header-meta">
+      <div class="profile-avatar-large" id="profileAvatarBig">SJ</div>
+      <div>
+        <h3 class="profile-name-text" id="profileNameBig">Shaik Jubair</h3>
+        <p class="profile-contact-text" id="profilePhoneBig">+91 98765 43210</p>
+        <p class="profile-contact-text" id="profileEmailBig" style="color:var(--gold-brand); font-size:0.78rem;">Verified Customer</p>
+      </div>
+    </div>
+
+    <!-- Saved Addresses -->
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px;">
+      <h4 style="margin:0; font-size:1rem; font-weight:800; color:#fff;">🏠 Saved Addresses</h4>
+      <button onclick="openAddressModal()" style="background:rgba(255,107,0,0.15); border:1px solid var(--amber-brand); color:var(--amber-brand); padding:4px 10px; border-radius:999px; font-size:0.75rem; font-weight:700; cursor:pointer;">+ Add New</button>
+    </div>
+    <div class="saved-addr-list" id="profileSavedAddressList">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Order History -->
+    <div style="margin-top:24px;">
+      <h4 style="margin:0 0 10px; font-size:1rem; font-weight:800; color:#fff;">🛵 Recent Orders & Live Tracking</h4>
+      <div class="order-history-list" id="profileOrderHistoryList">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <div style="margin-top:28px; text-align:center;">
+      <button onclick="logoutCustomer()" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); color:#ef4444; width:100%; padding:12px; border-radius:12px; font-weight:700; cursor:pointer; transition:all 0.2s;">Sign Out of Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     HATCH SAVED ADDRESS EDITOR MODAL
+     =================================================== -->
+<div class="address-modal-overlay" id="addressModalOverlay">
+  <div class="address-modal-card">
+    <button class="auth-close-btn" onclick="closeAddressModal()">✕</button>
+
+    <div class="auth-brand-badge">Delivery Location</div>
+    <h3 style="font-size:1.4rem; font-weight:800; margin:0 0 6px;">Add Delivery Address</h3>
+    <p style="font-size:0.84rem; color:#94a3b8; margin:0 0 18px;">Bengaluru Hyperlocal Food Delivery by Hatch Couriers</p>
+
+    <div class="type-pills">
+      <button class="type-pill-btn active" id="addrTypeHome" onclick="selectAddrType('Home')">🏠 Home</button>
+      <button class="type-pill-btn" id="addrTypeWork" onclick="selectAddrType('Work')">🏢 Work</button>
+      <button class="type-pill-btn" id="addrTypeOther" onclick="selectAddrType('Other')">📍 Other</button>
+    </div>
+
+    <div class="auth-form-group">
+      <label>House / Flat / Block No.</label>
+      <input type="text" class="auth-input" id="addrDoorInput" placeholder="Flat 402, Emerald Heights">
+    </div>
+
+    <div class="auth-form-group">
+      <label>Street / Apartment / Society</label>
+      <input type="text" class="auth-input" id="addrStreetInput" placeholder="12th Main Road, HAL 2nd Stage">
+    </div>
+
+    <div class="auth-form-group">
+      <label>Landmark (Optional)</label>
+      <input type="text" class="auth-input" id="addrLandmarkInput" placeholder="Near Sony World Signal / Metro Pillar 114">
+    </div>
+
+    <div class="auth-form-group">
+      <label>Bengaluru Delivery Zone</label>
+      <select class="auth-input" id="addrZoneInput" style="background:#15221b;">
+        <option value="Indiranagar (100ft Rd)">Indiranagar (100ft Rd) · 15-25 min</option>
+        <option value="Domlur & HAL">Domlur & HAL · 20-30 min</option>
+        <option value="Koramangala">Koramangala · 25-35 min</option>
+        <option value="Ulsoor & Cambridge Layout">Ulsoor & Cambridge Layout · 20-30 min</option>
+        <option value="CBD / MG Road">CBD / MG Road · 25-35 min</option>
+        <option value="Whitefield / Outer Ring Road">Whitefield / Outer Ring Road · 45-55 min</option>
+      </select>
+    </div>
+
+    <div class="auth-form-group">
+      <label>Delivery Instructions for Rider</label>
+      <div class="delivery-instructions-pills">
+        <span class="instruction-pill selected" onclick="toggleInstructionPill(this)">🔔 Ring Doorbell</span>
+        <span class="instruction-pill" onclick="toggleInstructionPill(this)">🤫 Don't ring, baby sleeping</span>
+        <span class="instruction-pill selected" onclick="toggleInstructionPill(this)">🚪 Leave at the door</span>
+        <span class="instruction-pill" onclick="toggleInstructionPill(this)">🛡️ Leave with security</span>
+        <span class="instruction-pill" onclick="toggleInstructionPill(this)">📞 Call upon arrival</span>
+      </div>
+    </div>
+
+    <button class="auth-submit-btn" onclick="saveNewDeliveryAddress()">Save & Deliver to this Address ➔</button>
+  </div>
+</div>
+
+<!-- ===================================================
+     HATCH REAL-TIME COURIER TRACKER (SWIGGY/ZOMATO ENGINE)
+     =================================================== -->
+<div class="livetrack-modal-overlay" id="liveTrackerModalOverlay">
+  <div class="livetrack-modal-card">
+    <div class="livetrack-header-bar">
+      <div>
+        <div class="livetrack-order-tag">🛵 <span id="ltOrderNum">HTC-1002</span></div>
+        <div style="font-size:0.75rem; color:#94a3b8;" id="ltOrderType">Hyperlocal Delivery</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="livetrack-status-badge" id="ltStatusBadge">Out for Delivery</span>
+        <button class="auth-close-btn" style="position:static;" onclick="closeLiveTracker()">✕</button>
+      </div>
+    </div>
+
+    <!-- Live Animated Map Box -->
+    <div class="live-map-container">
+      <svg class="live-map-svg" viewBox="0 0 500 230">
+        <!-- City Grid Roads -->
+        <rect width="500" height="230" fill="#08140c"/>
+        <path d="M0,60 H500 M0,120 H500 M0,180 H500" stroke="#122519" stroke-width="6"/>
+        <path d="M80,0 V230 M180,0 V230 M280,0 V230 M380,0 V230 M460,0 V230" stroke="#122519" stroke-width="6"/>
+
+        <!-- Active Route Polyline -->
+        <path id="routePathSvg" d="M 80,180 L 180,180 L 180,90 L 320,90 L 320,140 L 420,140" fill="none" stroke="#22382a" stroke-width="6" stroke-linecap="round"/>
+        <path id="routeProgressSvg" d="M 80,180 L 180,180 L 180,90 L 320,90 L 320,140 L 420,140" fill="none" stroke="#ff6b00" stroke-width="6" stroke-dasharray="600" stroke-dashoffset="300" stroke-linecap="round"/>
+
+        <!-- Restaurant Pin (Hatch Indiranagar) -->
+        <circle cx="80" cy="180" r="14" fill="rgba(230,184,76,0.25)" class="map-pulse-restaurant"/>
+        <circle cx="80" cy="180" r="8" fill="#e6b84c"/>
+        <text x="80" y="212" font-size="11" font-weight="bold" fill="#e6b84c" text-anchor="middle">HATCH INDIRANAGAR</text>
+
+        <!-- Customer Pin -->
+        <circle cx="420" cy="140" r="14" fill="rgba(16,185,129,0.25)"/>
+        <circle cx="420" cy="140" r="8" fill="#10b981"/>
+        <text x="420" y="172" font-size="11" font-weight="bold" fill="#34d399" text-anchor="middle">YOUR LOCATION</text>
+
+        <!-- Dynamic Delivery Scooter Marker -->
+        <g id="scooterMarkerGroup" transform="translate(260, 80)">
+          <circle cx="0" cy="0" r="18" fill="#ff6b00" filter="drop-shadow(0 4px 10px rgba(255,107,0,0.7))"/>
+          <text x="0" y="5" font-size="16" text-anchor="middle">🛵</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ETA Banner -->
+    <div class="livetrack-eta-banner">
+      <div>
+        <div class="eta-title">Estimated Delivery Time</div>
+        <div style="font-size:0.8rem; color:#cbd5e1; margin-top:2px;" id="ltDeliveryAddressSummary">100 Feet Rd, Indiranagar</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="eta-time" id="ltEtaMinutes">14 mins</div>
+        <div style="font-size:0.75rem; color:#34d399; font-weight:700;">On Schedule</div>
+      </div>
+    </div>
+
+    <!-- Delivery Partner Card -->
+    <div class="rider-card-box">
+      <div class="rider-avatar-pic">👨🏽‍💼</div>
+      <div class="rider-info-text">
+        <h4 class="rider-name-heading" id="ltRiderName">Vikram Singh</h4>
+        <div class="rider-vehicle-desc" id="ltRiderVehicle">Ather 450X · KA 03 EQ 2024</div>
+        <span class="rider-rating-tag" id="ltRiderRating">4.95 ★ (2,480+ deliveries)</span>
+      </div>
+      <div class="rider-actions">
+        <a href="tel:+919886077123" class="rider-call-btn" id="ltRiderPhoneBtn" title="Call Delivery Partner">📞</a>
+        <a href="https://wa.me/919886077123?text=Hi%20Vikram,%20checking%20on%20my%20Hatch%20order!" target="_blank" class="rider-call-btn" style="background:#25d366;" title="WhatsApp Delivery Partner">💬</a>
+      </div>
+    </div>
+
+    <!-- 5-Stage Live Stepper -->
+    <div class="livetrack-stepper">
+      <div class="stepper-stage-item completed" id="step1">
+        <div class="step-node-icon">✓</div>
+        <div class="step-node-text">
+          <h4>Order Confirmed</h4>
+          <p>Kitchen accepted order · Preparing freshest ingredients</p>
+        </div>
+      </div>
+      <div class="stepper-stage-item completed" id="step2">
+        <div class="step-node-icon">✓</div>
+        <div class="step-node-text">
+          <h4>Master Chef Preparing</h4>
+          <p>Wok tossed & tandoor charred to perfection</p>
+        </div>
+      </div>
+      <div class="stepper-stage-item completed" id="step3">
+        <div class="step-node-icon">✓</div>
+        <div class="step-node-text">
+          <h4>Packed & Insulated</h4>
+          <p>Thermal pouch sealed with quality seal</p>
+        </div>
+      </div>
+      <div class="stepper-stage-item active" id="step4">
+        <div class="step-node-icon">🛵</div>
+        <div class="step-node-text">
+          <h4 style="color:var(--amber-brand);">Out for Delivery</h4>
+          <p id="step4Subtitle">Vikram is on his way on Ather 450X</p>
+        </div>
+      </div>
+      <div class="stepper-stage-item" id="step5">
+        <div class="step-node-icon">5</div>
+        <div class="step-node-text">
+          <h4>Delivered</h4>
+          <p>Enjoy your Hatch culinary feast!</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 24px 24px; display:flex; gap:10px;">
+      <button onclick="simulateOrderDelivered()" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#cbd5e1; padding:12px; border-radius:12px; font-weight:700; cursor:pointer;">Simulate Delivered 🏁</button>
+      <button onclick="closeLiveTracker()" style="flex:1; background:var(--gold-brand); border:none; color:#000; padding:12px; border-radius:12px; font-weight:700; cursor:pointer;">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     MOBILE BOTTOM NAVIGATION TABS
+     =================================================== -->
+<nav class="bottom-nav-bar" id="mobileBottomNav">
+  <button class="nav-tab-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <span class="tab-icon">🍽️</span>
+    <span>Explore</span>
+  </button>
+  <button class="nav-tab-item" onclick="switchToDeliveryModeAndPickAddress()">
+    <span class="tab-icon">🛵</span>
+    <span>Delivery</span>
+  </button>
+  <button class="nav-tab-item" onclick="openActiveLiveTrackerOrHistory()">
+    <span class="tab-icon">📦</span>
+    <span>Orders</span>
+  </button>
+  <button class="nav-tab-item" onclick="toggleUserAuthOrProfile()">
+    <span class="tab-icon">👤</span>
+    <span>Account</span>
+  </button>
+</nav>
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <script>
@@ -6032,6 +7163,557 @@
   renderCart();
   filterMenu();
 })();
+
+/* ===================================================
+   HATCH V2 CLIENT SCRIPT: AUTH, ADDRESSES & LIVE TRACKING
+   =================================================== */
+
+var HATCH_USER = null;
+var HATCH_TOKEN = null;
+var ACTIVE_DELIVERY_ADDRESS = null;
+var LIVE_TRACK_INTERVAL = null;
+var CURRENT_TRACKING_ORDER_ID = null;
+
+// Initialize on Load
+(function initCustomerState() {
+  try {
+    var rawUser = localStorage.getItem('hatch_user');
+    var rawTok = localStorage.getItem('hatch_token');
+    var rawAddr = localStorage.getItem('hatch_active_address');
+    if (rawUser && rawTok) {
+      HATCH_USER = JSON.parse(rawUser);
+      HATCH_TOKEN = rawTok;
+    }
+    if (rawAddr) {
+      ACTIVE_DELIVERY_ADDRESS = JSON.parse(rawAddr);
+    } else if (HATCH_USER && HATCH_USER.addresses && HATCH_USER.addresses.length) {
+      ACTIVE_DELIVERY_ADDRESS = HATCH_USER.addresses[0];
+    } else {
+      ACTIVE_DELIVERY_ADDRESS = {
+        label: 'Home',
+        fullAddress: '100 Feet Road, Indiranagar, Bengaluru 560038',
+        zone: 'Indiranagar (100ft Rd)'
+      };
+    }
+  } catch(e) {}
+  updateHeaderAuthUI();
+  updateHeaderAddressUI();
+})();
+
+function updateHeaderAuthUI() {
+  var nameEl = document.getElementById('headerUserName');
+  var avatarEl = document.getElementById('headerUserAvatar');
+  if (HATCH_USER && HATCH_USER.name) {
+    if (nameEl) nameEl.textContent = HATCH_USER.name.split(' ')[0];
+    if (avatarEl) avatarEl.textContent = HATCH_USER.name.charAt(0).toUpperCase();
+  } else {
+    if (nameEl) nameEl.textContent = 'Sign In';
+    if (avatarEl) avatarEl.textContent = '👤';
+  }
+}
+
+function updateHeaderAddressUI() {
+  var labelEl = document.getElementById('headerAddressLabel');
+  var subEl = document.getElementById('headerAddressSub');
+  if (ACTIVE_DELIVERY_ADDRESS) {
+    if (labelEl) labelEl.textContent = 'Deliver to: ' + (ACTIVE_DELIVERY_ADDRESS.label || 'Home');
+    if (subEl) subEl.textContent = (ACTIVE_DELIVERY_ADDRESS.zone || 'Indiranagar') + ' ▾';
+  }
+}
+
+function toggleUserAuthOrProfile() {
+  if (HATCH_USER && HATCH_TOKEN) {
+    openProfileDrawer();
+  } else {
+    openAuthModal();
+  }
+}
+
+function openAuthModal() {
+  var overlay = document.getElementById('authModalOverlay');
+  if (overlay) overlay.classList.add('active');
+}
+function closeAuthModal() {
+  var overlay = document.getElementById('authModalOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function switchAuthTab(tab) {
+  var btnPhone = document.getElementById('tabBtnPhone');
+  var btnEmail = document.getElementById('tabBtnEmail');
+  var phonePanel = document.getElementById('authPhonePanel');
+  var emailPanel = document.getElementById('authEmailPanel');
+  if (tab === 'phone') {
+    btnPhone.classList.add('active');
+    btnEmail.classList.remove('active');
+    phonePanel.style.display = 'block';
+    emailPanel.style.display = 'none';
+  } else {
+    btnEmail.classList.add('active');
+    btnPhone.classList.remove('active');
+    emailPanel.style.display = 'block';
+    phonePanel.style.display = 'none';
+  }
+}
+
+var lastSentOtp = '123456';
+function requestOtpCode() {
+  var phoneVal = document.getElementById('authPhoneInput').value.trim();
+  if (phoneVal.length < 10) {
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+  fetch('/api/auth/send-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phoneVal })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      lastSentOtp = data.otp || '123456';
+      document.getElementById('demoOtpCode').textContent = lastSentOtp;
+      document.getElementById('otpTargetPhone').textContent = '+91 ' + phoneVal;
+      document.getElementById('phoneStep1').style.display = 'none';
+      document.getElementById('phoneStep2').style.display = 'block';
+      // Auto focus first OTP digit
+      setTimeout(function() {
+        var first = document.getElementById('otp_0');
+        if (first) first.focus();
+      }, 200);
+      startOtpTimer();
+    } else {
+      alert(data.error || 'Failed to send OTP.');
+    }
+  })
+  .catch(function(e) {
+    // Fallback in demo mode
+    lastSentOtp = '123456';
+    document.getElementById('demoOtpCode').textContent = '123456';
+    document.getElementById('phoneStep1').style.display = 'none';
+    document.getElementById('phoneStep2').style.display = 'block';
+  });
+}
+
+function handleOtpInput(idx, event) {
+  var el = document.getElementById('otp_' + idx);
+  if (event.key === 'Backspace' && idx > 0 && !el.value) {
+    document.getElementById('otp_' + (idx - 1)).focus();
+  } else if (el.value && idx < 5) {
+    document.getElementById('otp_' + (idx + 1)).focus();
+  }
+}
+
+function autofillDemoOtp() {
+  for (var i = 0; i < 6; i++) {
+    var digit = lastSentOtp.charAt(i) || '1';
+    var box = document.getElementById('otp_' + i);
+    if (box) box.value = digit;
+  }
+  submitOtpCode();
+}
+
+function startOtpTimer() {
+  var sec = 30;
+  var timerEl = document.getElementById('otpTimerText');
+  var interval = setInterval(function() {
+    sec--;
+    if (timerEl) timerEl.textContent = 'Resend OTP in ' + sec + 's';
+    if (sec <= 0) {
+      clearInterval(interval);
+      if (timerEl) timerEl.innerHTML = '<span style="color:var(--gold-brand); cursor:pointer; text-decoration:underline;" onclick="requestOtpCode()">Resend OTP Now</span>';
+    }
+  }, 1000);
+}
+
+function resetPhoneStep() {
+  document.getElementById('phoneStep1').style.display = 'block';
+  document.getElementById('phoneStep2').style.display = 'none';
+}
+
+function submitOtpCode() {
+  var code = '';
+  for (var i = 0; i < 6; i++) {
+    code += (document.getElementById('otp_' + i).value || '');
+  }
+  if (code.length !== 6) {
+    alert('Please enter all 6 digits of the OTP code.');
+    return;
+  }
+  var phoneVal = document.getElementById('authPhoneInput').value.trim();
+
+  fetch('/api/auth/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: '+91 ' + phoneVal, otp: code, name: 'Shaik Jubair' })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok && data.user) {
+      HATCH_USER = data.user;
+      HATCH_TOKEN = data.token;
+      localStorage.setItem('hatch_user', JSON.stringify(HATCH_USER));
+      localStorage.setItem('hatch_token', HATCH_TOKEN);
+      updateHeaderAuthUI();
+      closeAuthModal();
+      alert('Welcome back, ' + HATCH_USER.name + '! Logged in successfully.');
+    } else {
+      alert(data.error || 'Invalid OTP. Try again or click auto-fill.');
+    }
+  })
+  .catch(function(err) {
+    alert('Error connecting to server.');
+  });
+}
+
+var isEmailRegisterMode = false;
+function toggleEmailMode() {
+  isEmailRegisterMode = !isEmailRegisterMode;
+  document.getElementById('groupNameRegister').style.display = isEmailRegisterMode ? 'block' : 'none';
+  document.getElementById('btnEmailSubmit').textContent = isEmailRegisterMode ? 'Create Account ➔' : 'Sign In to Hatch ➔';
+  document.getElementById('emailTogglePrompt').textContent = isEmailRegisterMode ? 'Already have an account?' : 'New to Hatch?';
+  document.getElementById('btnToggleEmailMode').textContent = isEmailRegisterMode ? 'Sign In' : 'Create an account';
+}
+
+function submitEmailAuth() {
+  var email = document.getElementById('authEmailInput').value.trim();
+  var pass = document.getElementById('authPassInput').value;
+  var name = document.getElementById('authNameInput').value.trim();
+  if (!email || !pass) {
+    alert('Please fill in email and password.');
+    return;
+  }
+
+  var endpoint = isEmailRegisterMode ? '/api/auth/register' : '/api/auth/login';
+  var payload = isEmailRegisterMode ? { name: name || 'Diner', email: email, password: pass } : { emailOrPhone: email, password: pass };
+
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok && data.user) {
+      HATCH_USER = data.user;
+      HATCH_TOKEN = data.token;
+      localStorage.setItem('hatch_user', JSON.stringify(HATCH_USER));
+      localStorage.setItem('hatch_token', HATCH_TOKEN);
+      updateHeaderAuthUI();
+      closeAuthModal();
+      alert('Signed in successfully as ' + HATCH_USER.name);
+    } else {
+      alert(data.error || 'Login failed.');
+    }
+  })
+  .catch(function(e) {
+    alert('Network error during login.');
+  });
+}
+
+function openProfileDrawer() {
+  if (!HATCH_USER) { openAuthModal(); return; }
+  var overlay = document.getElementById('profileDrawerOverlay');
+  document.getElementById('profileNameBig').textContent = HATCH_USER.name || 'Diner';
+  document.getElementById('profileAvatarBig').textContent = (HATCH_USER.name || 'D').charAt(0).toUpperCase();
+  document.getElementById('profilePhoneBig').textContent = HATCH_USER.phone || HATCH_USER.email || 'Bengaluru';
+  renderSavedAddressesInProfile();
+  renderRecentOrdersInProfile();
+  if (overlay) overlay.classList.add('active');
+}
+function closeProfileDrawer() {
+  var overlay = document.getElementById('profileDrawerOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function renderSavedAddressesInProfile() {
+  var listEl = document.getElementById('profileSavedAddressList');
+  if (!listEl) return;
+  var addrs = (HATCH_USER && HATCH_USER.addresses && HATCH_USER.addresses.length) ? HATCH_USER.addresses : [
+    {
+      id: 'addr-1',
+      label: 'Home',
+      icon: '🏠',
+      fullAddress: 'Flat 402, Emerald Towers, 12th Main Rd, Indiranagar, Bengaluru 560038',
+      zone: 'Indiranagar (100ft Rd)'
+    },
+    {
+      id: 'addr-2',
+      label: 'Work',
+      icon: '🏢',
+      fullAddress: 'Tower B, Level 6, Embassy GolfLinks, Off Intermediate Ring Rd, Domlur, Bengaluru 560071',
+      zone: 'Domlur & HAL'
+    }
+  ];
+
+  var html = '';
+  addrs.forEach(function(a) {
+    var isDefault = (ACTIVE_DELIVERY_ADDRESS && ACTIVE_DELIVERY_ADDRESS.id === a.id);
+    html += '<div class="saved-addr-item ' + (isDefault ? 'active-default' : '') + '" onclick="selectActiveAddress(' + JSON.stringify(a).replace(/"/g, '&quot;') + ')">' +
+      '<div class="addr-icon-box">' + (a.icon || '📍') + '</div>' +
+      '<div class="addr-details-box">' +
+        '<div class="addr-label-title">' + (a.label || 'Saved Address') + (isDefault ? ' <span style="background:var(--gold-brand); color:#000; font-size:0.68rem; padding:2px 6px; border-radius:4px; font-weight:800;">ACTIVE</span>' : '') + '</div>' +
+        '<div class="addr-body-text">' + (a.fullAddress || a.door + ', ' + a.street) + '</div>' +
+      '</div>' +
+    '</div>';
+  });
+  listEl.innerHTML = html;
+}
+
+function selectActiveAddress(addr) {
+  ACTIVE_DELIVERY_ADDRESS = addr;
+  localStorage.setItem('hatch_active_address', JSON.stringify(addr));
+  updateHeaderAddressUI();
+  renderSavedAddressesInProfile();
+  closeProfileDrawer();
+}
+
+function renderRecentOrdersInProfile() {
+  var listEl = document.getElementById('profileOrderHistoryList');
+  if (!listEl) return;
+
+  var recentOrders = [];
+  try {
+    var stored = localStorage.getItem('hatch_last_orders');
+    if (stored) recentOrders = JSON.parse(stored);
+  } catch(e) {}
+
+  if (!recentOrders.length) {
+    recentOrders = [
+      { id: 'HTC-1002', date: 'Today · 1:20 PM', items: 'Royal Rogan Josh, Pad Thai', total: 1396.5, status: 'Out for Delivery' }
+    ];
+  }
+
+  var html = '';
+  recentOrders.forEach(function(o) {
+    html += '<div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; display:flex; justify-content:space-between; align-items:center;">' +
+      '<div>' +
+        '<div style="font-weight:700; font-size:0.92rem; color:#fff;">Order ' + (o.orderNumber || o.id) + '</div>' +
+        '<div style="font-size:0.78rem; color:#94a3b8;">' + (o.items || '2 items') + ' · ₹' + (o.total || 0) + '</div>' +
+      '</div>' +
+      '<button onclick="openLiveTracker(\'' + (o.id || o.orderNumber) + '\')" style="background:linear-gradient(135deg,var(--amber-brand),var(--gold-brand)); border:none; color:#000; font-weight:800; font-size:0.75rem; padding:6px 12px; border-radius:8px; cursor:pointer;">Live Track 🛵</button>' +
+    '</div>';
+  });
+  listEl.innerHTML = html;
+}
+
+function logoutCustomer() {
+  HATCH_USER = null;
+  HATCH_TOKEN = null;
+  localStorage.removeItem('hatch_user');
+  localStorage.removeItem('hatch_token');
+  updateHeaderAuthUI();
+  closeProfileDrawer();
+  alert('Signed out successfully.');
+}
+
+// Address Management
+var selectedAddrTypeLabel = 'Home';
+function openAddressModal() {
+  var overlay = document.getElementById('addressModalOverlay');
+  if (overlay) overlay.classList.add('active');
+}
+function closeAddressModal() {
+  var overlay = document.getElementById('addressModalOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+function selectAddrType(t) {
+  selectedAddrTypeLabel = t;
+  ['Home', 'Work', 'Other'].forEach(function(name) {
+    var btn = document.getElementById('addrType' + name);
+    if (btn) {
+      if (name === t) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
+}
+function toggleInstructionPill(pill) {
+  pill.classList.toggle('selected');
+}
+
+function saveNewDeliveryAddress() {
+  var door = document.getElementById('addrDoorInput').value.trim();
+  var street = document.getElementById('addrStreetInput').value.trim();
+  var landmark = document.getElementById('addrLandmarkInput').value.trim();
+  var zone = document.getElementById('addrZoneInput').value;
+
+  var pills = document.querySelectorAll('.delivery-instructions-pills .instruction-pill.selected');
+  var instructions = [];
+  pills.forEach(function(p) { instructions.push(p.textContent.trim()); });
+
+  if (!door || !street) {
+    alert('Please enter flat/door number and street name.');
+    return;
+  }
+
+  var newAddress = {
+    id: 'addr-' + Date.now(),
+    label: selectedAddrTypeLabel,
+    icon: selectedAddrTypeLabel === 'Home' ? '🏠' : (selectedAddrTypeLabel === 'Work' ? '🏢' : '📍'),
+    door: door,
+    street: street,
+    landmark: landmark,
+    zone: zone,
+    fullAddress: door + ', ' + street + (landmark ? ', Near ' + landmark : '') + ', ' + zone + ', Bengaluru',
+    instructions: instructions,
+    isDefault: true
+  };
+
+  ACTIVE_DELIVERY_ADDRESS = newAddress;
+  localStorage.setItem('hatch_active_address', JSON.stringify(newAddress));
+  if (!HATCH_USER) {
+    HATCH_USER = { name: 'Guest Diner', addresses: [newAddress] };
+  } else {
+    if (!HATCH_USER.addresses) HATCH_USER.addresses = [];
+    HATCH_USER.addresses.unshift(newAddress);
+  }
+  localStorage.setItem('hatch_user', JSON.stringify(HATCH_USER));
+
+  updateHeaderAddressUI();
+  closeAddressModal();
+  alert('Delivery location set to: ' + newAddress.label + ' (' + newAddress.zone + ')');
+}
+
+function switchToDeliveryModeAndPickAddress() {
+  var deliveryBtn = document.querySelector('[data-service="delivery"]');
+  if (deliveryBtn) deliveryBtn.click();
+  openAddressModal();
+}
+
+function openActiveLiveTrackerOrHistory() {
+  var lastOrderId = 'HTC-1002';
+  try {
+    var stored = localStorage.getItem('hatch_last_orders');
+    if (stored) {
+      var arr = JSON.parse(stored);
+      if (arr.length) lastOrderId = arr[0].id || arr[0].orderNumber || 'HTC-1002';
+    }
+  } catch(e) {}
+  openLiveTracker(lastOrderId);
+}
+
+// Live Courier Tracking
+function openLiveTracker(orderId) {
+  CURRENT_TRACKING_ORDER_ID = orderId || 'HTC-1002';
+  var overlay = document.getElementById('liveTrackerModalOverlay');
+  if (overlay) overlay.classList.add('active');
+  fetchLiveTrackingData();
+
+  if (LIVE_TRACK_INTERVAL) clearInterval(LIVE_TRACK_INTERVAL);
+  LIVE_TRACK_INTERVAL = setInterval(fetchLiveTrackingData, 3500);
+}
+
+function closeLiveTracker() {
+  var overlay = document.getElementById('liveTrackerModalOverlay');
+  if (overlay) overlay.classList.remove('active');
+  if (LIVE_TRACK_INTERVAL) {
+    clearInterval(LIVE_TRACK_INTERVAL);
+    LIVE_TRACK_INTERVAL = null;
+  }
+}
+
+function fetchLiveTrackingData() {
+  if (!CURRENT_TRACKING_ORDER_ID) return;
+  fetch('/api/orders/' + CURRENT_TRACKING_ORDER_ID + '/live-tracking')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      renderLiveTrackerView(data);
+    }
+  })
+  .catch(function(e) {
+    // Fallback simulated tracking state
+    renderLiveTrackerView({
+      orderNumber: CURRENT_TRACKING_ORDER_ID,
+      stage: 'out_for_delivery',
+      progressPct: 75,
+      etaRemainingMinutes: 12,
+      rider: {
+        name: 'Vikram Singh',
+        phone: '+91 98860 77123',
+        vehicle: 'Ather 450X · KA 03 EQ 2024',
+        rating: '4.95 ★ (2,480+ deliveries)'
+      },
+      deliveryAddress: (ACTIVE_DELIVERY_ADDRESS ? ACTIVE_DELIVERY_ADDRESS.fullAddress : '100ft Rd, Indiranagar')
+    });
+  });
+}
+
+function renderLiveTrackerView(data) {
+  document.getElementById('ltOrderNum').textContent = data.orderNumber || 'HTC-1002';
+  document.getElementById('ltEtaMinutes').textContent = (data.etaRemainingMinutes || 12) + ' mins';
+  document.getElementById('ltDeliveryAddressSummary').textContent = data.deliveryAddress || 'Indiranagar, Bengaluru';
+
+  if (data.rider) {
+    document.getElementById('ltRiderName').textContent = data.rider.name || 'Vikram Singh';
+    document.getElementById('ltRiderVehicle').textContent = data.rider.vehicle || 'Ather 450X';
+    document.getElementById('ltRiderRating').textContent = data.rider.rating || '4.95 ★';
+    if (data.rider.phone) {
+      document.getElementById('ltRiderPhoneBtn').href = 'tel:' + data.rider.phone;
+    }
+  }
+
+  // Animate route SVG progress & scooter position
+  var progress = data.progressPct || 65;
+  var dashoffset = 600 - (600 * (progress / 100));
+  var routeProgressSvg = document.getElementById('routeProgressSvg');
+  if (routeProgressSvg) routeProgressSvg.style.strokeDashoffset = dashoffset;
+
+  var scooterGroup = document.getElementById('scooterMarkerGroup');
+  if (scooterGroup) {
+    // Translate along path proportionally
+    var x = 80 + ((420 - 80) * (progress / 100));
+    var y = 180 + ((140 - 180) * (progress / 100));
+    scooterGroup.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+  }
+
+  // Update Stepper Stages
+  var stages = ['step1', 'step2', 'step3', 'step4', 'step5'];
+  var currentStageIdx = 3; // out_for_delivery
+  if (data.stage === 'confirmed') currentStageIdx = 0;
+  else if (data.stage === 'preparing') currentStageIdx = 1;
+  else if (data.stage === 'rider_assigned') currentStageIdx = 2;
+  else if (data.stage === 'out_for_delivery') currentStageIdx = 3;
+  else if (data.stage === 'delivered') currentStageIdx = 4;
+
+  stages.forEach(function(sid, idx) {
+    var el = document.getElementById(sid);
+    if (!el) return;
+    el.className = 'stepper-stage-item';
+    if (idx < currentStageIdx) {
+      el.classList.add('completed');
+    } else if (idx === currentStageIdx) {
+      el.classList.add('active');
+    }
+  });
+
+  var statusBadge = document.getElementById('ltStatusBadge');
+  if (statusBadge) {
+    if (data.stage === 'delivered') {
+      statusBadge.textContent = 'Delivered ✓';
+      statusBadge.style.background = 'rgba(16,185,129,0.3)';
+      statusBadge.style.color = '#34d399';
+    } else {
+      statusBadge.textContent = 'Out for Delivery';
+      statusBadge.style.background = 'rgba(255,107,0,0.2)';
+      statusBadge.style.color = '#ff9800';
+    }
+  }
+}
+
+function simulateOrderDelivered() {
+  renderLiveTrackerView({
+    orderNumber: CURRENT_TRACKING_ORDER_ID,
+    stage: 'delivered',
+    progressPct: 100,
+    etaRemainingMinutes: 0,
+    rider: { name: 'Vikram Singh', vehicle: 'Ather 450X', rating: '5.0 ★' }
+  });
+  setTimeout(function() {
+    alert('🎉 Order Delivered! Enjoy your meal from Hatch. How was the food and delivery partner? ⭐⭐⭐⭐⭐');
+  }, 400);
+}
+
 </script>
 
 
