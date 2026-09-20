@@ -1,6 +1,7 @@
 [
   {
     "id": "e9b2a7d4-4f38-4281-9b1b-19d854890c51",
+    "orderNumber": "HTC-1001",
     "createdAt": "2026-09-20T12:00:00.000Z",
     "items": [
       {
@@ -20,12 +21,121 @@
     ],
     "subtotal": 1120,
     "gst": 56,
-    "total": 1176,
+    "discount": 100,
+    "promoCode": "WELCOME10",
+    "tip": 50,
+    "deliveryFee": 0,
+    "total": 1126,
     "status": "new",
     "orderType": "dine-in",
     "customerName": "Aarav Sharma",
     "customerPhone": "+91 98765 43210",
-    "tableNumber": "12",
-    "deliveryAddress": ""
+    "tableNumber": "T-04",
+    "tableArea": "Courtyard Garden",
+    "splitCount": 2,
+    "pickupTime": "",
+    "curbside": false,
+    "curbsideVehicle": "",
+    "noCutlery": false,
+    "thermalPackaging": false,
+    "deliveryZone": "",
+    "deliveryAddress": "",
+    "deliveryInstructions": [],
+    "notes": "Less spicy in shakshuka please"
+  },
+  {
+    "id": "b3f11c82-8921-4623-810a-20fa95183711",
+    "orderNumber": "HTC-1002",
+    "createdAt": "2026-09-20T12:15:00.000Z",
+    "items": [
+      {
+        "id": "hyderabadi-biryani",
+        "name": "Royal Hyderabadi Gosht Dum Biryani",
+        "size": "Purdah Claypot",
+        "price": 540,
+        "qty": 2
+      },
+      {
+        "id": "bengaluru-babka",
+        "name": "Sourdough Cardamom & Pistachio Babka",
+        "size": "2 Slices",
+        "price": 280,
+        "qty": 1
+      }
+    ],
+    "subtotal": 1360,
+    "gst": 68,
+    "discount": 0,
+    "promoCode": "",
+    "tip": 0,
+    "deliveryFee": 0,
+    "total": 1428,
+    "status": "preparing",
+    "orderType": "takeaway",
+    "customerName": "Rohan Deshmukh",
+    "customerPhone": "+91 98450 11223",
+    "tableNumber": "",
+    "tableArea": "",
+    "splitCount": 1,
+    "pickupTime": "In 30 mins",
+    "curbside": true,
+    "curbsideVehicle": "White Creta · KA 03 MN 4821",
+    "noCutlery": true,
+    "thermalPackaging": true,
+    "deliveryZone": "",
+    "deliveryAddress": "",
+    "deliveryInstructions": [],
+    "notes": "Call on arrival at valet entrance"
+  },
+  {
+    "id": "76513282-c869-4954-9b45-630f5613677e",
+    "orderNumber": "HTC-1003",
+    "createdAt": "2026-09-20T12:30:00.000Z",
+    "items": [
+      {
+        "id": "burrata-salad",
+        "name": "Nilgiri Burrata & Roasted Fig Salad",
+        "size": "Platter",
+        "price": 460,
+        "qty": 1
+      },
+      {
+        "id": "bbq-pork-ribs",
+        "name": "BBQ Char Siu Ribs",
+        "size": "Full Rack",
+        "price": 680,
+        "qty": 1
+      }
+    ],
+    "subtotal": 1140,
+    "gst": 57,
+    "discount": 0,
+    "promoCode": "",
+    "tip": 100,
+    "deliveryFee": 35,
+    "total": 1332,
+    "status": "new",
+    "orderType": "delivery",
+    "customerName": "Priya Sharma",
+    "customerPhone": "+91 98765 43210",
+    "tableNumber": "",
+    "tableArea": "",
+    "splitCount": 1,
+    "pickupTime": "",
+    "curbside": false,
+    "curbsideVehicle": "",
+    "noCutlery": false,
+    "thermalPackaging": true,
+    "deliveryZone": "Indiranagar (100ft Rd / Defence Colony)",
+    "deliveryAddress": "Flat 402, Embassy Habitat, Indiranagar",
+    "deliveryInstructions": ["Ring doorbell twice and leave with security"],
+    "notes": "",
+    "rider": {
+      "name": "Ramesh K.",
+      "phone": "+91 98860 12345",
+      "vehicle": "Ather 450X · KA 03 EN 9122",
+      "rating": "4.95 ★",
+      "estimatedMins": "20-28 mins"
+    }
   }
 ]

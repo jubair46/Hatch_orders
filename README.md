@@ -1,14 +1,14 @@
-# Hatch — Bengaluru Cafe & Six-Kitchen Ordering System
+# Hatch — Bengaluru 9-Kitchen Food Hall, Dining & Ordering Platform
 
-> **A kitchen with six passports, one room.**  
-> Indiranagar, Bengaluru 560038 • Zero dependencies, zero build step, production-ready.
+> **Nine culinary counters, one roof.**  
+> 100 Feet Road, Indiranagar, Bengaluru 560038 • Zero dependencies, zero build step, 100% production-ready.
 
 ---
 
 ## ⚡ Quick Start
 
 ### Windows (1-Click)
-Double-click [**`start.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/start.bat) — it auto-detects Node.js, starts the server, and opens your browser.
+Double-click [**`start.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/start.bat) — it auto-detects Node.js, starts the server on port 3001, and launches your browser.
 
 ### Command Line
 ```bash
@@ -16,89 +16,99 @@ node server.js
 ```
 
 Then visit:
-- **Customer Site**: [http://localhost:3001](http://localhost:3001)
-- **Staff Kitchen POS**: [http://localhost:3001/admin](http://localhost:3001/admin)
+- **Customer Dining Site**: [http://localhost:3001](http://localhost:3001)
+- **Staff Kitchen & POS Console**: [http://localhost:3001/admin](http://localhost:3001/admin)
   - **Username**: `hatch`
   - **Password**: `changeme` *(or set via `ADMIN_PASS` environment variable)*
+- **Health Check**: [http://localhost:3001/health](http://localhost:3001/health)
 
 ---
 
-## 🍽️ Features Overview
+## 🍽️ Nine Culinary Counters
 
-### 1. Customer-Facing Restaurant Website (`site.html`)
-- **Six World Kitchens**:
-  - 🥙 **The Levant** (Beirut-style counter, Shakshuka, Kofta, Labneh)
-  - 🍛 **Indian Kitchen** (North, South, East, West regional specialties)
-  - 🍣 **Kyoto Counter** (Miso glazed eggplant, Salmon Nigiri, Katsu Curry)
-  - 🌶️ **Chengdu Fire** (Mapo Tofu, Dan Dan Noodles, Chili Dumplings)
-  - 🌮 **Oaxaca Comal** (Mole Negro, Tlayuda, Elote con Crema)
-  - 🍝 **Naples Table** (Ragù Rigatoni, Burrata Crostini, Sfogliatella)
-  - 🍷 **Sweet & Cellar** (Gulab Jamun Cheesecake, Matcha Tiramisu, Indian Wines)
-- **Interactive Ordering Flow**:
-  - Size and portion selector (Half, Full, Regular, Large, 6pc).
-  - Ingredients breakdown and dietary highlights.
-  - Cart drawer with live item quantity increment/decrement (`+` / `−`) and duplicate merging.
-  - Dine-in (with table number), Takeaway, and Home Delivery (with address) options.
-  - Special instructions and allergy notes input.
-  - GST (5%) automatic bill calculation.
-- **Live Order Status Tracking on Receipt**:
-  - Real-time order tracking badge (`Order Dispatched` ⏳ → `In Preparation` 👨‍🍳 → `Ready to Serve` ✓).
-  - Thermal-style printable customer receipt.
-  - Cart state persisted via `localStorage`.
-
-### 2. Staff Kitchen POS Dashboard (`admin.html`)
-- **Audio Chime on New Orders**: Real-time two-tone bell chime alerts kitchen staff whenever a guest places an order (can be muted with 1 click).
-- **Instant Search & Filters**: Search across Order #, Customer Name, Phone, Table #, or dish names. Filter by `New`, `Preparing`, and `Completed`.
-- **Order Management Workflow**:
-  - `⏳ Start Prep`: Move new order to active kitchen prep.
-  - `✓ Mark Ready`: Mark order ready for server or delivery rider.
-  - `✕ Void`: Cancel or delete test/voided orders.
-- **Dual Printing System**:
-  - **🖨️ KOT (Kitchen Order Ticket)**: Formatted specifically for kitchen prep line with item list, table number, notes, and timestamp.
-  - **🧾 Customer Bill**: Formatted itemized receipt with tax breakdown.
-- **Analytics & Export**:
-  - Today's Revenue (₹), Pending Orders, and Total Orders today.
-  - 1-Click CSV Export for daily accounting and POS records.
+1. 🥙 **The Levant** (Beirut-style counter, Slow-Roasted Tomato Shakshuka, Lamb Kofta, Whipped Labneh)
+2. 🍛 **Indian Regional Kitchen** (Old Delhi Butter Chicken, Chettinad Pepper Mutton, Dal Makhani)
+3. 🍣 **Kyoto Counter** (Miso Glazed Nasu Dengaku, Salmon Nigiri, Chicken Katsu Curry, Ceremonial Uji Matcha)
+4. 🌶️ **Chengdu Fire** (Mapo Tofu with Szechuan Pepper, Dan Dan Hand-Pulled Noodles, Crisp Chili Dumplings)
+5. 🌮 **Oaxaca Comal** (Mole Negro Braised Short Rib, Charred Corn Street Elote, Blue Corn Tlayuda)
+6. 🍝 **Naples Table** (Slow-Braised Ragù Rigatoni, Truffled Burrata Crostini, Neapolitan Sfogliatella)
+7. ☕ **Bengaluru Roastery & Artisanal Bakery** (Mysore Nugget Cold Brew, Sourdough Babka, Coorg Honey Croissant)
+8. 🍲 **Royal Claypot Dum Biryanis** (Hyderabadi Gosht Dum Biryani, Malabar Prawns Biryani, Awadhi Subz Biryani)
+9. 🥗 **Artisanal Farm Salads & Bowls** (Nilgiri Burrata & Roasted Fig, Quinoa Avocado Bowl, Charred Peach Salad)
+10. 🍷 **Sweet & Cellar** (Gulab Jamun Cheesecake, Matcha Tiramisu, Kahlúa Espresso Martini, Indian Reserve Wines)
 
 ---
 
-## 🔌 REST API Reference
+## 🌟 Complete Feature Matrix
+
+### 1. Customer Site (`site.html`)
+- **Service Mode Bar**: Toggle seamlessly between `🍽️ Dine-In`, `🥡 Takeaway`, and `🛵 Delivery` with live contextual feedback.
+- **Interactive Floor Plan**:
+  - Interactive map of **15 tables** across 4 zones: *Main Dining Hall*, *Courtyard Garden*, *Chef's Counter*, and *Verandah*.
+  - Live availability indicators (`Available`, `Occupied`, `Reserved`). Selecting a table automatically syncs with your order.
+- **Digital Steward Call Bell (`🛎️ Call Steward`)**:
+  - Ambient floating bell button with dedicated request options: *Water Refill*, *Extra Cutlery*, *Sommelier Help*, *Payment Terminal / Bill*, or *General Assistance*.
+- **Smart Takeaway Logistics**:
+  - Pickup timing presets: `ASAP (15-20 min)`, `In 30 mins`, `In 45 mins`, `In 1 Hour`, or custom time slots.
+  - Curbside pickup toggle with vehicle model and license plate input for valet hand-off.
+  - Eco-packaging options: skip plastic cutlery, request thermal insulated delivery pouch.
+- **Hyperlocal Bengaluru Delivery**:
+  - Neighborhood zones: *Indiranagar (100ft Rd)*, *Domlur & HAL*, *Koramangala*, *Ulsoor & Cambridge Layout*, *CBD / MG Road*, and *Whitefield / Outer Ring Road*.
+  - Delivery instruction chips: `🔔 Ring doorbell`, `🤫 Don't ring, call`, `📦 Leave with security`, `🚪 Leave at door`.
+  - Live courier assignment simulation (*Ramesh K. · Ather 450X*) with 4-stage tracking stepper (`Confirmed` ➔ `Crafting` ➔ `Quality Pack` ➔ `En Route`).
+- **Table Reservations**:
+  - Booking modal with date picker, lunch/dinner slots, guest count (1-12), seating area, and special occasion requests.
+  - Instant booking confirmation code and WhatsApp notification integration.
+- **Promo Engine & Bill Splitting**:
+  - Active promo codes: `WELCOME10` (10% off), `HATCH50` (₹50 off ₹300+), `BENGALURU` (₹75 off ₹500+).
+  - Staff gratuity tip selector and dynamic per-person bill split calculator.
+- **Dietary Filter Chips & Live Search**:
+  - Filter across `All`, `Veg 🌱`, `Non-Veg 🍗`, `Vegan 🌿`, `Gluten-Free 🌾`, `Spicy 🌶️`.
+- **Aesthetic Glassmorphism Design & Dark Mode**:
+  - Day/Night theme toggle saved to `localStorage`, smooth CSS transitions, luxury typography, and toast alerts.
+
+---
+
+### 2. Kitchen POS & Staff Console (`admin.html`)
+- **Three Integrated Operation Views**:
+  - `🍳 Kitchen Orders`: Real-time queue displaying items, notes, table numbers, tips, split bill counts, curbside vehicle info, delivery zones, and courier assignments.
+  - `📅 Table Reservations`: Table booking queue with guest contacts, party size, area selection, and 1-click WhatsApp customer messaging.
+  - `🛎️ Table Assistance`: Dedicated real-time steward call console displaying table numbers, dining areas, service requested (*Water Refill, Sommelier, Bill, etc.*), and a `✓ Mark Attended` button with audio alerts.
+- **Audio Chime on New Events**: Dual-tone chime plays automatically on new orders and incoming steward calls.
+- **Hardware-Ready Thermal Printing**:
+  - **🖨️ KOT (Kitchen Order Ticket)**: Formatted for kitchen pass printers with item modifiers, allergies, and dispatch notes.
+  - **🧾 Customer Bill**: Itemized customer tax invoice showing food subtotal, promo discounts, 5% GST, gratuity tips, and delivery fees.
+- **1-Click CSV Exports**: Export Kitchen Orders, Table Reservations, and Table Assistance logs for auditing and POS accounting.
+
+---
+
+## 🔌 Complete REST API Reference
 
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/` or `/site.html` | Public | Serves customer restaurant website |
-| `GET` | `/admin` | Basic Auth | Serves staff kitchen POS dashboard |
-| `GET` | `/favicon.ico` | Public | Golden egg Hatch favicon |
+| `GET` | `/` or `/site.html` | Public | Serves customer dining application |
+| `GET` | `/admin` | Basic Auth | Serves staff POS & kitchen management console |
 | `GET` | `/health` | Public | Health check (`{"ok": true}`) |
-| `POST` | `/api/orders` | Public | Create new order (returns `id` and `orderNumber`) |
+| `POST` | `/api/orders` | Public | Place order with Dine-in, Takeaway, or Delivery metadata |
 | `GET` | `/api/orders/:id/status` | Public | Live order status tracker for customer receipts |
-| `GET` | `/api/orders` | Basic Auth | List all orders sorted by creation time |
+| `GET` | `/api/orders` | Basic Auth | List all orders sorted chronologically |
 | `PATCH`| `/api/orders/:id` | Basic Auth | Update order status (`new` / `preparing` / `done`) |
 | `DELETE`| `/api/orders/:id` | Basic Auth | Void or delete an order |
+| `POST` | `/api/reservations` | Public | Book a dining table reservation |
+| `GET` | `/api/reservations` | Basic Auth | List all reservations |
+| `PATCH`| `/api/reservations/:id` | Basic Auth | Update reservation status (`confirmed` / `seated` / `cancelled`) |
+| `DELETE`| `/api/reservations/:id` | Basic Auth | Cancel or void a reservation |
+| `POST` | `/api/assistance` | Public | Submit table steward call request |
+| `GET` | `/api/assistance` | Basic Auth | List all table service calls |
+| `PATCH`| `/api/assistance/:id` | Basic Auth | Mark service call as `attended` |
+| `DELETE`| `/api/assistance/:id` | Basic Auth | Dismiss or void a service call |
 
 ---
 
-## 🛠️ Configuration & Environment Variables
+## 🛠️ Configuration
 
 | Variable | Default | Description |
 | :--- | :--- | :--- |
 | `PORT` | `3001` | HTTP port to listen on |
 | `ADMIN_USER` | `hatch` | Staff dashboard username |
 | `ADMIN_PASS` | `changeme` | Staff dashboard password |
-
-### Custom Password Example:
-```bash
-# Windows PowerShell
-$env:ADMIN_PASS="SecretKitchenPass123"; node server.js
-
-# Linux / macOS
-ADMIN_PASS=SecretKitchenPass123 node server.js
-```
-
----
-
-## 🚀 1-Click GitHub Synchronization
-
-Whenever you make any changes to files:
-- Double-click [**`push_to_github.bat`**](file:///c:/Users/Shaik.Jubair/Downloads/Hatch_orders/push_to_github.bat)
-- It will automatically detect modified files, commit them, and push them to **https://github.com/jubair46/Hatch_orders**.
