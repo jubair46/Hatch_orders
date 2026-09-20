@@ -412,7 +412,16 @@ function printKOT(o){
   var orderCode = o.orderNumber || ('HTC-' + o.id.slice(0,6).toUpperCase());
   var win = window.open('', '_blank', 'width=340,height=520');
   var items = o.items.map(function(it){
-    return '<div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;"><strong>' + it.qty + ' × ' + it.name + '</strong><span>' + it.size + '</span></div>';
+    var details = [];
+    if (it.protein) details.push(it.protein);
+    if (it.spiceLevel) details.push('Spice: ' + it.spiceLevel);
+    var detStr = details.length ? '<div style="font-size:11px;opacity:0.85;">' + details.join(' • ') + '</div>' : '';
+    var addOns = (it.addOns && it.addOns.length) ? '<div style="font-size:11px;font-style:italic;">+ ' + it.addOns.join(', ') + '</div>' : '';
+    var note = it.customNote ? '<div style="font-size:11px;font-weight:bold;background:#eee;padding:2px 4px;margin-top:2px;">CHEF NOTE: ' + it.customNote + '</div>' : '';
+    return '<div style="margin-bottom:10px;font-size:14px;border-bottom:1px dotted #ccc;padding-bottom:6px;">' +
+      '<div style="display:flex;justify-content:space-between;"><strong>' + it.qty + ' × ' + it.name + '</strong><span>' + (it.size || 'Regular') + '</span></div>' +
+      detStr + addOns + note +
+    '</div>';
   }).join('');
   win.document.write(
     '<html><head><title>KOT ' + orderCode + '</title><style>' +
@@ -425,6 +434,7 @@ function printKOT(o){
     '<h3>*** KITCHEN ORDER TICKET ***</h3>' +
     '<h4>' + (o.orderType.toUpperCase()) + (o.tableNumber ? ' - TABLE ' + o.tableNumber + (o.tableArea ? ' (' + o.tableArea + ')' : '') : '') + '</h4>' +
     '<div class="meta">Order: ' + orderCode + '<br>Time: ' + new Date(o.createdAt).toLocaleTimeString() + (o.customerName ? '<br>Guest: ' + o.customerName : '') +
+    '<br>Payment: <strong>' + (o.paymentMethod || 'UPI Instant') + ' (' + (o.paymentStatus || 'Verified') + ')</strong>' +
     (o.pickupTime ? '<br>Pickup Slot: ' + o.pickupTime : '') +
     (o.curbside ? '<br>Curbside Vehicle: ' + (o.curbsideVehicle || 'Yes') : '') +
     (o.deliveryZone ? '<br>Delivery Zone: ' + o.deliveryZone : '') +
@@ -432,7 +442,7 @@ function printKOT(o){
     (o.thermalPackaging ? '<br>Thermal Insulated Bag' : '') +
     '</div>' +
     '<hr>' + items + '<hr>' +
-    (o.notes ? '<div style="margin-top:8px;"><strong>SPECIAL NOTES:</strong> ' + o.notes + '</div><hr>' : '') +
+    (o.notes ? '<div style="margin-top:8px;"><strong>ORDER INSTRUCTIONS:</strong> ' + o.notes + '</div><hr>' : '') +
     (o.deliveryInstructions ? '<div style="margin-top:8px;"><strong>DISPATCH NOTE:</strong> ' + o.deliveryInstructions + '</div><hr>' : '') +
     '<div style="text-align:center;font-size:11px;margin-top:12px;">HATCH INDIRANAGAR • 9 KITCHENS</div>' +
     '</body></html>'
@@ -446,7 +456,15 @@ function printCustomerBill(o){
   var orderCode = o.orderNumber || ('HTC-' + o.id.slice(0,6).toUpperCase());
   var win = window.open('', '_blank', 'width=380,height=620');
   var items = o.items.map(function(it){
-    return '<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;"><span>' + it.qty + ' × ' + it.name + ' (' + it.size + ')</span><span>₹' + (it.price*it.qty) + '</span></div>';
+    var sub = [];
+    if (it.protein) sub.push(it.protein);
+    if (it.spiceLevel) sub.push(it.spiceLevel);
+    var subStr = sub.length ? '<div style="font-size:11px;opacity:0.75;">' + sub.join(' • ') + '</div>' : '';
+    var addOns = (it.addOns && it.addOns.length) ? '<div style="font-size:11px;opacity:0.8;">+ ' + it.addOns.join(', ') + '</div>' : '';
+    return '<div style="margin-bottom:8px;font-size:13px;border-bottom:1px dashed #eee;padding-bottom:4px;">' +
+      '<div style="display:flex;justify-content:space-between;"><span>' + it.qty + ' × ' + it.name + ' (' + (it.size||'Regular') + ')</span><span>₹' + (it.lineTotal || (it.price*it.qty)) + '</span></div>' +
+      subStr + addOns +
+    '</div>';
   }).join('');
   win.document.write(
     '<html><head><title>Receipt ' + orderCode + '</title><style>' +
@@ -465,6 +483,7 @@ function printCustomerBill(o){
       (o.customerName ? 'Guest: ' + o.customerName + '<br>' : '') +
       (o.customerPhone ? 'Phone: ' + o.customerPhone + '<br>' : '') +
       o.orderType.toUpperCase() + (o.tableNumber ? ' — Table ' + o.tableNumber + (o.tableArea ? ' (' + o.tableArea + ')' : '') : '') + (o.deliveryAddress ? ' — ' + o.deliveryAddress : '') +
+      '<br>Payment: ' + (o.paymentMethod || 'UPI') + ' (' + (o.paymentStatus || 'Verified') + ')' +
       (o.splitCount > 1 ? '<br>Bill Split: ' + o.splitCount + ' ways (₹' + Math.round(o.total / o.splitCount) + ' each)' : '') +
     '</p>' +
     '<hr>' + items + '<hr>' +
@@ -588,7 +607,20 @@ function renderOrdersTable(orders){
     var type = o.orderType || 'dine-in';
 
     var itemsHtml = o.items.map(function(it){
-      return '<div class="item-line"><span class="item-name">' + it.qty + ' × ' + it.name + '</span><span class="item-meta">(' + it.size + ')</span></div>';
+      var customTags = [];
+      if (it.protein) customTags.push('<span class="tag-pill" style="background:#2d4a3e;color:#b2ebc4;">' + it.protein + '</span>');
+      if (it.spiceLevel) customTags.push('<span class="tag-pill" style="background:#52251a;color:#ffab91;">🌶️ ' + it.spiceLevel + '</span>');
+      var addOnsStr = (it.addOns && it.addOns.length) ? '<div style="font-size:11px;color:#d4a017;margin-top:2px;">+ ' + it.addOns.join(', ') + '</div>' : '';
+      var noteStr = it.customNote ? '<div style="font-size:11px;opacity:0.8;font-style:italic;margin-top:2px;">Note: ' + it.customNote + '</div>' : '';
+      return '<div class="item-line" style="margin-bottom:6px;border-bottom:1px dashed rgba(255,255,255,0.06);padding-bottom:4px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span class="item-name"><strong>' + it.qty + ' × ' + it.name + '</strong></span>' +
+          '<span class="item-meta">(' + (it.size || 'Regular') + ')</span>' +
+        '</div>' +
+        (customTags.length ? '<div style="display:flex;gap:4px;margin-top:2px;flex-wrap:wrap;">' + customTags.join('') + '</div>' : '') +
+        addOnsStr +
+        noteStr +
+      '</div>';
     }).join('');
 
     var actionHtml = '';
@@ -614,6 +646,7 @@ function renderOrdersTable(orders){
       if (o.rider) detailsPills += '<div style="font-size:11px;opacity:0.8;margin-top:4px;">🛵 Rider: <strong>' + o.rider.name + '</strong> (' + o.rider.vehicle + ')</div>';
     }
 
+    var payBadge = '<div style="margin-top:6px;"><span class="tag-pill" style="background:#1f3326;color:#a3e635;border:1px solid rgba(163,230,53,0.3);">' + (o.paymentMethod || 'UPI Instant') + '</span></div>';
     var discountInfo = o.discount ? '<div style="font-size:11px;color:#4da664;font-family:sans-serif;font-weight:600;margin-top:2px;">🎟️ ' + (o.promoCode || 'PROMO') + ' (-₹' + o.discount + ')</div>' : '';
 
     html += '<tr class="row-' + o.status + '">' +
@@ -621,6 +654,7 @@ function renderOrdersTable(orders){
         '<span class="order-num">#' + orderCode + '</span>' +
         '<span class="time-main">' + timeStr + '</span>' +
         '<span class="time-rel">' + timeAgo(o.createdAt) + '</span>' +
+        payBadge +
       '</td>' +
       '<td>' +
         '<span class="type-badge ' + type + '">' + type + '</span>' +

@@ -154,7 +154,8 @@ const server = http.createServer((req, res) => {
         orderType, customerName, customerPhone, tableNumber, tableArea,
         deliveryAddress, notes,
         tip, splitCount, pickupTime, curbside, curbsideVehicle,
-        noCutlery, thermalPackaging, deliveryZone, deliveryFee, deliveryInstructions
+        noCutlery, thermalPackaging, deliveryZone, deliveryFee, deliveryInstructions,
+        paymentMethod, paymentStatus
       } = body || {};
 
       if (!Array.isArray(items) || items.length === 0) {
@@ -173,11 +174,24 @@ const server = http.createServer((req, res) => {
         estimatedMins: (deliveryZone && deliveryZone.includes('Whitefield')) ? '45-50 mins' : '20-28 mins'
       } : null;
 
+      const sanitizedItems = items.map(it => ({
+        id: clean(it.id || '', 60),
+        name: clean(it.name || 'Dish', 100),
+        size: clean(it.size || 'Regular', 40),
+        price: Number(it.price) || 0,
+        qty: Math.max(1, parseInt(it.qty, 10) || 1),
+        spiceLevel: clean(it.spiceLevel || '', 30),
+        protein: clean(it.protein || '', 40),
+        addOns: Array.isArray(it.addOns) ? it.addOns.map(a => clean(a, 60)) : [],
+        customNote: clean(it.customNote || '', 150),
+        lineTotal: Number(it.lineTotal) || ((Number(it.price) || 0) * (Math.max(1, parseInt(it.qty, 10) || 1)))
+      }));
+
       const order = {
         id: crypto.randomUUID(),
         orderNumber: orderNum,
         createdAt: new Date().toISOString(),
-        items,
+        items: sanitizedItems,
         subtotal: Number(subtotal) || 0,
         gst: Number(gst) || 0,
         discount: Number(discount) || 0,
@@ -185,6 +199,8 @@ const server = http.createServer((req, res) => {
         tip: Number(tip) || 0,
         deliveryFee: Number(deliveryFee) || 0,
         total: Number(total) || 0,
+        paymentMethod: clean(paymentMethod || 'UPI (Instant QR)', 60),
+        paymentStatus: clean(paymentStatus || 'Verified / Paid', 40),
         status: 'new',
         orderType: ['dine-in', 'takeaway', 'delivery'].includes(orderType) ? orderType : 'dine-in',
         customerName: clean(customerName, 80),
@@ -223,11 +239,14 @@ const server = http.createServer((req, res) => {
       createdAt: order.createdAt,
       orderType: order.orderType,
       itemCount: order.items ? order.items.length : 0,
+      items: order.items || [],
       subtotal: order.subtotal,
       discount: order.discount || 0,
       tip: order.tip || 0,
       deliveryFee: order.deliveryFee || 0,
       total: order.total,
+      paymentMethod: order.paymentMethod || 'UPI',
+      paymentStatus: order.paymentStatus || 'Verified / Paid',
       tableNumber: order.tableNumber || '',
       tableArea: order.tableArea || '',
       pickupTime: order.pickupTime || '',

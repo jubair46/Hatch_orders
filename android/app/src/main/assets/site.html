@@ -16,16 +16,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#14201a;
-    --ink-soft:#22322a;
-    --paper:#f6efe1;
-    --shell:#eee2c8;
+    --ink:#0a140e;
+    --ink-soft:#16271e;
+    --paper:#f8f5ee;
+    --shell:#ede3d1;
     --yolk:#d4a017;
-    --rust:#b5502e;
-    --sage:#3f6b4a;
-    --wine:#5a2a4d;
-    --line-on-paper: rgba(20,32,26,0.14);
-    --line-on-ink: rgba(246,239,225,0.16);
+    --yolk-gold:#e6b84c;
+    --gold-glow: rgba(212,160,23,0.22);
+    --gold-border: rgba(212,160,23,0.32);
+    --rust:#b5492a;
+    --sage:#2e754d;
+    --wine:#5e274f;
+    --thai:#d97706;
+    --line-on-paper: rgba(10,20,14,0.12);
+    --line-on-ink: rgba(248,245,238,0.14);
     --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
     --sans: "Work Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
@@ -1213,12 +1217,12 @@
 
   /* ---------- DARK THEME SUPPORT ---------- */
   [data-theme="dark"] {
-    --ink: #f5ede1;
-    --ink-soft: #dcd0bd;
-    --paper: #121915;
-    --shell: #1b2620;
-    --line-on-paper: rgba(245,237,225,0.14);
-    --line-on-ink: rgba(245,237,225,0.14);
+    --ink: #f8f4ec;
+    --ink-soft: #dcd0bc;
+    --paper: #0b140e;
+    --shell: #121e16;
+    --line-on-paper: rgba(248,244,236,0.12);
+    --line-on-ink: rgba(248,244,236,0.12);
   }
   [data-theme="dark"] .panel.light {
     background: #19241e;
@@ -2167,6 +2171,425 @@
   .toast-notification.show {
     transform: translateX(-50%) translateY(0);
   }
+
+  /* ---------- LUXURY STYLING & CUSTOMIZATION STUDIO ---------- */
+  .dish {
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease !important;
+    border-radius: 12px;
+    padding: 18px 20px !important;
+    border: 1px solid var(--line-on-paper);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(8px);
+  }
+  .panel.dark .dish {
+    background: rgba(18, 30, 22, 0.45);
+    border: 1px solid rgba(248,244,236,0.08);
+  }
+  .dish:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 16px 36px rgba(10,20,14,0.12), 0 0 0 1px var(--gold-border);
+  }
+  .panel.dark .dish:hover {
+    box-shadow: 0 16px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(229,184,76,0.35);
+  }
+
+  .cuisine-name {
+    font-family: var(--serif);
+    letter-spacing: -0.01em;
+  }
+
+  /* Customization Modal Enhancements */
+  .dish-modal {
+    max-width: 560px !important;
+    border-radius: 18px !important;
+    border: 1px solid var(--gold-border);
+    box-shadow: 0 28px 70px rgba(0,0,0,0.4) !important;
+  }
+  .dish-modal-art {
+    height: 120px !important;
+  }
+  .dish-modal-body {
+    padding: 24px 28px 30px !important;
+  }
+  .modal-custom-section {
+    margin: 16px 0 6px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line-on-paper);
+  }
+  .custom-chips-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0 12px;
+  }
+  .custom-chip, .pref-chip {
+    background: rgba(20,32,26,0.04);
+    border: 1px solid var(--line-on-paper);
+    color: var(--ink);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .custom-chip:hover, .pref-chip:hover {
+    border-color: var(--yolk);
+    background: rgba(212,160,23,0.08);
+  }
+  .custom-chip.selected, .pref-chip.selected {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 600;
+  }
+  [data-theme="dark"] .custom-chip, [data-theme="dark"] .pref-chip {
+    background: rgba(248,244,236,0.06);
+    border-color: rgba(248,244,236,0.15);
+  }
+  [data-theme="dark"] .custom-chip.selected, [data-theme="dark"] .pref-chip.selected {
+    background: var(--yolk);
+    color: var(--ink);
+    border-color: var(--yolk);
+  }
+
+  .addon-checkboxes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0 12px;
+  }
+  .addon-item-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(20,32,26,0.03);
+    border: 1px solid var(--line-on-paper);
+    cursor: pointer;
+    font-size: 13px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .addon-item-label:hover {
+    border-color: var(--yolk);
+    background: rgba(212,160,23,0.05);
+  }
+  .addon-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .addon-item-left input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--yolk);
+    cursor: pointer;
+  }
+  .addon-price-tag {
+    font-weight: 600;
+    color: var(--sage);
+    font-size: 12.5px;
+  }
+  [data-theme="dark"] .addon-price-tag {
+    color: #93e6a8;
+  }
+
+  .modal-note-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line-on-paper);
+    background: #fff;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    margin-top: 6px;
+  }
+  [data-theme="dark"] .modal-note-input {
+    background: #111a14;
+    color: #f8f4ec;
+    border-color: rgba(248,244,236,0.2);
+  }
+  .modal-note-input:focus {
+    border-color: var(--yolk);
+  }
+
+  /* Cart Custom Items Display */
+  .cart-item-custom-tags {
+    display: flex;
+    gap: 6px;
+    margin: 4px 0 2px;
+    flex-wrap: wrap;
+  }
+  .cart-custom-badge {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(46,117,77,0.15);
+    color: var(--sage);
+  }
+  .cart-custom-badge.spice {
+    background: rgba(181,73,42,0.15);
+    color: var(--rust);
+  }
+  .cart-addons-list {
+    font-size: 11px;
+    color: var(--yolk);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .cart-custom-note {
+    font-size: 11px;
+    opacity: 0.8;
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* Frictionless Payment Engine */
+  .payment-method-box {
+    margin: 18px 0 10px;
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(20,32,26,0.03);
+    border: 1px solid var(--line-on-paper);
+  }
+  [data-theme="dark"] .payment-method-box {
+    background: rgba(248,244,236,0.04);
+  }
+  .zero-fail-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: #2e7d32;
+    background: rgba(46,125,50,0.14);
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  [data-theme="dark"] .zero-fail-tag {
+    color: #85e098;
+    background: rgba(46,125,50,0.3);
+  }
+  .pay-method-chips {
+    display: flex;
+    gap: 6px;
+    margin: 10px 0 14px;
+  }
+  .pay-chip {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line-on-paper);
+    background: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  [data-theme="dark"] .pay-chip {
+    background: #152219;
+    border-color: rgba(248,244,236,0.15);
+    color: #f8f4ec;
+  }
+  .pay-chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  [data-theme="dark"] .pay-chip.active {
+    background: var(--yolk);
+    color: var(--ink);
+    border-color: var(--yolk);
+  }
+
+  .upi-qr-card {
+    background: #fff;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  [data-theme="dark"] .upi-qr-card {
+    background: #121c15;
+    border-color: rgba(248,244,236,0.15);
+  }
+  .upi-qr-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--yolk);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .upi-qr-visual {
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.08);
+    display: inline-block;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .upi-vpa-label {
+    font-size: 12px;
+    margin: 10px 0 6px;
+  }
+  .upi-apps-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .app-chip {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.06);
+  }
+  [data-theme="dark"] .app-chip {
+    background: rgba(255,255,255,0.1);
+  }
+  .upi-timer-text {
+    font-size: 11.5px;
+    opacity: 0.75;
+    margin-bottom: 6px;
+  }
+  .upi-verified-badge {
+    font-size: 11px;
+    color: #2e7d32;
+    font-weight: 600;
+  }
+  [data-theme="dark"] .upi-verified-badge {
+    color: #85e098;
+  }
+
+  .card-sim-panel {
+    background: #fff;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  [data-theme="dark"] .card-sim-panel {
+    background: #121c15;
+    border-color: rgba(248,244,236,0.15);
+  }
+  .card-field-box {
+    margin-bottom: 8px;
+  }
+  .card-field-box label {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.75;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .card-field-box input {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line-on-paper);
+    font-family: monospace;
+    font-size: 13.5px;
+    box-sizing: border-box;
+  }
+  [data-theme="dark"] .card-field-box input {
+    background: #0d1510;
+    color: #fff;
+    border-color: rgba(255,255,255,0.15);
+  }
+  .card-split-row {
+    display: flex;
+    gap: 10px;
+  }
+  .card-split-row .card-field-box {
+    flex: 1;
+  }
+  .card-secure-hint {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .table-pay-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--line-on-paper);
+    border-radius: 12px;
+  }
+  [data-theme="dark"] .table-pay-panel {
+    background: #121c15;
+    border-color: rgba(248,244,236,0.15);
+  }
+
+  /* Floating Sticky Bottom Cart Bar for Mobile */
+  .mobile-bottom-cart-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--yolk);
+    border-radius: 16px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 95;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    animation: slideUpBottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUpBottom {
+    from { transform: translateY(80px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .cart-bar-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-bar-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--yolk);
+    letter-spacing: 0.05em;
+  }
+  .cart-bar-total {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--sans);
+  }
+  .cart-bar-action-btn {
+    background: var(--yolk);
+    color: var(--ink);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .cart-bar-action-btn:hover {
+    transform: scale(1.05);
+  }
+
 </style>
 </head>
 <body>
@@ -2270,6 +2693,7 @@
     <a class="quicknav-chip" href="#levant" data-panel-link="levant">Levant</a>
     <a class="quicknav-chip" href="#malabar" data-panel-link="malabar">Indian Kitchen</a>
     <a class="quicknav-chip" href="#biryani" data-panel-link="biryani">Royal Biryani</a>
+    <a class="quicknav-chip" href="#thai" data-panel-link="thai">Thai Orchid</a>
     <a class="quicknav-chip" href="#bengaluru" data-panel-link="bengaluru">Roastery &amp; Bakery</a>
     <a class="quicknav-chip" href="#salads" data-panel-link="salads">Farm Salads</a>
     <a class="quicknav-chip" href="#kyoto" data-panel-link="kyoto">Kyoto</a>
@@ -2352,22 +2776,208 @@
         <p class="cuisine-origin">Started as one cook's Kochi recipes — grown, over six years, into a counter that pulls from across the country.</p>
       </div>
 
-      <h4 class="region-head" data-reveal>North — Punjab &amp; Delhi</h4>
+      <h4 class="region-head" data-reveal>Starters, Snacks &amp; Chaat</h4>
       <div class="dish-list">
-        <div class="dish" data-reveal data-id="india-butter-chicken" data-accent="yolk">
-          <h3 class="dish-name">Butter chicken</h3>
-          <p class="dish-desc">Tandoori chicken simmered in tomato-butter gravy, kasuri methi.</p>
+        <div class="dish" data-reveal data-id="india-punjabi-samosa" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Crispy Samosa Ragda Chaat</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Flaky golden pastry filled with spiced potato-pea mash, topped with warm ragda curry, mint-coriander and tamarind chutneys.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(220 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹220</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-paneer-tikka" data-accent="yolk" data-tags="veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Tandoori Paneer Tikka Angara</h3>
+              <span class="dish-badge-pill">Chef's Pick ⭐</span>
+            </div>
+            <p class="dish-desc">Cubes of fresh malai paneer marinated in Kashmiri chili, crushed ajwain and hung curd, roasted on skewers over charcoal.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(185 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹360</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-chicken-65" data-accent="yolk" data-tags="non-veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Andhra Crispy Chicken 65</h3>
+              <span class="dish-badge-pill">Popular 👍</span>
+            </div>
+            <p class="dish-desc">Tender boneless chicken tossed with fiery red chilies, fresh curry leaves, crushed garlic and tangy southern spices.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(195 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹390</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-seekh-kebab" data-accent="yolk" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Lucknowi Galouti Seekh Kebab</h3>
+            </div>
+            <p class="dish-desc">Melt-in-the-mouth minced spiced mutton infused with 16 royal Awadhi potli spices, served with mint lachha onion.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(160 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹540</span>
+        </div>
+      </div>
+
+      <h4 class="region-head" data-reveal>Curries, Dals &amp; Regional Mains</h4>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="india-butter-chicken" data-accent="yolk" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Purani Dilli Butter Chicken</h3>
+              <span class="dish-badge-pill">Signature 🔥</span>
+            </div>
+            <p class="dish-desc">Claypot tandoori chicken simmered in a velvety San Marzano tomato-butter satin gravy with sun-dried kasuri methi.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(410 reviews)</span></div>
+          </div>
           <span class="dish-price">₹480</span>
         </div>
-        <div class="dish" data-reveal data-id="india-dal-makhani" data-accent="yolk">
-          <h3 class="dish-name">Dal makhani</h3>
-          <p class="dish-desc">Black lentils and kidney beans, slow-cooked overnight, finished with cream.</p>
+        <div class="dish" data-reveal data-id="india-dal-makhani" data-accent="yolk" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Overnight Bukhara Dal Makhani</h3>
+            </div>
+            <p class="dish-desc">Black urad lentils and red rajma slow-simmered for 24 hours on charcoal embers with churned white butter and cream.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(320 reviews)</span></div>
+          </div>
           <span class="dish-price">₹340</span>
         </div>
-        <div class="dish" data-reveal data-id="india-amritsari-kulcha" data-accent="yolk">
-          <h3 class="dish-name">Amritsari kulcha</h3>
-          <p class="dish-desc">Stuffed leavened flatbread, spiced potato filling, served with chole.</p>
+        <div class="dish" data-reveal data-id="india-rogan-josh" data-accent="yolk" data-tags="non-veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Kashmiri Mutton Rogan Josh</h3>
+            </div>
+            <p class="dish-desc">Tender mutton slow-cooked in natural cockscomb flower, fennel seed reduction, dried ginger and fragrant Kashmiri red chili.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(140 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹560</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-paneer-butter-masala" data-accent="yolk" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Shahi Paneer Butter Masala</h3>
+            </div>
+            <p class="dish-desc">Fresh cottage cheese cubes in a royal cashew and tomato cream velvet gravy, scented with cardamom and mace.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(170 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹410</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-chettinad-chicken" data-accent="yolk" data-tags="non-veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Chettinad Black Pepper Chicken</h3>
+            </div>
+            <p class="dish-desc">Fiery Tamil Nadu preparation with stone-ground Tellicherry peppercorns, kalpasi, star anise and toasted coconut paste.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(155 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹460</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-fish-moilee" data-accent="yolk" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Kerala Golden Fish Moilee</h3>
+            </div>
+            <p class="dish-desc">River kingfish simmered in light coconut milk, green chilies, shallots, tomato wedges and fresh curry leaf tempered coconut oil.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(110 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹520</span>
+        </div>
+      </div>
+
+      <h4 class="region-head" data-reveal>Artisanal Breads, Desserts &amp; Heritage Drinks</h4>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="india-amritsari-kulcha" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Amritsari Chur-Chur Kulcha</h3>
+            </div>
+            <p class="dish-desc">Crushed crispy layered flatbread stuffed with spiced potato and onion, served with Pindi chole and tamarind dip.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(190 reviews)</span></div>
+          </div>
           <span class="dish-price">₹280</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-garlic-butter-naan" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Tandoori Garlic Butter Naan</h3>
+            </div>
+            <p class="dish-desc">Pillow-soft tandoor leavened flatbread studded with charred roasted garlic chips and brushed with cultured butter.</p>
+          </div>
+          <span class="dish-price">₹120</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-gulab-jamun" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Warm Shahi Gulab Jamun &amp; Rabri</h3>
+              <span class="dish-badge-pill">Sweet ⭐</span>
+            </div>
+            <p class="dish-desc">Soft golden khoya dumplings soaked in rose-cardamom sugar syrup, served over chilled slow-reduced saffron rabri.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(280 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹260</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-rasmalai" data-accent="yolk" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Kesar Pista Chhena Rasmalai</h3>
+            </div>
+            <p class="dish-desc">Poached cottage cheese discs immersed in reduced saffron-cardamom clotted milk, garnished with pistachio slivers.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(175 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹240</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-filter-coffee" data-accent="yolk" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Kumbakonam Degree Filter Coffee</h3>
+            </div>
+            <p class="dish-desc">First-decoction Chicory-Arabica South Indian brass filter coffee frothed to perfection in stainless dabarah.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(310 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹140</span>
+        </div>
+        <div class="dish" data-reveal data-id="india-kesar-lassi" data-accent="yolk" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Amritsari Kesar Mango Lassi</h3>
+            </div>
+            <p class="dish-desc">Thick churned creamy yogurt whipped with Ratnagiri Alphonso mango pulp, crushed almonds and Kashmiri saffron threads.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(230 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹210</span>
         </div>
       </div>
 
@@ -2569,6 +3179,162 @@
     </svg>
   </div>
 
+
+  <!-- Thai Orchid Counter (NEW) -->
+  <div class="panel light" id="thai" style="--accent:var(--thai)">
+    <div class="wrap">
+      <div class="panel-head" data-reveal>
+        <h2 class="cuisine-name">Thai Orchid Counter</h2>
+        <p class="cuisine-origin">Bangkok street carts &amp; Chiang Mai heritage — lemongrass, galangal, holy basil, and fresh hand-pressed coconut cream.</p>
+      </div>
+
+      <h4 class="region-head" data-reveal>Starters, Soups &amp; Salads</h4>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="thai-tom-yum" data-accent="rust" data-tags="non-veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Tom Yum Goong (Hot &amp; Sour Prawn Soup)</h3>
+              <span class="dish-badge-pill">Chef Signature ⭐</span>
+            </div>
+            <p class="dish-desc">Clear spicy-sour broth with jumbo tiger prawns, bruised lemongrass, galangal, kaffir lime leaves, bird's eye chilies and straw mushrooms.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(165 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹420</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-chicken-satay" data-accent="rust" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Flame-Grilled Chicken Satay</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Turmeric and coconut-marinated chicken skewers char-grilled, served with house-ground warm peanut sauce and cucumber-shallot relish.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(210 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹380</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-som-tam" data-accent="rust" data-tags="veg vegan gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Som Tam (Green Papaya Salad)</h3>
+            </div>
+            <p class="dish-desc">Mortar-pounded raw green papaya shreds, snake beans, cherry tomatoes, roasted peanuts, garlic, lime juice and palm sugar.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(130 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹320</span>
+        </div>
+      </div>
+
+      <h4 class="region-head" data-reveal>Curries &amp; Wok Specialties</h4>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="thai-green-curry" data-accent="rust" data-tags="veg gluten-free spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Royal Thai Green Curry (Gaeng Keow Wan)</h3>
+              <span class="dish-badge-pill">Signature 🔥</span>
+            </div>
+            <p class="dish-desc">Fragrant green chili-coriander paste braised with thick coconut cream, pea aubergines, bamboo shoots and Thai sweet basil. Served with steamed jasmine rice.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(310 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹460</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-massaman-curry" data-accent="rust" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Slow-Simmered Massaman Curry</h3>
+            </div>
+            <p class="dish-desc">Mildly spiced Persian-Thai heritage curry with roasted peanuts, baby potatoes, shallots, star anise, cinnamon and tamarind reduction.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(190 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹490</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-pad-kra-pao" data-accent="rust" data-tags="non-veg spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Pad Kra Pao (Holy Basil Stir-Fry)</h3>
+            </div>
+            <p class="dish-desc">Wok-tossed minced chicken or tofu with bird's eye chilies, garlic, dark soy and pungent holy basil leaves, crowned with a crispy sunny egg.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(145 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹440</span>
+        </div>
+      </div>
+
+      <h4 class="region-head" data-reveal>Noodles, Rice &amp; Sweets</h4>
+      <div class="dish-list">
+        <div class="dish" data-reveal data-id="thai-pad-thai" data-accent="rust" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Bangkok Street Pad Thai</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Wok-tossed flat rice noodles in tangy tamarind sauce, yellow tofu, farm egg, crunchy bean sprouts, chives, lime wedge and roasted crushed peanuts.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(380 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹420</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-khao-soi" data-accent="rust" data-tags="non-veg spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Chiang Mai Khao Soi Curry Noodles</h3>
+            </div>
+            <p class="dish-desc">Northern Thai rich coconut-turmeric curry noodle soup with tender chicken, pickled mustard greens, shallots, lime and crisp golden fried egg noodle nest.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(170 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹450</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-mango-sticky-rice" data-accent="rust" data-tags="veg vegan gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Khao Niew Mamuang (Mango Sticky Rice)</h3>
+              <span class="dish-badge-pill">Signature Sweet ⭐</span>
+            </div>
+            <p class="dish-desc">Sweet steamed glutinous sticky rice bathed in salted coconut cream, paired with chilled fresh ripe sweet mango slices and toasted sesame.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(350 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹320</span>
+        </div>
+        <div class="dish" data-reveal data-id="thai-iced-tea" data-accent="rust" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Cha Yen (Authentic Thai Iced Milk Tea)</h3>
+            </div>
+            <p class="dish-desc">Strong-brewed black tea steeped with star anise and crushed cardamom, poured over crushed ice and layered with sweetened condensed milk.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(210 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹210</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crack-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <polygon points="0,34 0,14 70,26 145,8 220,24 300,10 375,26 450,6 530,20 610,4 690,22 765,8 845,24 920,6 995,20 1075,4 1150,22 1200,12 1200,34" fill="#14201a"/>
+    </svg>
+  </div>
+
   <!-- Artisanal Farm Salads & Bowls -->
   <div class="panel light" id="salads" style="--accent:var(--sage)">
     <div class="wrap">
@@ -2641,20 +3407,99 @@
         <p class="cuisine-origin">Kyoto-style counter — dashi built daily, rice cooked to order, nothing rushed.</p>
       </div>
       <div class="dish-list">
-        <div class="dish" data-reveal data-id="kyoto-miso-eggplant" data-accent="rust">
-          <h3 class="dish-name">Miso-glazed eggplant</h3>
-          <p class="dish-desc">Nasu dengaku, white miso glaze, toasted sesame, shiso.</p>
+        <div class="dish" data-reveal data-id="kyoto-truffle-edamame" data-accent="rust" data-tags="veg vegan gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge vegan">🌿 Vegan</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Truffle &amp; Sea Salt Edamame</h3>
+            </div>
+            <p class="dish-desc">Steamed young soybeans tossed in white truffle oil, Maldon sea salt flakes and roasted sesame.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(90 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹280</span>
+        </div>
+        <div class="dish" data-reveal data-id="kyoto-gyoza" data-accent="rust" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Pan-Fried Pork &amp; Cabbage Gyoza</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Six handcrafted dumplings with crispy lace crust, juicy pork and scallion filling, scallion ponzu dip.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(180 reviews)</span></div>
+          </div>
           <span class="dish-price">₹360</span>
         </div>
-        <div class="dish" data-reveal data-id="kyoto-katsu-curry-rice" data-accent="rust">
-          <h3 class="dish-name">Chicken katsu curry rice</h3>
-          <p class="dish-desc">Panko-fried chicken thigh, Japanese curry, pickled ginger.</p>
-          <span class="dish-price">₹420</span>
+        <div class="dish" data-reveal data-id="kyoto-karaage" data-accent="rust" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Tokyo Chicken Karaage</h3>
+            </div>
+            <p class="dish-desc">Double-fried crispy chicken thigh bites marinated in ginger, garlic and sake, Japanese Kewpie and togarashi.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(210 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹390</span>
         </div>
-        <div class="dish" data-reveal data-id="kyoto-salmon-nigiri" data-accent="rust">
-          <h3 class="dish-name">Salmon nigiri set</h3>
-          <p class="dish-desc">Six pieces, hand-pressed to order, wasabi, soy.</p>
-          <span class="dish-price">₹480</span>
+        <div class="dish" data-reveal data-id="kyoto-tonkotsu-ramen" data-accent="rust" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Hakata Tonkotsu Chashu Ramen</h3>
+              <span class="dish-badge-pill">Chef's Pick ⭐</span>
+            </div>
+            <p class="dish-desc">Rich 16-hour simmered collagen broth, handmade thin wheat noodles, tender rolled chashu pork belly, ajitama ramen egg, menma, nori and scallions.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(390 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹540</span>
+        </div>
+        <div class="dish" data-reveal data-id="kyoto-katsu-curry-rice" data-accent="rust" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Crispy Chicken Katsu Curry Rice</h3>
+            </div>
+            <p class="dish-desc">Panko-crusted chicken thigh cutlet served with aromatic mild spiced Kyoto curry, short-grain rice and pickled fukujinzuke.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(280 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹440</span>
+        </div>
+        <div class="dish" data-reveal data-id="kyoto-salmon-nigiri" data-accent="rust" data-tags="non-veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Fresh Salmon Nigiri Selection</h3>
+            </div>
+            <p class="dish-desc">Six hand-pressed pieces of sushi-grade Norwegian salmon over seasoned Koshihikari sushi rice with fresh wasabi.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(195 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹490</span>
+        </div>
+        <div class="dish" data-reveal data-id="kyoto-mochi" data-accent="rust" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Mochi Ice Cream Trio</h3>
+            </div>
+            <p class="dish-desc">Three pillowy soft rice dough shells filled with premium ice cream: Uji matcha green tea, sweet mango and black sesame.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(140 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹290</span>
+        </div>
+        <div class="dish" data-reveal data-id="kyoto-matcha-latte" data-accent="rust" data-tags="veg gluten-free">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge gluten-free">🌾 GF</span>
+              <h3 class="dish-name">Uji Ceremonial Iced Matcha Latte</h3>
+            </div>
+            <p class="dish-desc">First-harvest Kyoto ceremonial matcha whisked with bamboo chasen, poured over cold fresh milk or oat milk.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(250 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹260</span>
         </div>
       </div>
     </div>
@@ -2672,20 +3517,88 @@
         <p class="cuisine-origin">Sichuan counter — mala oil made fresh twice a day, numbing chili and all.</p>
       </div>
       <div class="dish-list">
-        <div class="dish" data-reveal data-id="chengdu-mapo-tofu" data-accent="yolk">
-          <h3 class="dish-name">Mapo tofu rice bowl</h3>
-          <p class="dish-desc">Silken tofu, ground pork, fermented broad bean paste, Sichuan peppercorn.</p>
+        <div class="dish" data-reveal data-id="chinese-har-gow" data-accent="yolk" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Crystal Prawn Har Gow Dim Sum</h3>
+              <span class="dish-badge-pill">Dim Sum ⭐</span>
+            </div>
+            <p class="dish-desc">Translucent wheat-starch steamed dumplings packed with sweet whole tiger prawns, bamboo shoots and sesame oil.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(210 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹380</span>
+        </div>
+        <div class="dish" data-reveal data-id="chinese-siu-mai" data-accent="yolk" data-tags="non-veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <h3 class="dish-name">Open-Topped Pork &amp; Prawn Siu Mai</h3>
+            </div>
+            <p class="dish-desc">Cantonese steamed dumplings garnished with flying fish tobiko roe and wood-ear mushrooms.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(165 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹360</span>
+        </div>
+        <div class="dish" data-reveal data-id="chengdu-mapo-tofu" data-accent="yolk" data-tags="veg spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Chengdu Mala Mapo Tofu</h3>
+              <span class="dish-badge-pill">Signature 🔥</span>
+            </div>
+            <p class="dish-desc">Silken tofu, fermented Pixian broad bean paste, ground wild mushrooms or minced pork, finished with numbing Sichuan peppercorn oil.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(310 reviews)</span></div>
+          </div>
           <span class="dish-price">₹420</span>
         </div>
-        <div class="dish" data-reveal data-id="chengdu-dan-dan-noodles" data-accent="yolk">
-          <h3 class="dish-name">Dan dan noodles</h3>
-          <p class="dish-desc">Wheat noodles, chili oil, preserved mustard greens, crushed peanut.</p>
-          <span class="dish-price">₹390</span>
+        <div class="dish" data-reveal data-id="chinese-kung-pao" data-accent="yolk" data-tags="non-veg spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Fire-Wok Kung Pao Chicken</h3>
+            </div>
+            <p class="dish-desc">Diced chicken thigh, toasted crunchy peanuts, dried facing-heaven chilies and scallions in a sweet-savory dark soy glaze.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(240 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹440</span>
         </div>
-        <div class="dish" data-reveal data-id="chengdu-chili-dumplings" data-accent="yolk">
-          <h3 class="dish-name">Chili oil dumplings</h3>
-          <p class="dish-desc">Hand-folded pork and chive, black vinegar, house mala oil.</p>
+        <div class="dish" data-reveal data-id="chinese-chili-chicken" data-accent="yolk" data-tags="non-veg spicy">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge non-veg">🍗 Non-Veg</span>
+              <span class="diet-badge spicy">🌶️ Spicy</span>
+              <h3 class="dish-name">Calcutta Indo-Chinese Chili Chicken</h3>
+              <span class="dish-badge-pill">Bestseller 🔥</span>
+            </div>
+            <p class="dish-desc">Crisp battered chicken chunks wok-tossed with slit green chilies, bell peppers, spring onions, dark soy and chili garlic paste.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 5.0</span> <span>(420 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹410</span>
+        </div>
+        <div class="dish" data-reveal data-id="chinese-hakka-noodles" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Street-Style Wok Hakka Noodles</h3>
+            </div>
+            <p class="dish-desc">High-flame tossed wheat noodles with julienned carrots, shredded cabbage, scallions and toasted garlic oil.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.8</span> <span>(290 reviews)</span></div>
+          </div>
           <span class="dish-price">₹340</span>
+        </div>
+        <div class="dish" data-reveal data-id="chinese-bubble-tea" data-accent="yolk" data-tags="veg">
+          <div>
+            <div class="dish-title-line">
+              <span class="diet-badge veg">🌱 Veg</span>
+              <h3 class="dish-name">Taiwanese Brown Sugar Boba Milk Tea</h3>
+            </div>
+            <p class="dish-desc">Sun-ripened black tea infused milk with warm caramelized brown sugar tiger stripes and chewy tapioca pearls.</p>
+            <div class="dish-meta-info"><span class="dish-star">★ 4.9</span> <span>(310 reviews)</span></div>
+          </div>
+          <span class="dish-price">₹240</span>
         </div>
       </div>
     </div>
@@ -2861,8 +3774,45 @@
       <p class="dish-modal-desc" id="modalDesc"></p>
       <p class="dish-modal-label">Ingredients</p>
       <div class="ingredient-pills" id="modalIngredients"></div>
-      <p class="dish-modal-label" id="modalSizeLabel">Size</p>
+      <p class="dish-modal-label" id="modalSizeLabel">Portion Size</p>
       <div class="size-options" id="modalSizes"></div>
+
+      <!-- Spice Level Selection -->
+      <div class="modal-custom-section" id="modalSpiceGroup">
+        <p class="dish-modal-label">Spice Level</p>
+        <div class="custom-chips-row" id="modalSpiceList">
+          <button type="button" class="custom-chip" data-spice="Mild">🟢 Mild</button>
+          <button type="button" class="custom-chip selected" data-spice="Medium">🟡 Medium</button>
+          <button type="button" class="custom-chip" data-spice="Spicy">🌶️ Spicy</button>
+          <button type="button" class="custom-chip" data-spice="Extra Hot">🔥 Extra Hot</button>
+        </div>
+      </div>
+
+      <!-- Protein / Base Choice Selection -->
+      <div class="modal-custom-section" id="modalProteinGroup">
+        <p class="dish-modal-label">Protein / Base Choice</p>
+        <div class="custom-chips-row" id="modalProteinList"></div>
+      </div>
+
+      <!-- Gourmet Add-ons & Extras -->
+      <div class="modal-custom-section" id="modalAddOnsGroup">
+        <p class="dish-modal-label">Gourmet Add-ons &amp; Extras</p>
+        <div class="addon-checkboxes-list" id="modalAddOnsList"></div>
+      </div>
+
+      <!-- Chef Cooking Instructions & Dietary Preferences -->
+      <div class="modal-custom-section" id="modalPrepGroup">
+        <p class="dish-modal-label">Chef Instructions &amp; Dietary Preferences</p>
+        <div class="custom-chips-row" id="modalDietPills">
+          <button type="button" class="pref-chip" data-pref="No Onion/Garlic">Jain (No Onion/Garlic)</button>
+          <button type="button" class="pref-chip" data-pref="Less Oil">Less Oil</button>
+          <button type="button" class="pref-chip" data-pref="Low Salt">Low Salt</button>
+          <button type="button" class="pref-chip" data-pref="Extra Crispy">Extra Crispy</button>
+          <button type="button" class="pref-chip" data-pref="Sauce on Side">Separate Sauce</button>
+        </div>
+        <input type="text" id="modalCustomNote" class="modal-note-input" placeholder="Allergies or special instructions for our chef (e.g. pack dressing separately)…">
+      </div>
+
       <div class="dish-modal-footer">
         <div class="qty-stepper">
           <button id="qtyMinus" aria-label="Decrease quantity">−</button>
@@ -3019,6 +3969,106 @@
         <button type="button" class="apply-promo-btn" id="applyPromoBtn">Apply</button>
       </div>
       <div class="promo-message" id="promoMessage"></div>
+    </div>
+
+    <!-- Frictionless Payment Mode Selector (Zero Gateway Failure) -->
+    <div class="payment-method-box" id="paymentMethodBox">
+      <p class="dish-modal-label" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <span>Select Payment Mode</span>
+        <span class="zero-fail-tag">⚡ 100% Zero-Drop Guaranteed</span>
+      </p>
+      <div class="pay-method-chips" id="payMethodChips">
+        <button type="button" class="pay-chip active" data-pay="UPI (Instant QR)">⚡ Instant UPI QR</button>
+        <button type="button" class="pay-chip" data-pay="Credit / Debit Card">💳 Card</button>
+        <button type="button" class="pay-chip" data-pay="Pay at Table / Cash">💵 Table / Cash</button>
+      </div>
+
+      <!-- UPI QR Block -->
+      <div class="pay-block" id="payBlockUpi">
+        <div class="upi-qr-card">
+          <div class="upi-qr-badge">Hatch Indiranagar Merchant QR</div>
+          <div class="upi-qr-visual">
+            <svg class="upi-qr-svg" viewBox="0 0 140 140" width="120" height="120">
+              <rect width="140" height="140" fill="#ffffff" rx="10"/>
+              <!-- Stylish QR Code matrix pattern with corner markers -->
+              <rect x="12" y="12" width="34" height="34" fill="#0b140e" rx="4"/>
+              <rect x="18" y="18" width="22" height="22" fill="#ffffff" rx="2"/>
+              <rect x="23" y="23" width="12" height="12" fill="#d4a017" rx="1"/>
+
+              <rect x="94" y="12" width="34" height="34" fill="#0b140e" rx="4"/>
+              <rect x="100" y="18" width="22" height="22" fill="#ffffff" rx="2"/>
+              <rect x="105" y="23" width="12" height="12" fill="#d4a017" rx="1"/>
+
+              <rect x="12" y="94" width="34" height="34" fill="#0b140e" rx="4"/>
+              <rect x="18" y="100" width="22" height="22" fill="#ffffff" rx="2"/>
+              <rect x="23" y="105" width="12" height="12" fill="#d4a017" rx="1"/>
+
+              <!-- Central Hatch Monogram -->
+              <circle cx="70" cy="70" r="14" fill="#0b140e"/>
+              <text x="70" y="74" fill="#d4a017" font-family="Fraunces, serif" font-weight="bold" font-size="11" text-anchor="middle">H</text>
+
+              <!-- Data dots -->
+              <rect x="54" y="18" width="8" height="8" fill="#1b2820"/>
+              <rect x="68" y="14" width="8" height="8" fill="#1b2820"/>
+              <rect x="78" y="24" width="8" height="8" fill="#1b2820"/>
+              <rect x="54" y="34" width="8" height="8" fill="#1b2820"/>
+              <rect x="68" y="44" width="8" height="8" fill="#1b2820"/>
+              <rect x="20" y="58" width="8" height="8" fill="#1b2820"/>
+              <rect x="34" y="68" width="8" height="8" fill="#1b2820"/>
+              <rect x="98" y="54" width="8" height="8" fill="#1b2820"/>
+              <rect x="112" y="68" width="8" height="8" fill="#1b2820"/>
+              <rect x="54" y="98" width="8" height="8" fill="#1b2820"/>
+              <rect x="68" y="112" width="8" height="8" fill="#1b2820"/>
+              <rect x="94" y="98" width="8" height="8" fill="#1b2820"/>
+              <rect x="114" y="114" width="8" height="8" fill="#1b2820"/>
+            </svg>
+          </div>
+          <div class="upi-info-pane">
+            <div class="upi-vpa-label">UPI ID: <strong>hatch.orders@icici</strong></div>
+            <div class="upi-apps-row">
+              <span class="app-chip">GPay</span>
+              <span class="app-chip">PhonePe</span>
+              <span class="app-chip">Paytm</span>
+              <span class="app-chip">BHIM</span>
+              <span class="app-chip">Cred</span>
+            </div>
+            <div class="upi-timer-text">Dynamic Session: <strong id="upiTimer">04:59</strong></div>
+            <div class="upi-verified-badge">✓ 1-Tap Auto-Verification Active</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Block -->
+      <div class="pay-block" id="payBlockCard" style="display:none;">
+        <div class="card-sim-panel">
+          <div class="card-field-box">
+            <label>Card Number</label>
+            <input type="text" id="cardNumInput" placeholder="4532 •••• •••• 8821" maxlength="19">
+          </div>
+          <div class="card-split-row">
+            <div class="card-field-box">
+              <label>Expiry</label>
+              <input type="text" id="cardExpInput" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="card-field-box">
+              <label>CVV</label>
+              <input type="password" id="cardCvvInput" placeholder="•••" maxlength="4">
+            </div>
+          </div>
+          <div class="card-secure-hint">🔒 256-Bit TLS Simulated Authorization • Guaranteed Zero Dropoff</div>
+        </div>
+      </div>
+
+      <!-- Pay at Table Block -->
+      <div class="pay-block" id="payBlockCod" style="display:none;">
+        <div class="table-pay-panel">
+          <span style="font-size:22px;">🤝</span>
+          <div>
+            <strong>Pay at Counter / Table / Delivery</strong>
+            <p style="font-size:12px; opacity:0.75; margin:2px 0 0;">Pay with Cash, Card, or UPI directly to your steward or rider when served.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="cart-drawer-foot">
@@ -3329,7 +4379,7 @@
   ctaScroll();
 
   /* active state for the cuisine quick-nav */
-  var panelIds = ['levant','malabar','bengaluru','biryani','salads','kyoto','chengdu','oaxaca','napoli','sweet'];
+  var panelIds = ['levant','malabar','biryani','thai','kyoto','chengdu','bengaluru','salads','oaxaca','napoli','sweet'];
   var chips = {};
   panelIds.forEach(function(id){
     var chip = document.querySelector('[data-panel-link="' + id + '"]');
@@ -3411,75 +4461,116 @@
   }
 
   /* ================= DISH DATA ================= */
-  /* value shape: [origin label, icon name, ingredients[], sizes[[label,price],...]] */
+  /* shape: [origin, icon, ingredients[], sizes[[label,price],...], proteinType, addOnType, spiceType] */
   var DISH_DATA = {
     // The Levant
-    "levant-muhammara-toast": ["The Levant · Beirut-style counter", "flatbread", ["walnut", "roasted red pepper", "pomegranate molasses", "sourdough"], [["Regular", 320]]],
-    "levant-lamb-kofta-bowl": ["The Levant · Beirut-style counter", "bowl", ["lamb", "freekeh", "pickled turnip", "garlic toum", "charcoal"], [["Regular", 560], ["Large", 680]]],
-    "levant-labneh-flatbread": ["The Levant · Beirut-style counter", "flatbread", ["labneh", "za'atar", "olive oil", "flatbread"], [["Regular", 380]]],
+    "levant-muhammara-toast": ["The Levant · Beirut-style counter", "flatbread", ["walnut", "roasted red pepper", "pomegranate molasses", "sourdough"], [["Regular", 320], ["Large", 420]], "bread", "bakery", "mild"],
+    "levant-lamb-kofta-bowl": ["The Levant · Beirut-style counter", "bowl", ["lamb", "freekeh", "pickled turnip", "garlic toum", "charcoal"], [["Regular", 560], ["Large Sharing", 680]], "meat", "savory", "curry"],
+    "levant-labneh-flatbread": ["The Levant · Beirut-style counter", "flatbread", ["labneh", "za'atar", "olive oil", "flatbread"], [["Regular", 380]], "veg", "bakery", "mild"],
 
-    // Indian Kitchen
-    "india-butter-chicken": ["Indian Kitchen · North", "curry", ["tandoori chicken", "tomato", "butter", "cream", "kasuri methi"], [["Half", 320], ["Full", 480]]],
-    "india-dal-makhani": ["Indian Kitchen · North", "curry", ["black urad dal", "rajma", "butter", "cream", "tomato"], [["Half", 230], ["Full", 340]]],
-    "india-amritsari-kulcha": ["Indian Kitchen · North", "flatbread", ["refined flour", "spiced potato", "onion", "chole", "ghee"], [["Regular", 280]]],
-    "india-malabar-prawn-curry": ["Indian Kitchen · South", "curry", ["tiger prawns", "coconut milk", "kudampuli", "curry leaf", "red rice"], [["Half", 350], ["Full", 520]]],
-    "india-appam-stew": ["Indian Kitchen · South", "flatbread", ["rice appam", "coconut vegetable stew", "cardamom"], [["Regular", 340]]],
-    "india-mysore-dosa": ["Indian Kitchen · South", "flatbread", ["rice", "urad dal", "potato masala", "red chilli chutney"], [["Regular", 260]]],
-    "india-kosha-mangsho": ["Indian Kitchen · East", "curry", ["mutton", "mustard oil", "panch phoron", "onion", "ginger-garlic"], [["Half", 380], ["Full", 560]]],
-    "india-bhapa-maachh": ["Indian Kitchen · East", "curry", ["river fish", "mustard paste", "yogurt", "mustard oil", "banana leaf"], [["Regular", 460]]],
-    "india-kathi-roll": ["Indian Kitchen · East", "roll", ["paratha", "spiced chicken", "egg", "onion", "mustard sauce"], [["Regular", 300]]],
-    "india-dal-baati": ["Indian Kitchen · West", "flatbread", ["whole wheat flour", "ghee", "toor dal", "jaggery churma"], [["Regular", 380]]],
-    "india-pav-bhaji": ["Indian Kitchen · West", "curry", ["mixed vegetables", "butter", "pav bread", "pav bhaji masala"], [["Regular", 260], ["Large", 340]]],
-    "india-undhiyu": ["Indian Kitchen · West", "curry", ["purple yam", "surti papdi beans", "brinjal", "fenugreek dumplings"], [["Regular", 340]]],
+    // Indian Kitchen — Starters, Snacks & Chaat
+    "india-punjabi-samosa": ["Indian Kitchen · Chaat & Snacks", "flatbread", ["flaky pastry", "spiced potato", "green peas", "ragda curry", "chutneys"], [["2 Pieces", 220], ["Platter (4 Pcs)", 390]], "veg", "chaat", "curry"],
+    "india-paneer-tikka": ["Indian Kitchen · Tandoor", "skewer", ["fresh cottage cheese", "hung curd", "kashmiri chili", "bell peppers", "mint"], [["Regular (6 Pcs)", 360], ["Large Sharing", 520]], "veg_protein", "savory", "curry"],
+    "india-chicken-65": ["Indian Kitchen · Southern Crisp", "bowl", ["boneless chicken", "curry leaf", "green chili", "crushed garlic", "lemon"], [["Regular", 390], ["Large", 540]], "chicken_protein", "savory", "spicy"],
+    "india-seekh-kebab": ["Indian Kitchen · Awadhi Grills", "skewer", ["minced mutton", "shahi spices", "mace", "cardamom", "onion lachha"], [["Regular (4 Pcs)", 540], ["Large Platter", 780]], "meat", "savory", "curry"],
 
-    // Bengaluru Roastery & Artisanal Bakery
-    "roastery-filter-cold-brew": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["cold brew coffee", "artisanal tonic water", "orange peel", "ice"], [["Standard", 240], ["Large", 290]]],
-    "roastery-monsooned-malabar": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["dark roast espresso", "textured whole milk", "cocoa dusting"], [["Regular", 220], ["Double Shot", 260]]],
-    "roastery-cardamom-cruffin": ["Bengaluru Roastery · Boulangerie", "dessert", ["croissant pastry", "Mysore vanilla", "cardamom sugar", "custard"], [["Single", 260], ["Box of 2", 480]]],
-    "roastery-sourdough-ricotta": ["Bengaluru Roastery · Boulangerie", "flatbread", ["sourdough", "buffalo ricotta", "fresh figs", "Coorg honey", "pistachio"], [["Regular", 340]]],
+    // Indian Kitchen — Mains
+    "india-butter-chicken": ["Indian Kitchen · North", "curry", ["tandoori chicken", "tomato", "butter", "cream", "kasuri methi"], [["Half", 320], ["Full", 480], ["Handi for 3", 750]], "curry_protein", "curry", "curry"],
+    "india-dal-makhani": ["Indian Kitchen · North", "curry", ["black urad dal", "rajma", "butter", "cream", "tomato"], [["Half", 230], ["Full", 340], ["Handi", 520]], "veg", "curry", "curry"],
+    "india-rogan-josh": ["Indian Kitchen · Kashmir", "curry", ["tender mutton shanks", "rattan jot", "fennel seeds", "dried ginger", "kashmiri chili"], [["Regular", 560], ["Large Handi", 820]], "meat", "curry", "spicy"],
+    "india-paneer-butter-masala": ["Indian Kitchen · Shahi Handi", "curry", ["charred cottage cheese", "cashew paste", "tomato satin gravy", "butter", "mace"], [["Half", 280], ["Full", 410]], "veg_protein", "curry", "curry"],
+    "india-chettinad-chicken": ["Indian Kitchen · Tamil Nadu", "curry", ["country chicken", "tellicherry black pepper", "roasted coconut", "curry leaves"], [["Half", 310], ["Full", 460]], "chicken_protein", "curry", "spicy"],
+    "india-fish-moilee": ["Indian Kitchen · Kerala Coast", "curry", ["river fish fillet", "coconut milk", "turmeric", "green chilies", "shallots"], [["Regular", 520], ["Large", 680]], "seafood", "curry", "mild"],
+    "india-malabar-prawn-curry": ["Indian Kitchen · South", "curry", ["tiger prawns", "coconut milk", "kudampuli", "curry leaf", "red rice"], [["Half", 350], ["Full", 520]], "seafood", "curry", "curry"],
+    "india-appam-stew": ["Indian Kitchen · South", "flatbread", ["rice appam", "coconut vegetable stew", "cardamom"], [["Regular", 340]], "veg", "bakery", "mild"],
+    "india-mysore-dosa": ["Indian Kitchen · South", "flatbread", ["rice", "urad dal", "potato masala", "red chilli chutney"], [["Regular", 260]], "veg", "chaat", "curry"],
+    "india-kosha-mangsho": ["Indian Kitchen · East", "curry", ["mutton", "mustard oil", "panch phoron", "onion", "ginger-garlic"], [["Half", 380], ["Full", 560]], "meat", "curry", "spicy"],
+    "india-bhapa-maachh": ["Indian Kitchen · East", "curry", ["river fish", "mustard paste", "yogurt", "mustard oil", "banana leaf"], [["Regular", 460]], "seafood", "curry", "curry"],
+    "india-kathi-roll": ["Indian Kitchen · East", "roll", ["paratha", "spiced chicken", "egg", "onion", "mustard sauce"], [["Regular", 300]], "curry_protein", "savory", "curry"],
+    "india-dal-baati": ["Indian Kitchen · West", "flatbread", ["whole wheat flour", "ghee", "toor dal", "jaggery churma"], [["Regular", 380]], "veg", "bakery", "curry"],
+    "india-pav-bhaji": ["Indian Kitchen · West", "curry", ["mixed vegetables", "butter", "pav bread", "pav bhaji masala"], [["Regular", 260], ["Large", 340]], "veg", "chaat", "curry"],
+    "india-undhiyu": ["Indian Kitchen · West", "curry", ["purple yam", "surti papdi beans", "brinjal", "fenugreek dumplings"], [["Regular", 340]], "veg", "curry", "curry"],
 
-    // Royal Claypot Dum Biryanis
-    "biryani-hyderabadi-gosht": ["Royal Dum Biryani · Nizami Heritage", "biryani", ["baby goat meat", "aged basmati", "saffron", "brown onions", "mint", "ghee"], [["Regular", 620], ["Handi for 2", 1150]]],
-    "biryani-awadhi-murgh": ["Royal Dum Biryani · Awadhi Counter", "biryani", ["chicken thigh", "aged basmati", "saffron milk", "kewra", "green cardamom"], [["Regular", 520], ["Handi for 2", 980]]],
-    "biryani-kathal-mushroom": ["Royal Dum Biryani · Shahi Handi", "biryani", ["raw jackfruit (kathal)", "wild morel mushrooms", "basmati rice", "saffron"], [["Regular", 440], ["Handi for 2", 820]]],
-    "biryani-kolkata-egg-aloo": ["Royal Dum Biryani · Bengal Awadh", "biryani", ["basmati rice", "spiced potato", "farm brown egg", "shahi jeera", "meetha attar"], [["Regular", 380]]],
+    // Indian Breads & Sweets
+    "india-amritsari-kulcha": ["Indian Kitchen · North", "flatbread", ["refined flour", "spiced potato", "onion", "chole", "ghee"], [["Regular", 280]], "veg", "bakery", "curry"],
+    "india-garlic-butter-naan": ["Indian Kitchen · Tandoor Breads", "flatbread", ["tandoori leavened bread", "roasted garlic chips", "coriander", "butter"], [["Single", 120], ["Basket of 2", 220]], "veg", "bakery", "mild"],
+    "india-kerala-parotta": ["Indian Kitchen · Malabar Breads", "flatbread", ["flaky multi-layered spiral bread", "refined wheat", "ghee"], [["2 Pieces", 140]], "veg", "bakery", "mild"],
+    "india-gulab-jamun": ["Indian Kitchen · Heritage Sweets", "dessert", ["khoya milk dumplings", "rose cardamom syrup", "saffron rabri"], [["2 Pieces", 260]], "veg", "dessert", "sweet"],
+    "india-rasmalai": ["Indian Kitchen · Heritage Sweets", "dessert", ["poached chhena cheese", "saffron cardamom clotted milk", "pistachio"], [["2 Pieces", 240]], "veg", "dessert", "sweet"],
+    "india-filter-coffee": ["Indian Kitchen · South Brews", "coffee", ["chicory-arabica blend", "full cream milk", "froth"], [["Single Dabarah", 140]], "beverage", "drink", "sweet"],
+    "india-kesar-lassi": ["Indian Kitchen · Coolers", "wine", ["churned greek yogurt", "alphonso mango pulp", "saffron", "almonds"], [["Glass", 210], ["Bottle 500ml", 320]], "beverage", "drink", "sweet"],
 
-    // Artisanal Farm Salads & Bowls
-    "salad-nandi-goat-cheese": ["Farm Salads · Hydroponic Greens", "salad", ["local goat cheese", "roasted baby beets", "arugula", "walnuts", "berry reduction"], [["Regular", 390], ["Large Sharing", 540]]],
-    "salad-burrata-peach": ["Farm Salads · Seasonal Harvest", "salad", ["fresh burrata", "charred peach", "heirloom tomatoes", "basil oil", "pine nuts"], [["Regular", 460]]],
-    "salad-levant-fattoush": ["Farm Salads · Levantine Garden", "salad", ["romaine lettuce", "Persian cucumber", "radish", "pomegranate", "sumac", "pita crisps"], [["Regular", 320], ["Large", 420]]],
-    "salad-kyoto-sesame-soba": ["Farm Salads · Chilled Bowls", "noodle", ["buckwheat soba", "edamame", "avocado", "toasted sesame", "ginger-tamari"], [["Regular", 420], ["Large", 520]]],
+    // Royal Dum Biryanis
+    "biryani-hyderabadi-gosht": ["Royal Dum Biryani · Nizami Heritage", "biryani", ["baby goat meat", "aged basmati", "saffron", "brown onions", "mint", "ghee"], [["Regular", 620], ["Handi for 2", 1150], ["Dawat Handi (4 Pax)", 1980]], "meat", "curry", "spicy"],
+    "biryani-awadhi-murgh": ["Royal Dum Biryani · Awadhi Counter", "biryani", ["chicken thigh", "aged basmati", "saffron milk", "kewra", "green cardamom"], [["Regular", 520], ["Handi for 2", 980]], "chicken_protein", "curry", "curry"],
+    "biryani-kathal-mushroom": ["Royal Dum Biryani · Shahi Handi", "biryani", ["raw jackfruit (kathal)", "wild morel mushrooms", "basmati rice", "saffron"], [["Regular", 440], ["Handi for 2", 820]], "veg", "curry", "curry"],
+    "biryani-kolkata-egg-aloo": ["Royal Dum Biryani · Bengal Awadh", "biryani", ["basmati rice", "spiced potato", "farm brown egg", "shahi jeera", "meetha attar"], [["Regular", 380]], "egg_protein", "curry", "mild"],
+
+    // Thai Orchid Counter
+    "thai-tom-yum": ["Thai Orchid · Bangkok Soups", "bowl", ["tiger prawns", "lemongrass", "galangal", "kaffir lime", "chili", "straw mushrooms"], [["Single Bowl", 420], ["Large Sharing Hotpot", 650]], "seafood", "curry", "spicy"],
+    "thai-chicken-satay": ["Thai Orchid · Street Skewers", "skewer", ["chicken tenders", "turmeric coconut marinade", "warm peanut dip", "cucumber relish"], [["5 Skewers", 380], ["8 Skewers Sharing", 540]], "chicken_protein", "savory", "mild"],
+    "thai-som-tam": ["Thai Orchid · Isan Salads", "salad", ["green papaya", "snake beans", "cherry tomatoes", "roasted peanuts", "lime palm sugar"], [["Regular", 320], ["Large", 420]], "veg", "chaat", "spicy"],
+    "thai-green-curry": ["Thai Orchid · Royal Curries", "curry", ["green chili coriander paste", "thick coconut cream", "pea aubergines", "sweet basil", "jasmine rice"], [["Regular with Rice", 460], ["Large Sharing", 680]], "curry_protein", "curry", "spicy"],
+    "thai-massaman-curry": ["Thai Orchid · Southern Curries", "curry", ["baby potatoes", "roasted peanuts", "shallots", "star anise", "tamarind reduction"], [["Regular with Rice", 490], ["Large Sharing", 720]], "curry_protein", "curry", "curry"],
+    "thai-pad-kra-pao": ["Thai Orchid · Fire Wok", "bowl", ["holy basil", "bird's eye chilies", "garlic", "dark soy", "crispy sunny fried egg", "jasmine rice"], [["Regular", 440], ["Large", 560]], "curry_protein", "savory", "spicy"],
+    "thai-pad-thai": ["Thai Orchid · Bangkok Noodles", "noodle", ["rice noodles", "tamarind glaze", "yellow tofu", "farm egg", "bean sprouts", "crushed peanuts"], [["Regular", 420], ["Large Sharing", 580]], "curry_protein", "curry", "mild"],
+    "thai-khao-soi": ["Thai Orchid · Chiang Mai", "noodle", ["rich coconut-turmeric curry", "egg noodles", "pickled greens", "crispy noodle nest", "shallots"], [["Regular", 450], ["Large", 590]], "chicken_protein", "curry", "spicy"],
+    "thai-mango-sticky-rice": ["Thai Orchid · Bangkok Desserts", "dessert", ["sweet glutinous sticky rice", "salted coconut cream", "fresh ripe sweet mango", "toasted sesame"], [["Regular", 320]], "veg", "dessert", "sweet"],
+    "thai-iced-tea": ["Thai Orchid · Beverages", "wine", ["brewed ceylon black tea", "star anise", "crushed cardamom", "condensed milk", "ice"], [["Tall Glass", 210]], "beverage", "drink", "sweet"],
 
     // Kyoto Counter
-    "kyoto-miso-eggplant": ["Kyoto Counter", "skewer", ["nasu (eggplant)", "white miso glaze", "toasted sesame", "shiso"], [["Regular", 360]]],
-    "kyoto-katsu-curry-rice": ["Kyoto Counter", "curry", ["chicken thigh", "panko", "Japanese curry", "rice", "pickled ginger"], [["Regular", 420], ["Large", 520]]],
-    "kyoto-salmon-nigiri": ["Kyoto Counter", "sashimi", ["salmon", "sushi rice", "wasabi", "soy"], [["6 pieces", 480]]],
+    "kyoto-truffle-edamame": ["Kyoto Counter · Otsumami", "bowl", ["steamed soybeans", "white truffle oil", "maldon sea salt", "toasted sesame"], [["Regular", 280]], "veg", "chaat", "mild"],
+    "kyoto-gyoza": ["Kyoto Counter · Dumplings", "dumpling", ["handcrafted dumplings", "pork or chicken", "scallion", "crispy lace", "ponzu"], [["6 Pieces", 360], ["10 Pieces", 520]], "curry_protein", "savory", "mild"],
+    "kyoto-karaage": ["Kyoto Counter · Izakaya", "bowl", ["crispy chicken thigh", "ginger sake marinade", "kewpie mayo", "togarashi"], [["Regular", 390], ["Large", 540]], "chicken_protein", "savory", "mild"],
+    "kyoto-tonkotsu-ramen": ["Kyoto Counter · Ramen Bar", "noodle", ["16-hour collagen broth", "handmade wheat noodles", "chashu pork", "ajitama egg", "menma", "nori"], [["Standard Bowl", 540], ["Super Chashu & Egg", 680]], "ramen_protein", "ramen", "curry"],
+    "kyoto-katsu-curry-rice": ["Kyoto Counter · Yoshoku", "curry", ["panko chicken cutlet", "kyoto curry", "rice", "pickled ginger"], [["Regular", 440], ["Large", 560]], "curry_protein", "curry", "curry"],
+    "kyoto-salmon-nigiri": ["Kyoto Counter · Sushi Bar", "sashimi", ["norwegian salmon", "koshihikari sushi rice", "fresh wasabi", "tamari"], [["6 Pieces", 490], ["10 Pieces Deluxe", 780]], "seafood", "savory", "mild"],
+    "kyoto-miso-eggplant": ["Kyoto Counter · Hearth", "skewer", ["nasu dengaku", "white miso glaze", "toasted sesame", "shiso"], [["Regular", 360]], "veg", "savory", "mild"],
+    "kyoto-mochi": ["Kyoto Counter · Wagashi", "dessert", ["soft pounded mochi", "matcha ice cream", "mango", "black sesame"], [["Trio of 3", 290]], "veg", "dessert", "sweet"],
+    "kyoto-matcha-latte": ["Kyoto Counter · Chado", "coffee", ["ceremonial uji matcha", "cold textured milk", "bamboo whisked"], [["Regular", 260]], "beverage", "drink", "sweet"],
 
-    // Chengdu Fire
-    "chengdu-mapo-tofu": ["Chengdu Fire", "bowl", ["silken tofu", "ground pork", "broad bean paste", "Sichuan peppercorn", "rice"], [["Regular", 420], ["Large", 520]]],
-    "chengdu-dan-dan-noodles": ["Chengdu Fire", "noodle", ["wheat noodles", "chili oil", "preserved mustard greens", "peanut"], [["Regular", 390], ["Large", 470]]],
-    "chengdu-chili-dumplings": ["Chengdu Fire", "dumpling", ["pork", "chive", "black vinegar", "mala oil"], [["6 pieces", 340]]],
+    // Chengdu Fire & Indo-Chinese
+    "chinese-har-gow": ["Chengdu Fire · Dim Sum", "dumpling", ["translucent wheat skin", "tiger prawns", "bamboo shoots", "sesame oil"], [["4 Pieces", 380]], "seafood", "savory", "mild"],
+    "chinese-siu-mai": ["Chengdu Fire · Dim Sum", "dumpling", ["pork & prawn dumplings", "tobiko flying fish roe", "wood-ear mushroom"], [["4 Pieces", 360]], "curry_protein", "savory", "mild"],
+    "chengdu-mapo-tofu": ["Chengdu Fire · Sichuan", "bowl", ["silken tofu", "broad bean paste", "sichuan peppercorn", "chili oil", "rice"], [["Regular", 420], ["Large", 540]], "tofu_protein", "curry", "spicy"],
+    "chinese-kung-pao": ["Chengdu Fire · Wok Bar", "bowl", ["chicken thigh", "crunchy peanuts", "sichuan dried chilies", "scallions"], [["Regular", 440], ["Large", 580]], "curry_protein", "curry", "spicy"],
+    "chinese-chili-chicken": ["Chengdu Fire · Indo-Chinese", "bowl", ["crisp battered chicken", "slit green chilies", "bell peppers", "dark soy"], [["Regular", 410], ["Large", 560]], "curry_protein", "curry", "spicy"],
+    "chinese-hakka-noodles": ["Chengdu Fire · Indo-Chinese", "noodle", ["wok tossed wheat noodles", "julienned vegetables", "garlic oil"], [["Regular", 340], ["Large", 460]], "noodle_protein", "curry", "curry"],
+    "chengdu-dan-dan-noodles": ["Chengdu Fire · Sichuan", "noodle", ["wheat noodles", "chili oil", "preserved greens", "peanut"], [["Regular", 390], ["Large", 490]], "curry_protein", "curry", "spicy"],
+    "chinese-bubble-tea": ["Chengdu Fire · Taiwanese", "wine", ["black tea milk", "caramelized brown sugar", "tapioca boba pearls"], [["Tall 500ml", 240]], "beverage", "drink", "sweet"],
+
+    // Bengaluru Roastery & Artisanal Bakery
+    "roastery-filter-cold-brew": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["cold brew coffee", "artisanal tonic water", "orange peel", "ice"], [["Standard", 240], ["Large", 290]], "beverage", "drink", "sweet"],
+    "roastery-monsooned-malabar": ["Bengaluru Roastery · Artisanal Brews", "coffee", ["dark roast espresso", "textured whole milk", "cocoa dusting"], [["Regular", 220], ["Double Shot", 260]], "beverage", "drink", "sweet"],
+    "roastery-cardamom-cruffin": ["Bengaluru Roastery · Boulangerie", "dessert", ["croissant pastry", "Mysore vanilla", "cardamom sugar", "custard"], [["Single", 260], ["Box of 2", 480]], "veg", "dessert", "sweet"],
+    "roastery-sourdough-ricotta": ["Bengaluru Roastery · Boulangerie", "flatbread", ["sourdough", "buffalo ricotta", "fresh figs", "Coorg honey", "pistachio"], [["Regular", 340]], "veg", "bakery", "mild"],
+
+    // Farm Salads & Bowls
+    "salad-nandi-goat-cheese": ["Farm Salads · Hydroponic Greens", "salad", ["local goat cheese", "roasted baby beets", "arugula", "walnuts", "berry reduction"], [["Regular", 390], ["Large Sharing", 540]], "veg", "chaat", "mild"],
+    "salad-burrata-peach": ["Farm Salads · Seasonal Harvest", "salad", ["fresh burrata", "charred peach", "heirloom tomatoes", "basil oil", "pine nuts"], [["Regular", 460]], "veg", "chaat", "mild"],
+    "salad-levant-fattoush": ["Farm Salads · Levantine Garden", "salad", ["romaine lettuce", "Persian cucumber", "radish", "pomegranate", "sumac", "pita crisps"], [["Regular", 320], ["Large", 420]], "veg", "chaat", "mild"],
+    "salad-kyoto-sesame-soba": ["Farm Salads · Chilled Bowls", "noodle", ["buckwheat soba", "edamame", "avocado", "toasted sesame", "ginger-tamari"], [["Regular", 420], ["Large", 520]], "veg", "chaat", "mild"],
 
     // Oaxaca Comal
-    "oaxaca-mole-negro": ["Oaxaca Comal", "curry", ["mole negro (20 ingredients)", "shredded chicken", "sesame", "crema"], [["Regular", 480], ["Large", 580]]],
-    "oaxaca-tlayuda": ["Oaxaca Comal", "flatbread", ["masa", "black beans", "quesillo", "avocado", "salsa macha"], [["Regular", 450]]],
-    "oaxaca-elote-crema": ["Oaxaca Comal", "bowl", ["charred corn", "lime", "cotija", "guajillo dust"], [["Regular", 220]]],
+    "oaxaca-mole-negro": ["Oaxaca Comal", "curry", ["mole negro (20 ingredients)", "shredded chicken", "sesame", "crema"], [["Regular", 480], ["Large", 580]], "curry_protein", "curry", "curry"],
+    "oaxaca-tlayuda": ["Oaxaca Comal", "flatbread", ["masa", "black beans", "quesillo", "avocado", "salsa macha"], [["Regular", 450]], "veg", "bakery", "curry"],
+    "oaxaca-elote-crema": ["Oaxaca Comal", "bowl", ["charred corn", "lime", "cotija", "guajillo dust"], [["Regular", 220]], "veg", "chaat", "mild"],
 
     // Naples Table
-    "napoli-ragu-rigatoni": ["Naples Table", "noodle", ["pork and beef ragù", "rigatoni", "pecorino", "black pepper"], [["Regular", 460], ["Large", 560]]],
-    "napoli-burrata-crostini": ["Naples Table", "flatbread", ["burrata", "San Marzano tomato", "basil oil", "charred bread"], [["Regular", 380]]],
-    "napoli-sfogliatella": ["Naples Table", "dessert", ["hand-layered pastry", "candied orange", "ricotta"], [["Regular", 210]]],
+    "napoli-ragu-rigatoni": ["Naples Table", "noodle", ["pork and beef ragù", "rigatoni", "pecorino", "black pepper"], [["Regular", 460], ["Large", 560]], "meat", "curry", "mild"],
+    "napoli-burrata-crostini": ["Naples Table", "flatbread", ["burrata", "San Marzano tomato", "basil oil", "charred bread"], [["Regular", 380]], "veg", "bakery", "mild"],
+    "napoli-sfogliatella": ["Naples Table", "dessert", ["hand-layered pastry", "candied orange", "ricotta"], [["Regular", 210]], "veg", "dessert", "sweet"],
 
     // Sweet & Cellar
-    "sweet-gulab-jamun-cheesecake": ["Sweet & Cellar", "dessert", ["gulab jamun", "baked cheesecake", "saffron crumble"], [["Regular", 320]]],
-    "sweet-matcha-tiramisu": ["Sweet & Cellar", "dessert", ["matcha", "ladyfingers", "mascarpone", "dark chocolate"], [["Regular", 340]]],
-    "sweet-chikki-brulee": ["Sweet & Cellar", "dessert", ["peanut-jaggery chikki", "burnt caramel custard"], [["Regular", 280]]],
-    "sweet-sula-shiraz": ["Sweet & Cellar · The Cellar", "wine", ["Sula Dindori Reserve Shiraz", "Nashik Valley"], [["Glass", 650], ["Bottle", 2400]]],
-    "sweet-fratelli-chardonnay": ["Sweet & Cellar · The Cellar", "wine", ["Fratelli Sette Chardonnay", "Akluj"], [["Glass", 600], ["Bottle", 2200]]],
-    "sweet-krsma-cabernet": ["Sweet & Cellar · The Cellar", "wine", ["KRSMA Cabernet–Shiraz", "Hampi Hills"], [["Glass", 750], ["Bottle", 2800]]]
+    "sweet-gulab-jamun-cheesecake": ["Sweet & Cellar", "dessert", ["gulab jamun", "baked cheesecake", "saffron crumble"], [["Regular", 320]], "veg", "dessert", "sweet"],
+    "sweet-matcha-tiramisu": ["Sweet & Cellar", "dessert", ["matcha", "ladyfingers", "mascarpone", "dark chocolate"], [["Regular", 340]], "veg", "dessert", "sweet"],
+    "sweet-chikki-brulee": ["Sweet & Cellar", "dessert", ["peanut-jaggery chikki", "burnt caramel custard"], [["Regular", 280]], "veg", "dessert", "sweet"],
+    "sweet-sula-shiraz": ["Sweet & Cellar · The Cellar", "wine", ["Sula Dindori Reserve Shiraz", "Nashik Valley"], [["Glass", 650], ["Bottle", 2400]], "beverage", "drink", "sweet"],
+    "sweet-fratelli-chardonnay": ["Sweet & Cellar · The Cellar", "wine", ["Fratelli Sette Chardonnay", "Akluj"], [["Glass", 600], ["Bottle", 2200]], "beverage", "drink", "sweet"],
+    "sweet-krsma-cabernet": ["Sweet & Cellar · The Cellar", "wine", ["KRSMA Cabernet–Shiraz", "Hampi Hills"], [["Glass", 750], ["Bottle", 2800]], "beverage", "drink", "sweet"]
   };
 
-  /* ================= DISH MODAL ================= */
+  /* ================= DISH MODAL & CUSTOMIZATION ENGINE ================= */
   var overlay = document.getElementById('dishModalOverlay');
   var modalArt = document.getElementById('modalArt');
   var modalIconHref = document.getElementById('modalIconHref');
@@ -3491,7 +4582,99 @@
   var modalSizes = document.getElementById('modalSizes');
   var qtyValueEl = document.getElementById('qtyValue');
   var addBtn = document.getElementById('addToOrderBtn');
-  var currentDish = null; /* {id, name, origin, sizes, selectedSizeIdx, qty} */
+
+  // Customization elements
+  var modalSpiceGroup = document.getElementById('modalSpiceGroup');
+  var modalSpiceList = document.getElementById('modalSpiceList');
+  var modalProteinGroup = document.getElementById('modalProteinGroup');
+  var modalProteinList = document.getElementById('modalProteinList');
+  var modalAddOnsGroup = document.getElementById('modalAddOnsGroup');
+  var modalAddOnsList = document.getElementById('modalAddOnsList');
+  var modalPrepGroup = document.getElementById('modalPrepGroup');
+  var modalCustomNote = document.getElementById('modalCustomNote');
+
+  var currentDish = null;
+
+  // Preset customization catalogs
+  var PROTEIN_CATALOG = {
+    curry_protein: [
+      { name: "Farm Paneer / Veg", price: 0 },
+      { name: "Organic Tofu", price: 0 },
+      { name: "Tender Chicken", price: 50 },
+      { name: "Slow-Cooked Mutton", price: 120 },
+      { name: "Tiger Prawns", price: 150 }
+    ],
+    noodle_protein: [
+      { name: "Crisp Spring Veggies", price: 0 },
+      { name: "Farm Egg", price: 30 },
+      { name: "Chicken Shreds", price: 60 },
+      { name: "Tiger Prawns", price: 130 }
+    ],
+    chicken_protein: [
+      { name: "Tender Chicken Thigh", price: 0 },
+      { name: "Double Chicken Cut", price: 90 }
+    ],
+    veg_protein: [
+      { name: "Malai Cottage Cheese", price: 0 },
+      { name: "Organic Silken Tofu", price: 0 },
+      { name: "Extra Paneer Cubes", price: 60 }
+    ],
+    ramen_protein: [
+      { name: "Pork Belly Chashu", price: 0 },
+      { name: "Tender Chicken Breast", price: 0 },
+      { name: "Double Chashu (+2 Cuts)", price: 90 }
+    ],
+    beverage: [
+      { name: "Fresh Dairy Milk", price: 0 },
+      { name: "Oat Milk (Barista)", price: 40 },
+      { name: "Almond Milk", price: 40 },
+      { name: "Black / No Milk", price: 0 }
+    ]
+  };
+
+  var ADDONS_CATALOG = {
+    curry: [
+      { name: "Extra Truffle Garlic Butter", price: 60 },
+      { name: "Crispy Chili Oil Crunch", price: 35 },
+      { name: "Extra Melted Mozzarella", price: 50 },
+      { name: "Steamed Fragrant Basmati Rice", price: 50 },
+      { name: "Tandoori Garlic Naan", price: 60 }
+    ],
+    savory: [
+      { name: "Extra Artisanal Cheese Melt", price: 60 },
+      { name: "Crispy Fried Farm Egg", price: 30 },
+      { name: "Extra Chili Garlic Dip", price: 30 },
+      { name: "Avocado Slices", price: 70 }
+    ],
+    ramen: [
+      { name: "Seasoned Ajitama Ramen Egg", price: 45 },
+      { name: "Extra Roasted Nori Sheets", price: 30 },
+      { name: "Spicy Mala Chili Paste", price: 35 },
+      { name: "Extra Fresh Ramen Noodles", price: 60 }
+    ],
+    chaat: [
+      { name: "Extra Sweet Tamarind Chutney", price: 20 },
+      { name: "Extra Spicy Mint Chutney", price: 20 },
+      { name: "Crisp Boondi & Sev", price: 25 },
+      { name: "Buttered Pav (Pair)", price: 40 }
+    ],
+    bakery: [
+      { name: "Extra Whipped Ricotta", price: 50 },
+      { name: "Wild Honey Glaze", price: 30 },
+      { name: "Double Espresso Shot", price: 50 }
+    ],
+    dessert: [
+      { name: "Warm Salted Caramel Drizzle", price: 40 },
+      { name: "Scoop of Vanilla Bean Ice Cream", price: 60 },
+      { name: "Toasted Pistachio Crumble", price: 40 }
+    ],
+    drink: [
+      { name: "Extra Espresso Shot", price: 50 },
+      { name: "Vanilla Bean Syrup", price: 30 },
+      { name: "Brown Sugar Boba Pearls", price: 40 },
+      { name: "Less Ice / No Ice", price: 0 }
+    ]
+  };
 
   function openModalFor(el){
     var id = el.getAttribute('data-id');
@@ -3499,10 +4682,25 @@
     var accent = el.getAttribute('data-accent') || 'yolk';
     var data = DISH_DATA[id];
     var origin = data[0], icon = data[1], ingredients = data[2], sizes = data[3];
+    var proteinType = data[4] || 'curry_protein';
+    var addOnType = data[5] || 'curry';
+    var spiceType = data[6] || 'curry';
     var name = el.querySelector('.dish-name').textContent.trim();
     var desc = el.querySelector('.dish-desc') ? el.querySelector('.dish-desc').textContent.trim() : '';
 
-    currentDish = {id:id, name:name, origin:origin, sizes:sizes, sizeIdx:0, qty:1};
+    currentDish = {
+      id: id,
+      name: name,
+      origin: origin,
+      sizes: sizes,
+      sizeIdx: 0,
+      qty: 1,
+      selectedSpice: 'Medium',
+      selectedProtein: '',
+      proteinDelta: 0,
+      selectedAddOns: [],
+      dietNotes: []
+    };
 
     modalArt.style.setProperty('--modal-accent', 'var(--' + accent + ')');
     modalIconHref.setAttribute('href', '#icon-' + icon);
@@ -3510,6 +4708,7 @@
     modalName.textContent = name;
     modalDesc.textContent = desc;
 
+    // Ingredients
     modalIngredients.innerHTML = '';
     ingredients.forEach(function(ing){
       var span = document.createElement('span');
@@ -3518,6 +4717,7 @@
       modalIngredients.appendChild(span);
     });
 
+    // Portion Sizes
     modalSizeLabel.style.display = sizes.length > 1 ? '' : 'none';
     modalSizes.innerHTML = '';
     sizes.forEach(function(sz, i){
@@ -3533,7 +4733,99 @@
       });
       modalSizes.appendChild(btn);
     });
-    if (sizes.length <= 1) modalSizes.style.display = 'none'; else modalSizes.style.display = '';
+    modalSizes.style.display = sizes.length > 1 ? '' : 'none';
+
+    // Spice Selector (hide for sweet desserts/drinks)
+    if (spiceType === 'sweet') {
+      modalSpiceGroup.style.display = 'none';
+      currentDish.selectedSpice = '';
+    } else {
+      modalSpiceGroup.style.display = '';
+      currentDish.selectedSpice = 'Medium';
+      modalSpiceList.querySelectorAll('.custom-chip').forEach(function(btn){
+        btn.classList.toggle('selected', btn.getAttribute('data-spice') === 'Medium');
+        btn.onclick = function(){
+          modalSpiceList.querySelectorAll('.custom-chip').forEach(function(c){ c.classList.remove('selected'); });
+          btn.classList.add('selected');
+          currentDish.selectedSpice = btn.getAttribute('data-spice');
+        };
+      });
+    }
+
+    // Protein / Base Selector
+    var proteinList = PROTEIN_CATALOG[proteinType];
+    if (proteinList && proteinList.length > 1) {
+      modalProteinGroup.style.display = '';
+      modalProteinList.innerHTML = '';
+      currentDish.selectedProtein = proteinList[0].name;
+      currentDish.proteinDelta = proteinList[0].price;
+
+      proteinList.forEach(function(p, i){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'custom-chip' + (i === 0 ? ' selected' : '');
+        btn.textContent = p.name + (p.price > 0 ? ' (+₹' + p.price + ')' : '');
+        btn.addEventListener('click', function(){
+          modalProteinList.querySelectorAll('.custom-chip').forEach(function(c){ c.classList.remove('selected'); });
+          btn.classList.add('selected');
+          currentDish.selectedProtein = p.name;
+          currentDish.proteinDelta = p.price;
+          updateAddBtn();
+        });
+        modalProteinList.appendChild(btn);
+      });
+    } else {
+      modalProteinGroup.style.display = 'none';
+      currentDish.selectedProtein = '';
+      currentDish.proteinDelta = 0;
+    }
+
+    // Gourmet Add-ons
+    var addOnList = ADDONS_CATALOG[addOnType] || ADDONS_CATALOG['curry'];
+    modalAddOnsList.innerHTML = '';
+    if (addOnList && addOnList.length) {
+      modalAddOnsGroup.style.display = '';
+      addOnList.forEach(function(ao){
+        var label = document.createElement('label');
+        label.className = 'addon-item-label';
+        label.innerHTML =
+          '<div class="addon-item-left">' +
+            '<input type="checkbox" data-name="' + ao.name + '" data-price="' + ao.price + '">' +
+            '<span>' + ao.name + '</span>' +
+          '</div>' +
+          '<span class="addon-price-tag">' + (ao.price > 0 ? '+₹' + ao.price : 'Free') + '</span>';
+
+        var checkbox = label.querySelector('input');
+        checkbox.addEventListener('change', function(){
+          if (checkbox.checked) {
+            currentDish.selectedAddOns.push({ name: ao.name, price: ao.price });
+          } else {
+            currentDish.selectedAddOns = currentDish.selectedAddOns.filter(function(x){ return x.name !== ao.name; });
+          }
+          updateAddBtn();
+        });
+        modalAddOnsList.appendChild(label);
+      });
+    } else {
+      modalAddOnsGroup.style.display = 'none';
+    }
+
+    // Dietary Prep Pills
+    if (modalDietPills) {
+      modalDietPills.querySelectorAll('.pref-chip').forEach(function(chip){
+        chip.classList.remove('selected');
+        chip.onclick = function(){
+          chip.classList.toggle('selected');
+          var pref = chip.getAttribute('data-pref');
+          if (chip.classList.contains('selected')) {
+            if (!currentDish.dietNotes.includes(pref)) currentDish.dietNotes.push(pref);
+          } else {
+            currentDish.dietNotes = currentDish.dietNotes.filter(function(p){ return p !== pref; });
+          }
+        };
+      });
+    }
+    if (modalCustomNote) modalCustomNote.value = '';
 
     qtyValueEl.textContent = '1';
     updateAddBtn();
@@ -3542,8 +4834,12 @@
 
   function updateAddBtn(){
     if (!currentDish) return;
-    var price = currentDish.sizes[currentDish.sizeIdx][1] * currentDish.qty;
-    addBtn.textContent = 'Add — ₹' + price;
+    var basePrice = currentDish.sizes[currentDish.sizeIdx][1];
+    var proteinDelta = currentDish.proteinDelta || 0;
+    var addOnsTotal = (currentDish.selectedAddOns || []).reduce(function(acc, ao){ return acc + (ao.price || 0); }, 0);
+    var unitPrice = basePrice + proteinDelta + addOnsTotal;
+    var lineTotal = unitPrice * currentDish.qty;
+    addBtn.textContent = 'Add to Order — ₹' + lineTotal + ' 🍳';
   }
 
   function closeModal(){
@@ -3585,17 +4881,8 @@
   };
   var appliedPromo = null;
 
-  /* ================= CART ================= */
-  var CART_KEY = 'hatch_cart_v1';
-  var GST_RATE = 0.05;
-  var cart = [];
-  try {
-    var stored = window.localStorage.getItem(CART_KEY);
-    if (stored) cart = JSON.parse(stored);
-  } catch(e) { cart = []; }
-
-  /* ================= ADVANCED SERVICE MODES & CART ================= */
-  var CART_KEY = 'hatch_cart_v2';
+  /* ================= CART & PAYMENT ENGINE ================= */
+  var CART_KEY = 'hatch_cart_v3';
   var GST_RATE = 0.05;
   var cart = [];
   try {
@@ -3617,6 +4904,7 @@
   var currentDeliveryFee = 0;
   var currentDeliveryEta = '20–25 mins';
   var deliveryInstructionList = [];
+  var selectedPaymentMethod = 'UPI (Instant QR)';
 
   var cartBadge = document.getElementById('cartBadge');
   var cartItemsEl = document.getElementById('cartItems');
@@ -3636,6 +4924,15 @@
   var applyPromoBtn = document.getElementById('applyPromoBtn');
   var promoMessage = document.getElementById('promoMessage');
 
+  // Floating mobile cart bar
+  var floatingCartBar = document.getElementById('floatingCartBar');
+  var cartBarCount = document.getElementById('cartBarCount');
+  var cartBarTotal = document.getElementById('cartBarTotal');
+  var cartBarOpenBtn = document.getElementById('cartBarOpenBtn');
+  if (cartBarOpenBtn) {
+    cartBarOpenBtn.addEventListener('click', function(){ cartOverlay.classList.add('open'); });
+  }
+
   /* Toast helper */
   function showToast(msg, icon){
     var toast = document.getElementById('toastNotification');
@@ -3649,18 +4946,13 @@
   /* Mode Switcher Handler */
   function setServiceMode(mode){
     orderType = mode;
-
-    // Update Hero buttons
     document.querySelectorAll('#heroServiceModes .mode-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-mode') === mode);
     });
-
-    // Update Cart drawer chips
     document.querySelectorAll('#orderTypeOptions .type-chip').forEach(function(c){
       c.classList.toggle('selected', c.getAttribute('data-type') === mode);
     });
 
-    // Update Banner Text
     var bannerText = document.getElementById('modeBannerText');
     var bannerBtn = document.getElementById('modeBannerActionBtn');
     if (mode === 'dine-in') {
@@ -3677,7 +4969,6 @@
       bannerBtn.style.display = '';
     }
 
-    // Toggle Cart Drawer Sub-panels
     document.getElementById('boxDineIn').style.display = (mode === 'dine-in') ? 'block' : 'none';
     document.getElementById('boxTakeaway').style.display = (mode === 'takeaway') ? 'block' : 'none';
     document.getElementById('boxDelivery').style.display = (mode === 'delivery') ? 'block' : 'none';
@@ -3686,35 +4977,24 @@
   }
 
   document.querySelectorAll('#heroServiceModes .mode-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      setServiceMode(btn.getAttribute('data-mode'));
-    });
+    btn.addEventListener('click', function(){ setServiceMode(btn.getAttribute('data-mode')); });
   });
   document.querySelectorAll('#orderTypeOptions .type-chip').forEach(function(chip){
-    chip.addEventListener('click', function(){
-      setServiceMode(chip.getAttribute('data-type'));
-    });
+    chip.addEventListener('click', function(){ setServiceMode(chip.getAttribute('data-type')); });
   });
 
   var modeBannerActionBtn = document.getElementById('modeBannerActionBtn');
   if (modeBannerActionBtn) {
     modeBannerActionBtn.addEventListener('click', function(){
-      if (orderType === 'dine-in') {
-        openTableMapModal();
-      } else {
-        cartOverlay.classList.add('open');
-      }
+      if (orderType === 'dine-in') openTableMapModal();
+      else cartOverlay.classList.add('open');
     });
   }
 
   /* Table Floor Plan Modal */
   var tableMapOverlay = document.getElementById('tableMapModalOverlay');
-  function openTableMapModal(){
-    if (tableMapOverlay) tableMapOverlay.classList.add('open');
-  }
-  function closeTableMapModal(){
-    if (tableMapOverlay) tableMapOverlay.classList.remove('open');
-  }
+  function openTableMapModal(){ if (tableMapOverlay) tableMapOverlay.classList.add('open'); }
+  function closeTableMapModal(){ if (tableMapOverlay) tableMapOverlay.classList.remove('open'); }
   document.getElementById('openTableMapBtn').addEventListener('click', openTableMapModal);
   document.getElementById('tableMapCloseBtn').addEventListener('click', closeTableMapModal);
   if (tableMapOverlay) {
@@ -3753,34 +5033,43 @@
       var val = chip.getAttribute('data-tip');
       var customInput = document.getElementById('customTipInput');
       if (val === 'custom') {
-        customInput.style.display = 'block';
-        customInput.focus();
         selectedTipRate = 'custom';
+        customInput.style.display = 'block';
+        customTipAmount = Number(customInput.value) || 0;
       } else {
+        selectedTipRate = Number(val);
         customInput.style.display = 'none';
-        selectedTipRate = parseFloat(val);
+        customTipAmount = 0;
       }
       renderCart();
     });
   });
-  document.getElementById('customTipInput').addEventListener('input', function(e){
-    customTipAmount = Math.max(0, parseFloat(e.target.value) || 0);
-    renderCart();
-  });
 
-  /* Split Bill Stepper */
+  var customTipInput = document.getElementById('customTipInput');
+  if (customTipInput) {
+    customTipInput.addEventListener('input', function(e){
+      customTipAmount = Math.max(0, Number(e.target.value) || 0);
+      renderCart();
+    });
+  }
+
+  /* Bill Split Stepper */
   document.getElementById('splitMinus').addEventListener('click', function(){
-    splitDinersCount = Math.max(1, splitDinersCount - 1);
-    document.getElementById('splitCountVal').textContent = splitDinersCount + (splitDinersCount > 1 ? ' Diners' : ' Diner');
-    renderCart();
+    if (splitDinersCount > 1) {
+      splitDinersCount--;
+      document.getElementById('splitCountVal').textContent = splitDinersCount + (splitDinersCount === 1 ? ' Diner' : ' Diners');
+      renderCart();
+    }
   });
   document.getElementById('splitPlus').addEventListener('click', function(){
-    splitDinersCount = Math.min(12, splitDinersCount + 1);
-    document.getElementById('splitCountVal').textContent = splitDinersCount + ' Diners';
-    renderCart();
+    if (splitDinersCount < 20) {
+      splitDinersCount++;
+      document.getElementById('splitCountVal').textContent = splitDinersCount + ' Diners';
+      renderCart();
+    }
   });
 
-  /* Takeaway timing & curbside */
+  /* Takeaway timing chips */
   document.getElementById('timingAsap').addEventListener('click', function(){
     this.classList.add('active');
     document.getElementById('timingScheduled').classList.remove('active');
@@ -3790,14 +5079,15 @@
   document.getElementById('timingScheduled').addEventListener('click', function(){
     this.classList.add('active');
     document.getElementById('timingAsap').classList.remove('active');
-    var sel = document.getElementById('takeawaySlotSelect');
-    sel.style.display = 'block';
-    takeawaySlot = sel.value;
+    var select = document.getElementById('takeawaySlotSelect');
+    select.style.display = 'block';
+    takeawaySlot = select.value;
   });
   document.getElementById('takeawaySlotSelect').addEventListener('change', function(e){
     takeawaySlot = e.target.value;
   });
 
+  /* Curbside toggle */
   document.getElementById('curbsideToggle').addEventListener('change', function(e){
     isCurbside = e.target.checked;
     document.getElementById('curbsideFields').style.display = isCurbside ? 'block' : 'none';
@@ -3809,15 +5099,16 @@
     thermalSeal = e.target.checked;
   });
 
-  /* Delivery zone & instructions */
+  /* Delivery Zone selector */
   document.getElementById('deliveryZoneSelect').addEventListener('change', function(e){
     var parts = e.target.value.split('|');
     currentDeliveryZone = parts[0];
-    currentDeliveryFee = parseInt(parts[1], 10) || 0;
-    currentDeliveryEta = parts[2] || '30 mins';
+    currentDeliveryFee = Number(parts[1]) || 0;
+    currentDeliveryEta = parts[2] || '20-25 mins';
     renderCart();
   });
 
+  /* Delivery Instruction pills */
   document.querySelectorAll('#deliveryInstructionPills .inst-pill').forEach(function(pill){
     pill.addEventListener('click', function(){
       pill.classList.toggle('active');
@@ -3830,23 +5121,67 @@
     });
   });
 
-  /* Digital Steward Assistance Modal */
+  /* Payment Method Switcher */
+  document.querySelectorAll('#payMethodChips .pay-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('#payMethodChips .pay-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      selectedPaymentMethod = chip.getAttribute('data-pay');
+
+      document.getElementById('payBlockUpi').style.display = (selectedPaymentMethod.includes('UPI')) ? 'block' : 'none';
+      document.getElementById('payBlockCard').style.display = (selectedPaymentMethod.includes('Card')) ? 'block' : 'none';
+      document.getElementById('payBlockCod').style.display = (selectedPaymentMethod.includes('Table')) ? 'block' : 'none';
+    });
+  });
+
+  // Card input auto-formatting
+  var cardNumInput = document.getElementById('cardNumInput');
+  if (cardNumInput) {
+    cardNumInput.addEventListener('input', function(e){
+      var v = e.target.value.replace(/\D/g, '').slice(0, 16);
+      e.target.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+    });
+  }
+  var cardExpInput = document.getElementById('cardExpInput');
+  if (cardExpInput) {
+    cardExpInput.addEventListener('input', function(e){
+      var v = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (v.length > 2) e.target.value = v.slice(0, 2) + '/' + v.slice(2);
+      else e.target.value = v;
+    });
+  }
+
+  // UPI Session Timer simulation
+  var upiSeconds = 299;
+  setInterval(function(){
+    var timerEl = document.getElementById('upiTimer');
+    if (!timerEl) return;
+    if (upiSeconds > 0) upiSeconds--;
+    var mins = String(Math.floor(upiSeconds / 60)).padStart(2, '0');
+    var secs = String(upiSeconds % 60).padStart(2, '0');
+    timerEl.textContent = mins + ':' + secs;
+  }, 1000);
+
+  /* Steward Call Assistance Modal */
   var stewardOverlay = document.getElementById('stewardModalOverlay');
+  var floatingStewardBtn = document.getElementById('floatingStewardBtn');
+  var stewardCloseBtn = document.getElementById('stewardCloseBtn');
+  var stewardSubmitBtn = document.getElementById('stewardSubmitBtn');
   var stewardFeedback = document.getElementById('stewardFeedback');
-  var currentStewardReq = 'Call Steward to Table';
+  var selectedAssistType = 'Call Steward to Table';
 
   function openStewardModal(){
     if (stewardOverlay) {
       document.getElementById('stewardTableInput').value = selectedTable.number || 'T3';
-      stewardFeedback.textContent = '';
       stewardOverlay.classList.add('open');
     }
   }
   function closeStewardModal(){
     if (stewardOverlay) stewardOverlay.classList.remove('open');
+    if (stewardFeedback) stewardFeedback.textContent = '';
   }
-  document.getElementById('floatingStewardBtn').addEventListener('click', openStewardModal);
-  document.getElementById('stewardCloseBtn').addEventListener('click', closeStewardModal);
+  if (floatingStewardBtn) floatingStewardBtn.addEventListener('click', openStewardModal);
+  if (stewardCloseBtn) stewardCloseBtn.addEventListener('click', closeStewardModal);
   if (stewardOverlay) {
     stewardOverlay.addEventListener('click', function(e){ if (e.target === stewardOverlay) closeStewardModal(); });
   }
@@ -3855,58 +5190,47 @@
     btn.addEventListener('click', function(){
       document.querySelectorAll('#stewardOptionsList .steward-opt-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      currentStewardReq = btn.getAttribute('data-req');
+      selectedAssistType = btn.getAttribute('data-req');
     });
   });
 
-  document.getElementById('stewardSubmitBtn').addEventListener('click', function(){
-    var tbl = document.getElementById('stewardTableInput').value.trim();
-    var notes = document.getElementById('stewardNotes').value.trim();
-    var guest = document.getElementById('customerName').value.trim();
+  if (stewardSubmitBtn) {
+    stewardSubmitBtn.addEventListener('click', function(){
+      var tbl = document.getElementById('stewardTableInput').value.trim() || selectedTable.number;
+      var note = document.getElementById('stewardNotes').value.trim();
+      stewardFeedback.textContent = 'Calling floor steward…';
 
-    if (!tbl) {
-      stewardFeedback.style.color = 'var(--rust)';
-      stewardFeedback.textContent = 'Please enter your table number.';
-      return;
-    }
+      var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
+        ? 'http://localhost:3001/api/assistance'
+        : '/api/assistance';
 
-    stewardFeedback.style.color = 'var(--ink)';
-    stewardFeedback.textContent = 'Alerting kitchen staff POS…';
-
-    var apiBase = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
-      ? 'http://localhost:3001/api/assistance'
-      : '/api/assistance';
-
-    fetch(apiBase, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        tableNumber: tbl,
-        area: selectedTable.area || 'Main Dining Hall',
-        requestType: currentStewardReq,
-        guestName: guest || 'Table Guest',
-        notes: notes
-      })
-    }).then(function(res){
-      if (!res.ok) throw new Error('Failed');
-      return res.json();
-    }).then(function(){
-      stewardFeedback.style.color = 'var(--sage)';
-      stewardFeedback.textContent = '✓ Request dispatched! A steward is on the way.';
-      showToast('Steward alerted for Table #' + tbl + ' (' + currentStewardReq + ')', '🛎️');
-      setTimeout(closeStewardModal, 1600);
-    }).catch(function(){
-      stewardFeedback.style.color = 'var(--rust)';
-      stewardFeedback.textContent = 'Could not notify server. Please call steward directly.';
+      fetch(apiBase, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          tableNumber: tbl,
+          tableArea: selectedTable.area || 'Main Dining Hall',
+          type: selectedAssistType,
+          guestName: document.getElementById('customerName').value.trim() || 'Guest',
+          details: note
+        })
+      }).then(function(res){ return res.json(); })
+      .then(function(){
+        stewardFeedback.textContent = '✓ Steward alerted! A team member is walking to your table now.';
+        showToast('Steward dispatched to Table #' + tbl, '🛎️');
+        setTimeout(closeStewardModal, 2200);
+      }).catch(function(){
+        stewardFeedback.textContent = 'Could not reach server. Please signal your waiter.';
+      });
     });
-  });
+  }
 
   function saveCart(){
     try { window.localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e) {}
   }
 
   function cartTotals(){
-    var subtotal = cart.reduce(function(sum, it){ return sum + it.price * it.qty; }, 0);
+    var subtotal = cart.reduce(function(sum, it){ return sum + (it.lineTotal || (it.price * it.qty)); }, 0);
     var discount = 0;
     if (appliedPromo && PROMO_CODES[appliedPromo]) {
       var rule = PROMO_CODES[appliedPromo];
@@ -3923,16 +5247,13 @@
     var taxable = Math.max(0, subtotal - discount);
     var gst = Math.round(taxable * GST_RATE);
 
-    // Tip calculation (Dine-in only)
     var tip = 0;
     if (orderType === 'dine-in') {
       if (selectedTipRate === 'custom') tip = customTipAmount;
       else if (selectedTipRate > 0) tip = Math.round(taxable * selectedTipRate);
     }
 
-    // Delivery fee (Delivery only)
     var deliveryFee = (orderType === 'delivery') ? currentDeliveryFee : 0;
-
     var total = taxable + gst + tip + deliveryFee;
     return {
       subtotal: subtotal,
@@ -3949,8 +5270,20 @@
     cartBadge.textContent = count;
     cartBadge.classList.toggle('show', count > 0);
 
+    // Sync floating mobile cart bar
+    if (floatingCartBar) {
+      if (count > 0) {
+        floatingCartBar.style.display = 'flex';
+        document.getElementById('cartBarCount').textContent = count;
+        var tPreview = cartTotals();
+        document.getElementById('cartBarTotal').textContent = '₹' + tPreview.total;
+      } else {
+        floatingCartBar.style.display = 'none';
+      }
+    }
+
     if (cart.length === 0){
-      cartItemsEl.innerHTML = '<p class="cart-empty">Nothing added yet — tap any dish on the menu.</p>';
+      cartItemsEl.innerHTML = '<p class="cart-empty">Nothing added yet — tap any dish on the menu to customize &amp; add.</p>';
       appliedPromo = null;
       if (promoMessage) { promoMessage.textContent = ''; promoMessage.className = 'promo-message'; }
     } else {
@@ -3958,18 +5291,39 @@
       cart.forEach(function(item, idx){
         var row = document.createElement('div');
         row.className = 'cart-item';
+
+        var customBadges = '';
+        if (item.protein) customBadges += '<span class="cart-custom-badge">' + item.protein + '</span>';
+        if (item.spiceLevel) customBadges += '<span class="cart-custom-badge spice">🌶️ ' + item.spiceLevel + '</span>';
+
+        var addOnsHtml = (item.addOns && item.addOns.length)
+          ? '<div class="cart-addons-list">+ ' + item.addOns.join(', ') + '</div>'
+          : '';
+
+        var noteHtml = item.customNote
+          ? '<div class="cart-custom-note">Chef note: ' + item.customNote + '</div>'
+          : '';
+
         row.innerHTML =
-          '<p class="cart-item-name">' + item.name + '</p>' +
-          '<span class="cart-item-price">₹' + (item.price * item.qty) + '</span>' +
-          '<div class="cart-item-controls">' +
-            '<span class="cart-item-meta">' + item.size + ' · ₹' + item.price + '</span>' +
-            '<div class="cart-qty-pill">' +
-              '<button type="button" class="cart-qty-btn cart-item-minus" data-idx="' + idx + '" title="Decrease quantity">−</button>' +
-              '<span class="cart-qty-count">' + item.qty + '</span>' +
-              '<button type="button" class="cart-qty-btn cart-item-plus" data-idx="' + idx + '" title="Increase quantity">+</button>' +
+          '<div style="flex:1;">' +
+            '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+              '<p class="cart-item-name" style="margin:0 0 2px;">' + item.name + '</p>' +
+              '<span class="cart-item-price">₹' + (item.lineTotal || (item.price * item.qty)) + '</span>' +
             '</div>' +
-            '<button type="button" class="cart-item-remove" data-idx="' + idx + '">Remove</button>' +
+            '<div class="cart-item-meta">' + item.size + ' · ₹' + item.price + ' each</div>' +
+            (customBadges ? '<div class="cart-item-custom-tags">' + customBadges + '</div>' : '') +
+            addOnsHtml +
+            noteHtml +
+            '<div class="cart-item-controls" style="margin-top:8px;">' +
+              '<div class="cart-qty-pill">' +
+                '<button type="button" class="cart-qty-btn cart-item-minus" data-idx="' + idx + '" title="Decrease quantity">−</button>' +
+                '<span class="cart-qty-count">' + item.qty + '</span>' +
+                '<button type="button" class="cart-qty-btn cart-item-plus" data-idx="' + idx + '" title="Increase quantity">+</button>' +
+              '</div>' +
+              '<button type="button" class="cart-item-remove" data-idx="' + idx + '">Remove</button>' +
+            '</div>' +
           '</div>';
+
         cartItemsEl.appendChild(row);
       });
 
@@ -3978,6 +5332,7 @@
           var i = parseInt(btn.getAttribute('data-idx'), 10);
           if (cart[i].qty > 1) {
             cart[i].qty--;
+            cart[i].lineTotal = cart[i].price * cart[i].qty;
           } else {
             cart.splice(i, 1);
           }
@@ -3989,6 +5344,7 @@
         btn.addEventListener('click', function(){
           var i = parseInt(btn.getAttribute('data-idx'), 10);
           cart[i].qty++;
+          cart[i].lineTotal = cart[i].price * cart[i].qty;
           saveCart(); renderCart();
         });
       });
@@ -4029,7 +5385,6 @@
     cartGstEl.textContent = '₹' + t.gst;
     cartTotalEl.textContent = '₹' + t.total;
 
-    // Split result
     var splitRes = document.getElementById('splitResult');
     if (splitDinersCount > 1 && t.total > 0) {
       splitRes.style.display = 'block';
@@ -4041,8 +5396,8 @@
     if (cart.length === 0){
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order');
     } else {
-      var lines = cart.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + ') - Rs.' + (it.price*it.qty); });
-      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + (t.discount ? '\nDiscount (' + appliedPromo + '): -Rs.' + t.discount : '') + (t.tip ? '\nTip: Rs.' + t.tip : '') + (t.deliveryFee ? '\nDelivery Fee: Rs.' + t.deliveryFee : '') + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nOrder type: ' + orderType);
+      var lines = cart.map(function(it){ return it.qty + 'x ' + it.name + ' (' + it.size + (it.protein ? ', ' + it.protein : '') + ') - Rs.' + (it.lineTotal || (it.price*it.qty)); });
+      var body = encodeURIComponent(lines.join('\n') + '\n\nSubtotal: Rs.' + t.subtotal + (t.discount ? '\nDiscount (' + appliedPromo + '): -Rs.' + t.discount : '') + (t.tip ? '\nTip: Rs.' + t.tip : '') + (t.deliveryFee ? '\nDelivery Fee: Rs.' + t.deliveryFee : '') + '\nGST (5%): Rs.' + t.gst + '\nTotal: Rs.' + t.total + '\n\nPayment: ' + selectedPaymentMethod + '\nService: ' + orderType);
       cartEmailBtn.setAttribute('href', 'mailto:orders@hatchbengaluru.in?subject=Hatch%20Order&body=' + body);
     }
   }
@@ -4051,7 +5406,7 @@
     applyPromoBtn.addEventListener('click', function(){
       var code = (promoInput.value || '').trim().toUpperCase();
       if (!code) return;
-      var subtotal = cart.reduce(function(sum, it){ return sum + it.price * it.qty; }, 0);
+      var subtotal = cart.reduce(function(sum, it){ return sum + (it.lineTotal || (it.price * it.qty)); }, 0);
       if (!subtotal) {
         promoMessage.className = 'promo-message error';
         promoMessage.textContent = 'Please add dishes to your order first.';
@@ -4075,28 +5430,46 @@
     });
   }
 
+  /* Add to Order Button Click */
   addBtn.addEventListener('click', function(){
     if (!currentDish) return;
     var size = currentDish.sizes[currentDish.sizeIdx];
-    var existing = cart.find(function(it){ return it.id === currentDish.id && it.size === size[0]; });
-    if (existing) {
-      existing.qty += currentDish.qty;
-    } else {
-      cart.push({ id: currentDish.id, name: currentDish.name, size: size[0], price: size[1], qty: currentDish.qty });
-    }
+    var basePrice = size[1];
+    var proteinDelta = currentDish.proteinDelta || 0;
+    var addOnsTotal = (currentDish.selectedAddOns || []).reduce(function(acc, ao){ return acc + (ao.price || 0); }, 0);
+    var unitPrice = basePrice + proteinDelta + addOnsTotal;
+
+    var addOnNames = (currentDish.selectedAddOns || []).map(function(ao){
+      return ao.name + (ao.price > 0 ? ' (+₹' + ao.price + ')' : '');
+    });
+
+    var userCustomNote = modalCustomNote ? modalCustomNote.value.trim() : '';
+    var finalNotes = currentDish.dietNotes.slice();
+    if (userCustomNote) finalNotes.push(userCustomNote);
+
+    var cartItem = {
+      id: currentDish.id,
+      name: currentDish.name,
+      size: size[0],
+      price: unitPrice,
+      qty: currentDish.qty,
+      spiceLevel: currentDish.selectedSpice || '',
+      protein: currentDish.selectedProtein || '',
+      addOns: addOnNames,
+      customNote: finalNotes.join(', '),
+      lineTotal: unitPrice * currentDish.qty
+    };
+
+    cart.push(cartItem);
     saveCart();
     renderCart();
     closeModal();
     cartOverlay.classList.add('open');
-    showToast(currentDish.name + ' added to order', '🍳');
+    showToast(currentDish.name + ' customized & added to order', '🍳');
   });
 
-  document.getElementById('cartOpenBtn').addEventListener('click', function(){
-    cartOverlay.classList.add('open');
-  });
-  document.getElementById('cartCloseBtn').addEventListener('click', function(){
-    cartOverlay.classList.remove('open');
-  });
+  document.getElementById('cartOpenBtn').addEventListener('click', function(){ cartOverlay.classList.add('open'); });
+  document.getElementById('cartCloseBtn').addEventListener('click', function(){ cartOverlay.classList.remove('open'); });
   cartOverlay.addEventListener('click', function(e){ if (e.target === cartOverlay) cartOverlay.classList.remove('open'); });
   document.getElementById('cartClearBtn').addEventListener('click', function(){
     if (cart.length && confirm('Clear all dishes from your order?')){
@@ -4115,8 +5488,21 @@
   function showReceipt(orderId, orderNum, items, totals, details, riderInfo){
     var d = new Date();
     var lines = items.map(function(it){
-      return '<div class="receipt-line"><span class="item-label">' + it.qty + ' × ' + it.name + ' (' + it.size + ')</span><span>₹' + (it.price*it.qty) + '</span></div>';
+      var sub = [];
+      if (it.protein) sub.push(it.protein);
+      if (it.spiceLevel) sub.push('Spice: ' + it.spiceLevel);
+      var subStr = sub.length ? '<div style="font-size:11px;opacity:0.75;margin-top:2px;">' + sub.join(' • ') + '</div>' : '';
+      var addOns = (it.addOns && it.addOns.length) ? '<div style="font-size:11px;color:var(--yolk);margin-top:1px;">+ ' + it.addOns.join(', ') + '</div>' : '';
+      var itemNote = it.customNote ? '<div style="font-size:11px;font-style:italic;opacity:0.8;">Note: ' + it.customNote + '</div>' : '';
+      return '<div class="receipt-line" style="flex-direction:column; align-items:flex-start; margin-bottom:8px; border-bottom:1px dashed rgba(0,0,0,0.08); padding-bottom:6px;">' +
+        '<div style="display:flex; justify-content:space-between; width:100%;">' +
+          '<span class="item-label"><strong>' + it.qty + ' × ' + it.name + '</strong> (' + it.size + ')</span>' +
+          '<span>₹' + (it.lineTotal || (it.price * it.qty)) + '</span>' +
+        '</div>' +
+        subStr + addOns + itemNote +
+      '</div>';
     }).join('');
+
     var extra = '';
     if (details.orderType === 'dine-in') extra = 'Table #' + (details.tableNumber || 'T3') + ' (' + (details.tableArea || 'Main Hall') + ')';
     if (details.orderType === 'takeaway') extra = details.pickupTime || 'ASAP Pickup';
@@ -4143,7 +5529,7 @@
           '<div class="courier-avatar">🍽️</div>' +
           '<div class="courier-info">' +
             '<div class="courier-name">Table #' + (details.tableNumber || 'T3') + ' · ' + (details.tableArea || 'Main Dining Hall') + '</div>' +
-            '<div class="courier-vehicle">Floor Steward Assigned · Direct Service</div>' +
+            '<div class="courier-vehicle">Floor Steward Assigned • Direct Table Service</div>' +
           '</div>' +
           '<button type="button" class="btn-floor-plan" onclick="document.getElementById(\'floatingStewardBtn\').click()">Call 🛎️</button>' +
         '</div>';
@@ -4152,7 +5538,7 @@
         '<div class="courier-card">' +
           '<div class="courier-avatar">🥡</div>' +
           '<div class="courier-info">' +
-            '<div class="courier-name">Takeaway Counter Pickup</div>' +
+            '<div class="courier-name">Takeaway Counter Express</div>' +
             '<div class="courier-vehicle">' + (details.pickupTime || 'Ready in 15–20 minutes') + (details.curbsideVehicle ? ' · Car: ' + details.curbsideVehicle : '') + '</div>' +
           '</div>' +
         '</div>';
@@ -4162,7 +5548,8 @@
 
     receiptBody.innerHTML =
       '<h4>Hatch</h4>' +
-      '<p class="receipt-meta">100 Feet Road, Indiranagar, Bengaluru 560038<br>' + d.toLocaleDateString('en-IN') + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + '<br><strong>Order #' + displayCode + '</strong></p>' +
+      '<p class="receipt-meta">100 Feet Road, Indiranagar, Bengaluru 560038<br>' + d.toLocaleDateString('en-IN') + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + '<br><strong>Order #' + displayCode + '</strong><br>' +
+      '<span class="tag-pill" style="background:#1f3326;color:#a3e635;margin-top:4px;display:inline-block;">Payment: ' + (details.paymentMethod || 'UPI Instant') + ' (Verified)</span></p>' +
       '<div class="order-stepper">' +
         '<div class="order-stepper-progress" id="stepperProgressBar" style="width: 15%;"></div>' +
         '<div class="step-node active" id="stepNode1"><div class="step-circle">📋</div><span class="step-lbl">Confirmed</span></div>' +
@@ -4195,8 +5582,14 @@
     if (waBtn) {
       var orderSummary = '🍳 *Hatch Order #' + displayCode + '*\n' +
         'Guest: ' + (details.customerName || 'Diner') + '\n' +
+        'Payment: ' + (details.paymentMethod || 'UPI Instant') + ' (Verified)\n' +
         'Type: ' + details.orderType.toUpperCase() + (extra ? ' (' + extra + ')' : '') + '\n\n' +
-        items.map(function(it){ return '• ' + it.qty + 'x ' + it.name + ' (' + it.size + ') - ₹' + (it.price*it.qty); }).join('\n') +
+        items.map(function(it){
+          var subTags = [];
+          if (it.protein) subTags.push(it.protein);
+          if (it.spiceLevel) subTags.push(it.spiceLevel);
+          return '• ' + it.qty + 'x ' + it.name + ' (' + it.size + (subTags.length ? ' • ' + subTags.join('/') : '') + ') - ₹' + (it.lineTotal || (it.price*it.qty));
+        }).join('\n') +
         '\n\n' +
         (totals.discount ? 'Discount: -₹' + totals.discount + '\n' : '') +
         (totals.tip ? 'Tip: +₹' + totals.tip + '\n' : '') +
@@ -4264,7 +5657,6 @@
       return;
     }
 
-    // Clear previous validation styling
     document.querySelectorAll('.detail-field').forEach(function(f){ f.classList.remove('has-error'); });
 
     var nameVal = document.getElementById('customerName').value.trim();
@@ -4320,10 +5712,13 @@
       deliveryInstructions: deliveryInstructionList,
       notes: notesVal,
       promoCode: appliedPromo,
-      discount: t.discount
+      discount: t.discount,
+      paymentMethod: selectedPaymentMethod,
+      paymentStatus: (selectedPaymentMethod.includes('Table') ? 'Pending at Table' : 'Verified / Paid')
     };
+
     var orderItems = cart.slice();
-    cartNote.textContent = 'Transmitting order to kitchen…';
+    cartNote.textContent = 'Transmitting order to kitchen POS…';
 
     var apiUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3001'))
       ? 'http://localhost:3001/api/orders'
@@ -4355,7 +5750,9 @@
         deliveryZone: details.deliveryZone,
         deliveryAddress: details.deliveryAddress,
         deliveryInstructions: details.deliveryInstructions,
-        notes: details.notes
+        notes: details.notes,
+        paymentMethod: details.paymentMethod,
+        paymentStatus: details.paymentStatus
       })
     }).then(function(res){
       if (!res.ok) throw new Error('bad response');
@@ -4370,7 +5767,7 @@
       renderCart();
       showToast('Order #' + (data.orderNumber || 'HTC') + ' confirmed!', '🍳');
     }).catch(function(){
-      cartNote.textContent = "Couldn't reach the kitchen server — try Email Order instead.";
+      cartNote.textContent = "Couldn't reach kitchen server — try Email Order instead.";
     });
   });
 
@@ -4636,6 +6033,18 @@
   filterMenu();
 })();
 </script>
+
+
+<!-- Floating Sticky Mobile Bottom Order Bar -->
+<div class="mobile-bottom-cart-bar" id="floatingCartBar" style="display:none;">
+  <div class="cart-bar-info">
+    <div class="cart-bar-badge"><span id="cartBarCount">0</span> ITEMS IN ORDER</div>
+    <div class="cart-bar-total" id="cartBarTotal">₹0</div>
+  </div>
+  <button type="button" class="cart-bar-action-btn" id="cartBarOpenBtn">
+    View Order &amp; Pay ➔
+  </button>
+</div>
 
 </body>
 </html>

@@ -28,7 +28,7 @@ Then visit:
 
 ### 1. Download Native Android APK
 Every push to this repository automatically compiles a native Android APK in the cloud via GitHub Actions:
-- **Direct APK Download**: Go to [**GitHub Releases**](https://github.com/jubair46/Hatch_orders/releases) or the [**Actions Artifacts**](https://github.com/jubair46/Hatch_orders/actions) tab and download **`hatch-orders-v1.0.0.apk`**.
+- **Direct APK Download**: Go to [**GitHub Releases (v1.1.0)**](https://github.com/jubair46/Hatch_orders/releases) or the [**Actions Artifacts**](https://github.com/jubair46/Hatch_orders/actions) tab and download **`hatch-orders-v1.0.0.apk`**.
 - **Installation**: Tap the downloaded `.apk` file on your Android phone and select **Install** to enjoy the full native app experience.
 
 ### 2. Instant Browser Install (PWA)
@@ -38,18 +38,47 @@ Every push to this repository automatically compiles a native Android APK in the
 
 ---
 
-## 🍽️ Nine Culinary Counters
+## 🍽️ Master Culinary Counters (From the 22-Page Menu Catalogue)
 
-1. 🥙 **The Levant** (Beirut-style counter, Slow-Roasted Tomato Shakshuka, Lamb Kofta, Whipped Labneh)
-2. 🍛 **Indian Regional Kitchen** (Old Delhi Butter Chicken, Chettinad Pepper Mutton, Dal Makhani)
-3. 🍣 **Kyoto Counter** (Miso Glazed Nasu Dengaku, Salmon Nigiri, Chicken Katsu Curry, Ceremonial Uji Matcha)
-4. 🌶️ **Chengdu Fire** (Mapo Tofu with Szechuan Pepper, Dan Dan Hand-Pulled Noodles, Crisp Chili Dumplings)
-5. 🌮 **Oaxaca Comal** (Mole Negro Braised Short Rib, Charred Corn Street Elote, Blue Corn Tlayuda)
-6. 🍝 **Naples Table** (Slow-Braised Ragù Rigatoni, Truffled Burrata Crostini, Neapolitan Sfogliatella)
-7. ☕ **Bengaluru Roastery & Artisanal Bakery** (Mysore Nugget Cold Brew, Sourdough Babka, Coorg Honey Croissant)
-8. 🍲 **Royal Claypot Dum Biryanis** (Hyderabadi Gosht Dum Biryani, Malabar Prawns Biryani, Awadhi Subz Biryani)
-9. 🥗 **Artisanal Farm Salads & Bowls** (Nilgiri Burrata & Roasted Fig, Quinoa Avocado Bowl, Charred Peach Salad)
-10. 🍷 **Sweet & Cellar** (Gulab Jamun Cheesecake, Matcha Tiramisu, Kahlúa Espresso Martini, Indian Reserve Wines)
+1. 🍛 **Indian Kitchen**:
+   - *Starters & Tandoor*: Samosa Chaat Royal, Paneer Tikka Angaar, Chicken 65 Bengaluru, Lucknowi Seekh Kebab.
+   - *Curries & Gravies*: Royal Rogan Josh, Dal Makhani Bukhara, Chettinad Pepper Chicken, Alleppey Fish Moilee, Paneer Butter Masala.
+   - *Breads & Rice*: Truffle Garlic Naan, Saffron Dum Biryani Basmati, Butter Roti.
+   - *Desserts & Drinks*: Kesari Rasmalai, Warm Gulab Jamun, Saffron Kesar Lassi, South Indian Filter Coffee.
+2. 🌺 **Thai Orchid Counter**:
+   - *Soups & Small Plates*: Authentic Tom Yum Goong, Lemongrass Chicken Satay with Peanut Dip, Crisp Green Papaya Som Tam.
+   - *Mains & Noodles*: Thai Green Curry with Jasmine Rice, Royal Massaman Beef Curry, Spicy Pad Kra Pao Basil, Authentic Pad Thai, Chiang Mai Khao Soi.
+   - *Desserts & Beverages*: Sweet Mango Sticky Rice with Coconut Cream, Handcrafted Thai Iced Tea.
+3. 🍣 **Kyoto Counter**: Truffle Edamame, Wagyu Gyoza, Crispy Chicken Karaage, Signature Tonkotsu Ramen, Tempura Udon, Flame-Torched Salmon Nigiri, Artisanal Mochi Ice Cream, Ceremonial Matcha Latte.
+4. 🌶️ **Chengdu Fire**: Crystal Har Gow, Steamed Pork Siu Mai, Kung Pao Chicken Wok, Indo-Chinese Chili Chicken, Wok-Tossed Hakka Noodles, Taiwanese Boba Milk Tea.
+5. 🥙 **The Levant**: Beirut-style Shakshuka, Lamb Kofta Skewers, Whipped Labneh with Za'atar.
+6. 🌮 **Oaxaca Comal**: Mole Negro Braised Short Rib, Charred Corn Street Elote, Blue Corn Tlayuda.
+7. 🍝 **Naples Table**: Slow-Braised Ragù Rigatoni, Truffled Burrata Crostini, Neapolitan Sfogliatella.
+8. ☕ **Artisanal Bakery & Breakfast**: Truffle Scrambled Eggs, Avocado Sourdough Tartine, Fluffy Ricotta Pancakes, Salted Caramel Croissant, Acai Superfood Bowl.
+9. 🍹 **Bar & Handcrafted Beverages**: Smoked Rosemary Old Fashioned, Yuzu Blossom Spritz, Passionfruit Jalapeño Margarita, Spiced Hibiscus Cooler.
+
+---
+
+## 🌟 High-Impact New Features
+
+### 🎛️ 1. Interactive Dish Customization Studio
+Clicking on any dish now opens the bespoke **Customization Studio**:
+- **Portion Selection**: Pick between *Standard Serving* and *Family / Large Feast*.
+- **Spice Level Selector**: Interactive heat gauge from `🟢 Mild` to `🟡 Medium`, `🌶️ Spicy`, and `🔥 Extra Hot`.
+- **Protein & Base Chooser**: Choose your core protein/cut (e.g., *Farm Fresh Paneer*, *Free-Range Chicken*, *Slow-Cooked Mutton*, *Tiger Prawns*, *Silken Tofu*).
+- **Gourmet Add-Ons with Real-Time Delta Pricing**: Dynamically add sides and accompaniments (e.g., *Garlic Naan Basket*, *Extra Crushed Peanuts*, *Avocado Slices*) with live cost recalculation.
+- **Bespoke Chef Notes**: Quick dietary instruction chips (`Less Spicy`, `No Onion/Garlic`, `Extra Sauce`, `Allergy Alert`) plus an open text instruction field that prints directly onto the kitchen KOT.
+
+### 💳 2. Frictionless Tri-Payment Engine (Zero-Failure Architecture)
+Seamless checkout experience with zero third-party gateway drops or timeouts:
+- **Instant Dynamic UPI QR Simulator**: Generates real-time UPI QR codes with an authentic 5-minute security countdown timer and 1-tap UPI app launcher.
+- **Card Payment Terminal Simulator**: Realistic credit/debit card interface with formatted 16-digit card input, expiry, CVV, and 3D-Secure simulation.
+- **Pay at Table / Cash on Delivery**: 1-click option for contactless physical payment upon arrival.
+
+### 💎 3. Luxury Obsidian Emerald & Champagne Gold Theme
+- Handcrafted visual hierarchy with `#0a140e` deep obsidian backgrounds, `#16271e` emerald glass panels, and `#d4a017` champagne gold accents.
+- Responsive floating bottom cart bar for fluid single-handed mobile navigation.
+- Micro-interactions, hover glow effects, and modern typography.
 
 ---
 

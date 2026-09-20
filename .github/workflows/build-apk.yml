@@ -60,24 +60,22 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v1.0.0
-          name: "Hatch Android App v1.0.0"
+          tag_name: v1.1.0
+          name: "Hatch Android App v1.1.0 (Luxury Edition)"
           body: |
-            ## 📱 Hatch Mobile App — Android APK (v1.0.0)
+            ## 📱 Hatch Mobile App — Android APK (v1.1.0)
 
-            Download and install the official Hatch restaurant application directly on your Android phone!
+            Download and install the luxury Hatch restaurant application directly on your Android phone!
 
-            ### 🌟 Features in this Build:
-            * **9 Culinary Counters**: Levant, Indian Regional, Kyoto, Chengdu, Oaxaca, Naples, Bengaluru Roastery, Dum Biryanis, and Farm Salads.
-            * **Interactive Floor Plan**: 15 tables across 4 dining zones with live availability.
-            * **Digital Steward Call Bell**: Instant waiter call with audio alerts on kitchen POS.
-            * **Curbside Pickup**: Valet car delivery with vehicle model & license plate fields.
-            * **Bengaluru Delivery Zones**: Indiranagar, Domlur, Koramangala, Ulsoor, CBD, Whitefield.
-            * **Live Courier Tracking**: 4-stage animated receipt tracker.
-            * **Dark Mode & PWA Support**: Fast offline loading and fullscreen mobile experience.
+            ### 🌟 Latest Additions in v1.1.0:
+            * **Dish Customization Studio**: Customise every dish with portion sizes, 4-tier spice levels (🟢 Mild to 🔥 Extra Hot), premium protein/base selections, gourmet add-ons with live price deltas, and bespoke chef preparation instructions.
+            * **22-Page Master Cuisine Catalogue**: Expanded Indian Kitchen, authentic Thai Orchid counter, Kyoto sushi & ramen, Chengdu dim sum & wok, artisanal bakery, and handcrafted beverages.
+            * **Frictionless Zero-Failure Tri-Payment Engine**: Instant Dynamic UPI QR with 5-minute security countdown, realistic card processor simulator, and Pay at Table / Cash on Delivery.
+            * **Obsidian Emerald & Champagne Gold UI**: Luxury dark glassmorphism, fluid micro-animations, interactive table floor plans, and sticky mobile quick-cart bar.
+            * **Live Order Tracking & Thermal Receipt**: Real-time kitchen status stepper, digital steward call bell, KOT thermal printer format, and 1-tap WhatsApp receipt sharing.
 
-            ### 📥 Download:
-            Download **`hatch-orders-v1.0.0.apk`** below to install on your phone.
+            ### 📥 Download & Install:
+            Download **`hatch-orders-v1.0.0.apk`** below to install on your Android device.
           files: release-apk/hatch-orders-v1.0.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
