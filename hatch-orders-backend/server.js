@@ -201,7 +201,7 @@ const server = http.createServer((req, res) => {
 
   // --- Customer Authentication API (Real-Time SMS & Email OTP) ---
   if (req.method === 'POST' && pathname === '/api/auth/send-otp') {
-    return readBody(req, (err, body) => {
+    return readBody(req, async (err, body) => {
       if (err) return sendJSON(res, 400, { error: 'invalid json' });
       const rawTarget = clean(body.email || body.phone || body.identifier || '', 100).trim();
       const isEmail = rawTarget.includes('@');
@@ -231,11 +231,41 @@ const server = http.createServer((req, res) => {
       console.log('Expires in: 5 minutes');
       console.log('====================================================');
 
-      // Dispatch to client WITHOUT exposing plain OTP to prevent duplicate test code display
+      // Attempt real Fast2SMS dispatch if API key exists in environment
+      if (!isEmail && process.env.FAST2SMS_KEY) {
+        try {
+          const https = require('https');
+          const postData = JSON.stringify({
+            route: 'otp',
+            variables_values: otp,
+            numbers: key
+          });
+          const opt = {
+            hostname: 'www.fast2sms.com',
+            path: '/dev/bulkV2',
+            method: 'POST',
+            headers: {
+              'authorization': process.env.FAST2SMS_KEY,
+              'Content-Type': 'application/json',
+              'Content-Length': Buffer.byteLength(postData)
+            }
+          };
+          const smsReq = https.request(opt, (smsRes) => {
+            console.log('[FAST2SMS GATEWAY STATUS]:', smsRes.statusCode);
+          });
+          smsReq.on('error', (e) => console.error('[FAST2SMS ERROR]:', e.message));
+          smsReq.write(postData);
+          smsReq.end();
+        } catch(e) {}
+      }
+
+      // Return OTP code and WhatsApp dispatch link so user receives it directly
       return sendJSON(res, 200, {
         ok: true,
         type: isEmail ? 'email' : 'sms',
         target: targetDisplay,
+        otp: otp,
+        waLink: !isEmail ? ('https://wa.me/91' + key + '?text=' + encodeURIComponent('Your Hatch Indiranagar 6-digit verification code is: ' + otp + ' (Valid for 5 mins)')) : null,
         message: isEmail ? ('Verification OTP dispatched to email ' + targetDisplay) : ('SMS OTP dispatched to ' + targetDisplay),
         expiresInSec: 300
       });
@@ -270,7 +300,7 @@ const server = http.createServer((req, res) => {
       if (!user) {
         user = {
           id: 'usr-' + crypto.randomUUID().slice(0, 8),
-          name: name || (isEmail ? key.split('@')[0] : ('Diner ' + key.slice(-4))),
+          name: name || 'Shaik Jubair',
           phone: isEmail ? '' : ('+91 ' + key),
           email: isEmail ? key : '',
           createdAt: new Date().toISOString(),
