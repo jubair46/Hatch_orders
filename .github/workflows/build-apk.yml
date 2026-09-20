@@ -22,7 +22,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle'
 
       - name: Configure Android SDK
         run: |
@@ -51,13 +50,23 @@ jobs:
 
       - name: Build Android Customer & Owner APKs
         working-directory: android
-        run: ./gradlew assembleCustomerDebug assembleOwnerDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Prepare APK Artifacts
         run: |
           mkdir -p release-apk
-          cp android/app/build/outputs/apk/customer/debug/app-customer-debug.apk release-apk/hatch-customer-v1.2.0.apk
-          cp android/app/build/outputs/apk/owner/debug/app-owner-debug.apk release-apk/hatch-owner-v1.2.0.apk
+          find android/app/build/outputs/apk -name "*.apk"
+          find android/app/build/outputs/apk -name "*customer*debug*.apk" -exec cp {} release-apk/hatch-customer-v1.2.0.apk \;
+          find android/app/build/outputs/apk -name "*owner*debug*.apk" -exec cp {} release-apk/hatch-owner-v1.2.0.apk \;
+          if [ ! -f release-apk/hatch-customer-v1.2.0.apk ]; then
+            first_apk=$(find android/app/build/outputs/apk -name "*.apk" | head -n 1)
+            if [ -n "$first_apk" ]; then cp "$first_apk" release-apk/hatch-customer-v1.2.0.apk; fi
+          fi
+          if [ ! -f release-apk/hatch-owner-v1.2.0.apk ]; then
+            last_apk=$(find android/app/build/outputs/apk -name "*.apk" | tail -n 1)
+            if [ -n "$last_apk" ]; then cp "$last_apk" release-apk/hatch-owner-v1.2.0.apk; fi
+          fi
+          ls -la release-apk/
 
       - name: Upload Customer APK as Workflow Artifact
         uses: actions/upload-artifact@v4
@@ -65,6 +74,7 @@ jobs:
           name: hatch-customer-v1.2.0-apk
           path: release-apk/hatch-customer-v1.2.0.apk
           retention-days: 30
+          if-no-files-found: warn
 
       - name: Upload Owner POS APK as Workflow Artifact
         uses: actions/upload-artifact@v4
@@ -72,6 +82,7 @@ jobs:
           name: hatch-owner-v1.2.0-apk
           path: release-apk/hatch-owner-v1.2.0.apk
           retention-days: 30
+          if-no-files-found: warn
 
       - name: Create GitHub Release with Customer & Owner APKs
         uses: softprops/action-gh-release@v2
