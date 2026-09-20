@@ -890,6 +890,93 @@ const server = http.createServer((req, res) => {
     return sendJSON(res, 200, { ok: true, count: tickets.length, tickets: tickets });
   }
 
+  // --- Hatch AI Copilot Agent API ---
+  if (req.method === 'POST' && pathname === '/api/copilot/chat') {
+    return readBody(req, (err, body) => {
+      if (err) return sendJSON(res, 400, { error: 'invalid json' });
+      const { message, role, context } = body || {};
+      const q = (message || '').toLowerCase().trim();
+      const orders = loadOrders();
+      const agents = loadAgents();
+
+      if (!q) return sendJSON(res, 400, { error: 'Message required' });
+
+      // Manager / Admin Copilot mode
+      if (role === 'admin' || role === 'manager') {
+        const today = new Date().toISOString().slice(0,10);
+        const todayOrders = orders.filter(o => o.createdAt && o.createdAt.startsWith(today));
+        const totalSales = todayOrders.reduce((s, o) => s + (Number(o.total) || 0), 0);
+        const totalGst = todayOrders.reduce((s, o) => s + (Number(o.gst) || 0), 0);
+        const activeOrders = orders.filter(o => o.status === 'new' || o.status === 'preparing' || o.status === 'ready' || o.status === 'out_for_delivery');
+
+        if (q.includes('sale') || q.includes('revenue') || q.includes('bill') || q.includes('today')) {
+          return sendJSON(res, 200, {
+            reply: "📊 **Today's Sales & POS Overview**:\n• Total Orders Placed: **" + todayOrders.length + "**\n• Gross Revenue: **₹" + totalSales.toLocaleString() + "**\n• 5% GST Collected: **₹" + totalGst.toLocaleString() + "**\n• Active In-Kitchen / Delivery: **" + activeOrders.length + "** orders.",
+            suggestions: ['Show active orders', 'Check agent fleet', 'Inventory status']
+          });
+        }
+        if (q.includes('active') || q.includes('order') || q.includes('kitchen')) {
+          return sendJSON(res, 200, {
+            reply: "🍽️ **Active Kitchen Orders (" + activeOrders.length + ")**:\n" +
+              (activeOrders.length ? activeOrders.map(o => "• #" + (o.orderNumber || o.id.slice(0,6)) + " (" + o.orderType + ") — ₹" + o.total + " [" + o.status.toUpperCase() + "]").join('\n') : 'All orders completed! Kitchen is in idle state.'),
+            suggestions: ['Auto-assign riders', 'Show sales summary', 'Show open tickets']
+          });
+        }
+        if (q.includes('agent') || q.includes('rider') || q.includes('fleet') || q.includes('steward')) {
+          return sendJSON(res, 200, {
+            reply: "🛵 **Hatch Autonomous Fleet & Staff (" + agents.length + ")**:\n" +
+              agents.map(a => "• **" + a.name + "** (" + a.role + ") — Status: *" + a.status + "*").join('\n'),
+            suggestions: ['Show active orders', 'Today sales', 'Help inquiries']
+          });
+        }
+        return sendJSON(res, 200, {
+          reply: "👨‍🍳 **Hatch POS Copilot**: I'm your AI kitchen and floor operations copilot. You have **" + activeOrders.length + " active orders** and **" + agents.length + " active agents** on duty today. How can I assist you?",
+          suggestions: ['Today revenue & sales', 'Show active orders', 'Agent fleet status']
+        });
+      }
+
+      // Customer Dining Copilot mode
+      if (q.includes('pizza') || q.includes('napoli') || q.includes('crust')) {
+        return sendJSON(res, 200, {
+          reply: "🍕 **Wood-Fired Gourmet Pizzas**:\nWe bake 48-hour fermented Neapolitan sourdough in our 450°C oven:\n1. **Margherita di Bufala** (₹595) — San Marzano D.O.P, Buffalo Mozzarella, fresh basil.\n2. **Truffle Funghi & Burrata** (₹745) — Wild porcini, whole pugliese burrata, white truffle drizzle.\n3. **Diavola Piccante** (₹685) — Spicy artisanal pepperoni, hot fermented chili honey.\n\nWould you like me to open the customizer for any of these?",
+          suggestions: ['Margherita di Bufala', 'Truffle Funghi Pizza', 'Check Burgers', 'View Ice Creams']
+        });
+      }
+      if (q.includes('burger') || q.includes('slider') || q.includes('patty') || q.includes('bun')) {
+        return sendJSON(res, 200, {
+          reply: "🍔 **Hatch Craft Burgers & Sliders**:\n1. **The Hatch Smoked Wagyu Truffle** (₹725) — Aged patty, smoked scarmorza, black truffle aioli on toasted brioche.\n2. **Crispy Buttermilk Katsu** (₹565) — Panko chicken thigh, yuzu-kosho slaw, pickled ginger.\n3. **Portobello Mushroom Melt** (₹525, Veg) — Balsamic-glazed giant portobello, molten fontina cheese.\n\nAll burgers come with house-cut sea salt rosemary fries!",
+          suggestions: ['Wagyu Truffle Burger', 'Crispy Buttermilk Katsu', 'Portobello Melt', 'Drink Pairings']
+        });
+      }
+      if (q.includes('ice cream') || q.includes('gelato') || q.includes('dessert') || q.includes('sweet')) {
+        return sendJSON(res, 200, {
+          reply: "🍨 **Artisanal Gelatos & Sorbets**:\n1. **Pistachio di Bronte Gelato** (₹320) — Sicilian green gold pistachios, slow churned.\n2. **Madagascar Bourbon Vanilla Bean** (₹280) — Infused with whole vanilla pods.\n3. **Dark Belgian Gianduja 72%** (₹340) — Rich Callebaut chocolate with roasted Piedmont hazelnuts.\n4. **Alfonso Mango & Passion Fruit** (₹290, Vegan Sorbet) — Ratnagiri mango puree.",
+          suggestions: ['Pistachio Gelato', 'Belgian Gianduja 72%', 'Alfonso Mango Sorbet']
+        });
+      }
+      if (q.includes('gst') || q.includes('tax') || q.includes('bill') || q.includes('payment')) {
+        return sendJSON(res, 200, {
+          reply: "🧾 **Transparent Hatch Billing & 5% GST**:\nAll restaurant bills are computed with the standard restaurant **5% GST** breakdown, with no hidden platform markup. You can pay via **Instant UPI QR**, **Credit/Debit Card (256-bit SSL)**, or **Pay at Table / Cash on Delivery**.",
+          suggestions: ['View Cart', 'View Menu', 'Pay at Table']
+        });
+      }
+      if (q.includes('track') || q.includes('status') || q.includes('where is my order')) {
+        const lastOrder = orders[0];
+        if (lastOrder) {
+          return sendJSON(res, 200, {
+            reply: "🛵 **Latest Order Tracking**:\nOrder **#" + (lastOrder.orderNumber || lastOrder.id.slice(0,6)) + "** is currently **" + lastOrder.status.toUpperCase() + "**.\n" + (lastOrder.rider ? "Assigned Rider: **" + lastOrder.rider.name + "** (" + lastOrder.rider.vehicle + ")" : "In kitchen preparation phase."),
+            suggestions: ['Track in live stepper', 'Call floor steward', 'Order more food']
+          });
+        }
+      }
+
+      return sendJSON(res, 200, {
+        reply: "✨ **Hello! I'm your Hatch Dining Copilot**.\nI can recommend dishes across our 9 regional and international kitchens, customize your pizzas, burgers, or gelatos, compute your 5% GST bill, or reserve a table for you at Indiranagar. What are you craving today?",
+        suggestions: ['Recommend Pizzas', 'Show Craft Burgers', 'Artisanal Ice Creams', 'Dietary & Vegan options']
+      });
+    });
+  }
+
   // --- Payment Gateway Verification API ---
   if (req.method === 'POST' && pathname === '/api/payment/verify') {
     return readBody(req, (err, body) => {

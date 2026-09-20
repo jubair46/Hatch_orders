@@ -4378,6 +4378,167 @@
     max-width: 65ch !important;
   }
 
+
+/* ===== HATCH AI COPILOT FLOATING & MODAL STYLES ===== */
+.floating-copilot-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  z-index: 85;
+  background: linear-gradient(135deg, #1f3326, #0e1a14);
+  color: #f5c542;
+  border: 1px solid rgba(245, 197, 66, 0.45);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 16px rgba(245, 197, 66, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.floating-copilot-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 0 24px rgba(245, 197, 66, 0.4);
+}
+@media (max-width: 768px) {
+  .floating-copilot-btn { bottom: 74px; right: 16px; padding: 8px 14px; font-size: 12px; }
+}
+
+.copilot-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(10px);
+  z-index: 130;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.copilot-modal-overlay.active { display: flex; }
+.copilot-modal-card {
+  background: #0d1611;
+  border: 1px solid rgba(245, 197, 66, 0.35);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  height: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 30px rgba(245, 197, 66, 0.15);
+  animation: copilotPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes copilotPop {
+  from { opacity: 0; transform: scale(0.95) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.copilot-head {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(245,197,66,0.12), rgba(31,51,38,0.4));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.copilot-title-wrap { display: flex; align-items: center; gap: 10px; }
+.copilot-avatar-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #192b20; border: 1px solid #f5c542;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.copilot-messages {
+  flex: 1;
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.copilot-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.copilot-bubble.agent {
+  background: #15241b;
+  color: #f1f5f9;
+  border: 1px solid rgba(245, 197, 66, 0.2);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.copilot-bubble.user {
+  background: linear-gradient(135deg, #d4a017, #b8860b);
+  color: #0b140e;
+  font-weight: 600;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.copilot-chips-wrap {
+  padding: 10px 18px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  background: rgba(0,0,0,0.2);
+}
+.copilot-chip {
+  white-space: nowrap;
+  background: rgba(245,197,66,0.1);
+  color: #f5c542;
+  border: 1px solid rgba(245,197,66,0.25);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.copilot-chip:hover {
+  background: #f5c542;
+  color: #0b140e;
+}
+.copilot-foot {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  gap: 10px;
+  background: #09100c;
+}
+.copilot-input {
+  flex: 1;
+  background: #142018;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+.copilot-input:focus {
+  border-color: #f5c542;
+  box-shadow: 0 0 10px rgba(245,197,66,0.2);
+}
+.copilot-send-btn {
+  background: #f5c542;
+  color: #0b140e;
+  border: none;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 </style>
 </head>
 <body>
@@ -4405,6 +4566,11 @@
     <li><a href="#menu">Menu</a></li>
     <li><a href="#book-table" id="navBookTableBtn" style="color:var(--yolk); font-weight:600;">Book Table</a></li>
     <li><a href="#visit">Visit</a></li>
+    <li>
+      <button class="copilot-nav-btn" id="headerCopilotBtn" onclick="openCopilotModal()" title="Hatch Dining Copilot" style="background:linear-gradient(135deg, rgba(230,184,76,0.2), rgba(212,160,23,0.3)); border:1px solid rgba(245,197,66,0.5); color:#f5c542; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 0 10px rgba(245,197,66,0.2);">
+        <span>✨ Copilot</span>
+      </button>
+    </li>
     <li>
       <button class="pwa-install-nav-btn" id="pwaInstallBtn" onclick="triggerPwaInstall()" style="display:none;" title="Install Hatch Mobile App">
         📲 <span class="pwa-label">Install App</span>
@@ -6173,6 +6339,48 @@
 <div class="toast-notification" id="toastNotification">
   <span id="toastIcon">✓</span>
   <span id="toastMsg">Request sent successfully</span>
+</div>
+
+
+<!-- Floating AI Dining Copilot Button -->
+<button type="button" class="floating-copilot-btn" id="floatingCopilotBtn" onclick="openCopilotModal()" title="Hatch Dining Copilot">
+  <span>✨</span> <span>Dining Copilot</span>
+</button>
+
+<!-- Hatch Dining Copilot Modal -->
+<div class="copilot-modal-overlay" id="copilotModalOverlay" onclick="if(event.target===this) closeCopilotModal()">
+  <div class="copilot-modal-card">
+    <div class="copilot-head">
+      <div class="copilot-title-wrap">
+        <div class="copilot-avatar-icon">✨</div>
+        <div>
+          <div style="font-weight:700; font-size:15px; color:#f5c542;">Hatch Dining Copilot</div>
+          <div style="font-size:11.5px; color:#94a3b8;">Autonomous Dining Concierge · Indiranagar</div>
+        </div>
+      </div>
+      <button type="button" class="auth-close-btn" style="position:static;" onclick="closeCopilotModal()">✕</button>
+    </div>
+
+    <div class="copilot-messages" id="copilotMessages">
+      <div class="copilot-bubble agent">
+        ✨ <strong>Hello! I'm your Hatch Dining Copilot.</strong><br>
+        I can recommend gourmet pizzas, craft burgers, artisanal gelatos, calculate your 5% GST bill, or help customize your dish. What would you like to explore?
+      </div>
+    </div>
+
+    <div class="copilot-chips-wrap" id="copilotSuggestions">
+      <button type="button" class="copilot-chip" onclick="askCopilot('Recommend Wood-Fired Pizzas')">🍕 Pizzas</button>
+      <button type="button" class="copilot-chip" onclick="askCopilot('Show Craft Burgers')">🍔 Burgers</button>
+      <button type="button" class="copilot-chip" onclick="askCopilot('Artisanal Ice Creams')">🍨 Gelatos</button>
+      <button type="button" class="copilot-chip" onclick="askCopilot('How much is 5% GST on bill?')">🧾 5% GST Bill</button>
+      <button type="button" class="copilot-chip" onclick="askCopilot('Track my order status')">🛵 Track Order</button>
+    </div>
+
+    <div class="copilot-foot">
+      <input type="text" class="copilot-input" id="copilotInput" placeholder="Ask Copilot anything (e.g. spicy chicken pizza)..." onkeyup="if(event.key==='Enter') submitCopilotMessage()">
+      <button type="button" class="copilot-send-btn" onclick="submitCopilotMessage()">Send ➔</button>
+    </div>
+  </div>
 </div>
 
 <!-- Table Reservation Modal -->
